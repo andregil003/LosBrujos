@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D5 · Ecosistema HACKCREA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;}
+svg{display:block;width:100%;height:auto;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Ecosistema HACKCREA 2026 · quién organiza y quién evalúa</h1>
+    <div class="sub">4 grupos organizadores · 5 hosts · 3 fases — toca cada entidad</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- ORGANIZADORES -->
+  <text x="40" y="34" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">ORGANIZADORES · 4 GRUPOS</text>
+
+  <g class="node" data-key="internacional" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="40" y="48" width="270" height="150" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="175" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">🌐 Internacional</text>
+    <text x="175" y="100" text-anchor="middle" font-size="11" fill="#6B7280">ONU · Joint SDG Fund</text>
+    <text x="175" y="118" text-anchor="middle" font-size="11" fill="#6B7280">Global Gateway (UE)</text>
+    <text x="175" y="136" text-anchor="middle" font-size="11" fill="#6B7280">UNESCO</text>
+    <text x="175" y="160" text-anchor="middle" font-size="10" font-style="italic" fill="#2563EB">agenda 2030 · ODS</text>
+    <text x="294" y="64" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="gobierno" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="330" y="48" width="270" height="150" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="465" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">🏛️ Gobierno</text>
+    <text x="465" y="100" text-anchor="middle" font-size="11" fill="#6B7280">SENACYT</text>
+    <text x="465" y="118" text-anchor="middle" font-size="11" fill="#6B7280">(Secretaría Nacional de</text>
+    <text x="465" y="136" text-anchor="middle" font-size="11" fill="#6B7280">Ciencia y Tecnología)</text>
+    <text x="465" y="160" text-anchor="middle" font-size="10" font-style="italic" fill="#B45309">anfitrión nacional</text>
+    <text x="584" y="64" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="ong" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="620" y="48" width="270" height="150" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="755" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">🤝 ONG</text>
+    <text x="755" y="100" text-anchor="middle" font-size="11" fill="#6B7280">AVD</text>
+    <text x="755" y="118" text-anchor="middle" font-size="11" fill="#6B7280">JCV</text>
+    <text x="755" y="136" text-anchor="middle" font-size="11" fill="#6B7280">(Asociación de</text>
+    <text x="755" y="154" text-anchor="middle" font-size="11" fill="#6B7280">Voluntarios Digitales)</text>
+    <text x="874" y="64" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="academia" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="910" y="48" width="250" height="150" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="1035" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">🎓 Academia</text>
+    <text x="1035" y="100" text-anchor="middle" font-size="11" fill="#6B7280">UVG</text>
+    <text x="1035" y="118" text-anchor="middle" font-size="11" fill="#6B7280">CIE-UVG</text>
+    <text x="1035" y="136" text-anchor="middle" font-size="11" fill="#6B7280">(Centro de</text>
+    <text x="1035" y="154" text-anchor="middle" font-size="11" fill="#6B7280">Innovación Educativa)</text>
+    <text x="1144" y="64" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- HOSTS -->
+  <text x="40" y="234" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">HOSTS · 5 PERSONAS</text>
+
+  <g class="node" data-key="iris" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="40" y="248" width="210" height="92" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="145" y="276" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Iris Palma</text>
+    <text x="145" y="296" text-anchor="middle" font-size="11" fill="#6B7280">host · apertura</text>
+    <text x="145" y="314" text-anchor="middle" font-size="11" fill="#6B7280">y cierre</text>
+    <text x="234" y="264" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="rodrigo" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="270" y="248" width="210" height="92" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="375" y="276" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Rodrigo Morán</text>
+    <text x="375" y="296" text-anchor="middle" font-size="11" fill="#6B7280">Aracari Studios</text>
+    <text x="375" y="314" text-anchor="middle" font-size="11" fill="#6B7280">producción next LATAM</text>
+    <text x="464" y="264" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="bridfeth" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="500" y="248" width="210" height="92" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="605" y="276" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Bridfeth Guerra</text>
+    <text x="605" y="296" text-anchor="middle" font-size="11" fill="#6B7280">host · dinámicas</text>
+    <text x="605" y="314" text-anchor="middle" font-size="11" fill="#6B7280">de equipo</text>
+    <text x="694" y="264" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="ruben" tabindex="0" role="button" style="animation-delay:.31s">
+    <rect x="730" y="248" width="210" height="92" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="835" y="276" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Rubén Aquino</text>
+    <text x="835" y="296" text-anchor="middle" font-size="11" fill="#6B7280">Aracari Studios</text>
+    <text x="835" y="314" text-anchor="middle" font-size="11" fill="#6B7280">producción next LATAM</text>
+    <text x="924" y="264" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="nancy" tabindex="0" role="button" style="animation-delay:.35s">
+    <rect x="960" y="248" width="200" height="92" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="1060" y="276" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">Nancy Sajvin ⚠️</text>
+    <text x="1060" y="296" text-anchor="middle" font-size="11" fill="#6B7280">por confirmar</text>
+    <text x="1060" y="314" text-anchor="middle" font-size="11" fill="#6B7280">(posible 5ª host)</text>
+    <text x="1144" y="264" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- TIMELINE -->
+  <text x="40" y="384" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">TIMELINE · 3 FASES</text>
+
+  <g class="node" data-key="fase1" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="40" y="398" width="350" height="120" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="215" y="428" text-anchor="middle" font-size="14" font-weight="600" class="node-label">Fase 1 · Hackatón</text>
+    <text x="215" y="450" text-anchor="middle" font-size="11" fill="#6B7280">28-30 ago · 9-11 sep</text>
+    <text x="215" y="468" text-anchor="middle" font-size="11" fill="#6B7280">ideación + prototipo</text>
+    <text x="215" y="486" text-anchor="middle" font-size="11" fill="#6B7280">equipos multidisciplinarios</text>
+    <text x="215" y="504" text-anchor="middle" font-size="11" fill="#9CA3AF">LosBrujos: Reto 05</text>
+    <text x="374" y="414" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <line x1="390" y1="458" x2="425" y2="458" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+  <g class="node" data-key="fase2" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="427" y="398" width="350" height="120" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="602" y="428" text-anchor="middle" font-size="14" font-weight="600" class="node-label">Fase 2 · Aceleración</text>
+    <text x="602" y="450" text-anchor="middle" font-size="11" fill="#6B7280">septiembre - noviembre</text>
+    <text x="602" y="468" text-anchor="middle" font-size="11" fill="#6B7280">mentorías y desarrollo</text>
+    <text x="602" y="486" text-anchor="middle" font-size="11" fill="#6B7280">del prototipo</text>
+    <text x="602" y="504" text-anchor="middle" font-size="11" fill="#9CA3AF">refinamiento con feedback</text>
+    <text x="761" y="414" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <line x1="777" y1="458" x2="812" y2="458" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+  <g class="node" data-key="fase3" tabindex="0" role="button" style="animation-delay:.47s">
+    <rect x="814" y="398" width="346" height="120" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="987" y="428" text-anchor="middle" font-size="14" font-weight="600" fill="#047857" class="node-label">Fase 3 · Demo Day</text>
+    <text x="987" y="450" text-anchor="middle" font-size="11" fill="#047857">11-13 de noviembre</text>
+    <text x="987" y="468" text-anchor="middle" font-size="11" fill="#047857">presentación final</text>
+    <text x="987" y="486" text-anchor="middle" font-size="11" fill="#047857">ante jurado</text>
+    <text x="987" y="504" text-anchor="middle" font-size="11" fill="#9CA3AF">premios y networking</text>
+    <text x="1144" y="414" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- PITCH -->
+  <g class="node" data-key="pitch" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="40" y="560" width="1120" height="64" rx="10" fill="#111111" stroke="#111111" stroke-width="1.5"/>
+    <text x="600" y="588" text-anchor="middle" font-size="14" font-weight="600" fill="#FBBF24">Pitch de LosBrujos: "multas que educan, no que castigan"</text>
+    <text x="600" y="610" text-anchor="middle" font-size="11" fill="#D1D5DB">3 minutos · demo en vivo · alineado con ODS 16 (paz, justicia e instituciones sólidas)</text>
+    <text x="1144" y="576" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="40" y="656">fuente: evento.md · perfiles.md · retosAndre.md</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Internacional</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> Gobierno / por confirmar</div>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> ONG / fase final</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Academia</div>
+  <div class="legend">💡 Toca cualquier entidad</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+internacional:{chip:"Organizador",title:"Internacional",body:"Organismos multilaterales que financian y respaldan el hackathon. Su agenda es la Agenda 2030 y los ODS.",facts:[["ONU","Marco global de los ODS"],["Joint SDG Fund","Financiamiento conjunto para desarrollo"],["Global Gateway (UE)","Estrategia de inversión de la Unión Europea"],["UNESCO","Educación, ciencia y cultura"],["ODS clave","16 · 9 · 10"]],source:"evento.md"},
+gobierno:{chip:"Organizador",title:"Gobierno · SENACYT",body:"La Secretaría Nacional de Ciencia y Tecnología es el anfitrión nacional del evento.",facts:[["Rol","Anfitrión nacional"],["Ámbito","Ciencia, tecnología e innovación"]],source:"evento.md"},
+ong:{chip:"Organizador",title:"ONG · AVD / JCV",body:"Asociación de Voluntarios Digitales (AVD) y JCV, organizaciones de la sociedad civil que impulsan el voluntariado digital.",facts:[["AVD","Asociación de Voluntarios Digitales"],["JCV","Organización aliada"],["Rol","Comunidad, voluntariado y logística"]],source:"evento.md"},
+academia:{chip:"Organizador",title:"Academia · UVG / CIE-UVG",body:"La Universidad del Valle de Guatemala y su Centro de Innovación Educativa aportan el marco académico y metodológico.",facts:[["UVG","Universidad del Valle de Guatemala"],["CIE-UVG","Centro de Innovación Educativa"],["Rol","Metodología y evaluación"]],source:"evento.md"},
+iris:{chip:"Host",title:"Iris Palma",body:"Host principal del evento. Se encarga de la apertura y el cierre de las jornadas.",facts:[["Rol","Host de apertura y cierre"]],source:"perfiles.md"},
+rodrigo:{chip:"Host",title:"Rodrigo Morán",body:"Host de Aracari Studios, estudio de producción audiovisual. Trabaja en la producción del evento next LATAM.",facts:[["Empresa","Aracari Studios"],["Proyecto","Producción next LATAM"]],source:"perfiles.md"},
+bridfeth:{chip:"Host",title:"Bridfeth Guerra",body:"Host encargada de las dinámicas de equipo durante el hackathon.",facts:[["Rol","Dinámicas de equipo"]],source:"perfiles.md"},
+ruben:{chip:"Host",title:"Rubén Aquino",body:"Host de Aracari Studios junto a Rodrigo Morán. Producción del evento next LATAM.",facts:[["Empresa","Aracari Studios"],["Proyecto","Producción next LATAM"]],source:"perfiles.md"},
+nancy:{chip:"Host · ⚠️ por confirmar",title:"Nancy Sajvin",body:"Posible quinta host del evento. Su participación aún no está confirmada.",facts:[["Estado","Por confirmar"],["Rol","Host (posible)"]],source:"perfiles.md"},
+fase1:{chip:"Timeline",title:"Fase 1 · Hackatón",body:"Ideación y prototipado en jornadas intensivas. Los equipos multidisciplinarios eligen reto y construyen el primer prototipo.",facts:[["Fechas","28-30 ago · 9-11 sep"],["Actividad","Ideación + prototipo"],["LosBrujos","Reto 05 (multas de tránsito)"]],source:"evento.md"},
+fase2:{chip:"Timeline",title:"Fase 2 · Aceleración",body:"Mentorías y desarrollo del prototipo entre septiembre y noviembre. Los equipos refinan la solución con feedback de mentores.",facts:[["Período","Sep - nov"],["Actividad","Mentorías + desarrollo"],["Objetivo","Prototipo pulido para demo"]],source:"evento.md"},
+fase3:{chip:"Timeline",title:"Fase 3 · Demo Day",body:"Presentación final ante jurado el 11-13 de noviembre. Premios y networking.",facts:[["Fechas","11-13 nov"],["Actividad","Presentación final"],["Formato","Demo en vivo ante jurado"]],source:"evento.md"},
+pitch:{chip:"LosBrujos",title:"Pitch del equipo",body:"Nuestro pitch: 'multas que educan, no que castigan'. 3 minutos con demo en vivo, alineado con el ODS 16 (paz, justicia e instituciones sólidas).",facts:[["Duración","3 minutos"],["Formato","Demo en vivo"],["ODS","16 · 9 · 10"],["Mensaje","De multa punitiva a educación vial"]],source:"retosAndre.md · analisis-retos.md"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

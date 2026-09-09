@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D6 · Comparativa de retos HACKCREA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;}
+svg{display:block;width:100%;height:auto;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Por qué LosBrujos eligió el Reto 05</h1>
+    <div class="sub">3 retos finalistas · 7 criterios · veredicto — toca cada celda</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<main>
+<svg viewBox="0 0 1200 820" width="1200" height="820" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- CABECERA -->
+  <g class="node" data-key="reto05" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="40" y="40" width="360" height="86" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+    <text x="220" y="72" text-anchor="middle" font-size="16" font-weight="700" fill="#1D4ED8" class="node-label">🏆 Reto 05 · Multas</text>
+    <text x="220" y="94" text-anchor="middle" font-size="11" fill="#6B7280">MinGob · Dirección de Tránsito</text>
+    <text x="220" y="112" text-anchor="middle" font-size="11" fill="#6B7280">"multas que educan, no que castigan"</text>
+    <text x="384" y="56" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="reto08" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="420" y="40" width="360" height="86" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="72" text-anchor="middle" font-size="16" font-weight="600" class="node-label">Reto 08 · Licencia</text>
+    <text x="600" y="94" text-anchor="middle" font-size="11" fill="#6B7280">MSPAS · Dirección de Licencias</text>
+    <text x="600" y="112" text-anchor="middle" font-size="11" fill="#6B7280">digitalizar licencias de conducir</text>
+    <text x="764" y="56" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="reto01" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="800" y="40" width="360" height="86" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="980" y="72" text-anchor="middle" font-size="16" font-weight="600" class="node-label">Reto 01 · Antecedentes</text>
+    <text x="980" y="94" text-anchor="middle" font-size="11" fill="#6B7280">PNC · antecedentes penales</text>
+    <text x="980" y="112" text-anchor="middle" font-size="11" fill="#6B7280">constancia de antecedentes</text>
+    <text x="1144" y="56" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- CRITERIOS -->
+  <text x="40" y="170" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">CRITERIOS DE EVALUACIÓN</text>
+
+  <g class="node" data-key="c-quejas" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="40" y="184" width="360" height="52" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="220" y="206" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">Quejas ciudadanas 🔥</text>
+    <text x="220" y="226" text-anchor="middle" font-size="11" fill="#B91C1C">6 quejas directas · el dolor más citado</text>
+    <text x="384" y="200" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-dolor" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="420" y="184" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="206" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Dolor real</text>
+    <text x="600" y="226" text-anchor="middle" font-size="11" fill="#6B7280">multas injustas · miedo · desinformación</text>
+    <text x="764" y="200" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-inclusion" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="800" y="184" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="980" y="206" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Inclusión lingüística</text>
+    <text x="980" y="226" text-anchor="middle" font-size="11" fill="#6B7280">4 idiomas + audio (único reto que lo pide)</text>
+    <text x="1144" y="200" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="c-complejidad" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="40" y="252" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="220" y="274" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Complejidad legal</text>
+    <text x="220" y="294" text-anchor="middle" font-size="11" fill="#6B7280">media · Decreto 33-2024 + Ley 89-2005</text>
+    <text x="384" y="268" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-demo" tabindex="0" role="button" style="animation-delay:.31s">
+    <rect x="420" y="252" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="274" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Demo en vivo</text>
+    <text x="600" y="294" text-anchor="middle" font-size="11" fill="#6B7280">foto de boleta → resultado (WOW)</text>
+    <text x="764" y="268" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-datos" tabindex="0" role="button" style="animation-delay:.35s">
+    <rect x="800" y="252" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="980" y="274" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Datos disponibles</text>
+    <text x="980" y="294" text-anchor="middle" font-size="11" fill="#6B7280">mock realista (sin API pública)</text>
+    <text x="1144" y="268" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="c-riesgo" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="40" y="320" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="220" y="342" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Riesgo de datos</text>
+    <text x="220" y="362" text-anchor="middle" font-size="11" fill="#6B7280">bajo · todo local (Ley 89-2005)</text>
+    <text x="384" y="336" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-impacto" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="420" y="320" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="342" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Impacto social</text>
+    <text x="600" y="362" text-anchor="middle" font-size="11" fill="#6B7280">millones de conductores · motociclistas</text>
+    <text x="764" y="336" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="c-ods" tabindex="0" role="button" style="animation-delay:.47s">
+    <rect x="800" y="320" width="360" height="52" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="980" y="342" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Alineación ODS</text>
+    <text x="980" y="362" text-anchor="middle" font-size="11" fill="#6B7280">ODS 16 · 9 · 10</text>
+    <text x="1144" y="336" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- VEREDICTO -->
+  <line x1="600" y1="392" x2="600" y2="430" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <g class="node" data-key="veredicto" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="200" y="436" width="800" height="120" rx="12" fill="#111111" stroke="#111111" stroke-width="2"/>
+    <text x="600" y="474" text-anchor="middle" font-size="20" font-weight="700" fill="#FBBF24">🏆 Veredicto: Reto 05</text>
+    <text x="600" y="500" text-anchor="middle" font-size="13" fill="#D1D5DB">el dolor más citado (6 quejas) + demo WOW + inclusión lingüística</text>
+    <text x="600" y="522" text-anchor="middle" font-size="13" fill="#D1D5DB">+ riesgo bajo de datos + impacto en millones de conductores</text>
+    <text x="600" y="544" text-anchor="middle" font-size="11" fill="#9CA3AF">"multas que educan, no que castigan"</text>
+    <text x="984" y="452" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <!-- STACK COMÚN -->
+  <g class="node" data-key="stack" tabindex="0" role="button" style="animation-delay:.55s">
+    <rect x="40" y="600" width="1120" height="76" rx="10" fill="#F8FAFC" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="628" text-anchor="middle" font-size="13" font-weight="600" class="node-label">Stack común a los 3 retos</text>
+    <text x="600" y="650" text-anchor="middle" font-size="11" fill="#6B7280">Vite + TypeScript + Tailwind · Cloudflare Pages + Workers · PWA offline-first · i18n 4 idiomas</text>
+    <text x="600" y="668" text-anchor="middle" font-size="11" fill="#6B7280">misma arquitectura → el equipo puede pivotar sin reescribir</text>
+    <text x="1144" y="616" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="40" y="706">fuente: analisis-retos.md · reto5-multas-transito.md · retosAndre.md</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Reto elegido</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Criterio decisivo</div>
+  <div class="legend">💡 Toca cualquier celda</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+reto05:{chip:"Reto elegido",title:"Reto 05 · Multas de tránsito",body:"Dirección de Tránsito del MinGob. El ciudadano recibe una multa y no sabe qué hacer: el prototipo traduce la jerga legal, muestra plazos y opciones.",facts:[["Institución","MinGob · Dirección de Tránsito"],["Leyes","Decreto 33-2024 · Ley 89-2005 · Decreto 19-2003"],["Mensaje","Multas que educan, no que castigan"]],source:"reto5-multas-transito.md"},
+reto08:{chip:"Finalista",title:"Reto 08 · Licencia de conducir",body:"MSPAS · Dirección de Licencias. Digitalizar el proceso de licencias de conducir.",facts:[["Institución","MSPAS · Dirección de Licencias"],["Estado","Finalista, no elegido"]],source:"analisis-retos.md"},
+reto01:{chip:"Finalista",title:"Reto 01 · Antecedentes penales",body:"PNC. Digitalizar la constancia de antecedentes penales.",facts:[["Institución","PNC"],["Estado","Finalista, no elegido"]],source:"analisis-retos.md"},
+"c-quejas":{chip:"Criterio decisivo",title:"Quejas ciudadanas 🔥",body:"El Reto 05 acumuló 6 quejas directas de ciudadanos: es el dolor más citado de los tres finalistas.",facts:[["Quejas","6 directas"],["Dolor","Multas injustas, miedo, desinformación"]],source:"analisis-retos.md"},
+"c-dolor":{chip:"Criterio",title:"Dolor real",body:"Las multas generan miedo y desinformación: la gente paga por miedo sin saber si puede impugnar.",facts:[["Síntoma","Pagos por miedo"],["Causa","Jerga legal incomprensible"],["Oportunidad","Educar en vez de castigar"]],source:"reto5-multas-transito.md §5.1"},
+"c-inclusion":{chip:"Criterio",title:"Inclusión lingüística",body:"Es el único reto que pide explícitamente atender a quien no tiene el español como primera lengua.",facts:[["Idiomas","es · k'iche' · q'eqchi' · garífuna"],["Audio","Para quienes hablan pero no leen"],["Ley","Decreto 19-2003 Art. 9"]],source:"analisis-retos.md"},
+"c-complejidad":{chip:"Criterio",title:"Complejidad legal",body:"Media: requiere entender el Decreto 33-2024 (multas) y la Ley 89-2005 (datos), pero no integraciones con sistemas estatales.",facts:[["Nivel","Media"],["Leyes","Decreto 33-2024 · Ley 89-2005"],["Ventaja","Sin integración con sistemas estatales"]],source:"reto5-multas-transito.md §2"},
+"c-demo":{chip:"Criterio",title:"Demo en vivo",body:"El momento WOW: el usuario fotografía la boleta y el prototipo la traduce al instante. Perfecto para un pitch de 3 minutos.",facts:[["Demo","Foto de boleta → resultado"],["Impacto","WOW inmediato"],["OCR","Tesseract.js local"]],source:"reto5-multas-transito.md §15.1"},
+"c-datos":{chip:"Criterio",title:"Datos disponibles",body:"No hay API pública de multas en Guatemala, pero un mock realista demuestra el concepto sin riesgo legal.",facts:[["Realidad","Sin API pública"],["Solución","Mock realista"],["Riesgo","Bajo"]],source:"reto5-multas-transito.md §10.1"},
+"c-riesgo":{chip:"Criterio",title:"Riesgo de datos",body:"Bajo: todo el procesamiento es local (OCR en navegador, IndexedDB). Cumple la Ley 89-2005 sin infraestructura compleja.",facts:[["Procesamiento","Local"],["Almacenamiento","IndexedDB"],["Ley","89-2005"]],source:"reto5-multas-transito.md §14.1"},
+"c-impacto":{chip:"Criterio",title:"Impacto social",body:"Millones de conductores, especialmente motociclistas (la mayoría de multas). El impacto es inmediato y masivo.",facts:[["Población","Millones de conductores"],["Mayoría","Motociclistas"],["Multa típica","Q300 (motocicleta)"]],source:"reto5-multas-transito.md §5.7"},
+"c-ods":{chip:"Criterio",title:"Alineación ODS",body:"El reto se alinea con la Agenda 2030: instituciones sólidas, innovación e igualdad.",facts:[["ODS 16","Paz, justicia e instituciones sólidas"],["ODS 9","Industria, innovación e infraestructura"],["ODS 10","Reducción de desigualdades"]],source:"evento.md · analisis-retos.md"},
+veredicto:{chip:"Veredicto",title:"Reto 05 gana",body:"Combina el dolor más citado (6 quejas), una demo WOW (foto → traducción), inclusión lingüística única, riesgo bajo de datos e impacto en millones de conductores.",facts:[["Quejas","6 directas (máximo)"],["Demo","WOW con OCR"],["Inclusión","4 idiomas + audio"],["Riesgo","Bajo (todo local)"],["Impacto","Millones de conductores"]],source:"analisis-retos.md"},
+stack:{chip:"Arquitectura",title:"Stack común a los 3 retos",body:"Los tres finalistas comparten la misma arquitectura base, así que el equipo puede pivotar sin reescribir.",facts:[["Frontend","Vite + TypeScript + Tailwind"],["Hosting","Cloudflare Pages + Workers"],["Offline","PWA offline-first"],["i18n","4 idiomas"]],source:"analisis-retos.md (stack común)"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

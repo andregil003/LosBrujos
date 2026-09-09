@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D3 · Flujo del ciudadano en el prototipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;}
+svg{display:block;width:100%;height:auto;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>De multa a educación · el flujo del ciudadano en el prototipo</h1>
+    <div class="sub">5 pasos · sin backend · offline-first · en español, k'iche', q'eqchi' y garífuna — toca cada paso</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<main>
+<svg viewBox="0 0 1200 760" width="1200" height="760" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- PASOS -->
+  <g class="node" data-key="paso1" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="30" y="70" width="210" height="140" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <circle cx="62" cy="100" r="15" fill="#2563EB"/>
+    <text x="62" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+    <text x="135" y="140" text-anchor="middle" font-size="14" font-weight="600" fill="#1D4ED8" class="node-label">Recibe la boleta</text>
+    <text x="135" y="162" text-anchor="middle" font-size="11" fill="#6B7280">física del agente o</text>
+    <text x="135" y="178" text-anchor="middle" font-size="11" fill="#6B7280">notificación formal</text>
+    <text x="135" y="200" text-anchor="middle" font-size="11" font-style="italic" fill="#2563EB">"¿y ahora qué hago?"</text>
+    <text x="224" y="86" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <line x1="240" y1="140" x2="270" y2="140" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <g class="node" data-key="paso2" tabindex="0" role="button" style="animation-delay:.08s">
+    <rect x="272" y="70" width="210" height="140" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <circle cx="304" cy="100" r="15" fill="#111111"/>
+    <text x="304" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+    <text x="377" y="140" text-anchor="middle" font-size="14" font-weight="600" class="node-label">Consulta</text>
+    <text x="377" y="162" text-anchor="middle" font-size="11" fill="#6B7280">escanea el QR de la boleta</text>
+    <text x="377" y="178" text-anchor="middle" font-size="11" fill="#6B7280">foto con OCR</text>
+    <text x="377" y="194" text-anchor="middle" font-size="11" fill="#6B7280">o ingresa el # de remisión</text>
+    <text x="466" y="86" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <line x1="482" y1="140" x2="512" y2="140" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <g class="node" data-key="paso3" tabindex="0" role="button" style="animation-delay:.13s">
+    <rect x="514" y="70" width="210" height="140" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <circle cx="546" cy="100" r="15" fill="#D97706"/>
+    <text x="546" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+    <text x="619" y="140" text-anchor="middle" font-size="14" font-weight="600" fill="#B45309" class="node-label">Traduce</text>
+    <text x="619" y="162" text-anchor="middle" font-size="11" fill="#6B7280">"Art. 90" → "no respetaste</text>
+    <text x="619" y="178" text-anchor="middle" font-size="11" fill="#6B7280">el alto" en lenguaje claro</text>
+    <text x="619" y="200" text-anchor="middle" font-size="11" font-weight="600" fill="#B45309">¿cumple el Decreto 33-2024?</text>
+    <text x="708" y="86" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+  <line x1="724" y1="140" x2="754" y2="140" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <g class="node" data-key="paso4" tabindex="0" role="button" style="animation-delay:.18s">
+    <rect x="756" y="70" width="210" height="140" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <circle cx="788" cy="100" r="15" fill="#111111"/>
+    <text x="788" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">4</text>
+    <text x="861" y="140" text-anchor="middle" font-size="14" font-weight="600" class="node-label">Plazos</text>
+    <text x="861" y="162" text-anchor="middle" font-size="11" fill="#6B7280">semáforo con días restantes</text>
+    <text x="861" y="178" text-anchor="middle" font-size="11" fill="#6B7280">para impugnar</text>
+    <circle cx="800" cy="196" r="8" fill="#34D399" stroke="#059669" stroke-width="1.5"/>
+    <circle cx="822" cy="196" r="8" fill="#FBBF24" stroke="#D97706" stroke-width="1.5"/>
+    <circle cx="844" cy="196" r="8" fill="#F87171" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="950" y="86" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+  <line x1="966" y1="140" x2="996" y2="140" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <g class="node" data-key="paso5" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="998" y="70" width="172" height="140" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <circle cx="1030" cy="100" r="15" fill="#059669"/>
+    <text x="1030" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">5</text>
+    <text x="1084" y="140" text-anchor="middle" font-size="14" font-weight="600" fill="#047857" class="node-label">Decide</text>
+    <text x="1084" y="162" text-anchor="middle" font-size="11" fill="#6B7280">acción informada,</text>
+    <text x="1084" y="178" text-anchor="middle" font-size="11" fill="#6B7280">no por miedo</text>
+    <text x="1154" y="86" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- SALIDAS -->
+  <text x="600" y="270" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">TRES SALIDAS POSIBLES</text>
+
+  <g class="node" data-key="salida-pagar" tabindex="0" role="button" style="animation-delay:.28s">
+    <rect x="60" y="300" width="320" height="140" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="220" y="334" text-anchor="middle" font-size="15" font-weight="600" class="node-label">💰 Pagar</text>
+    <text x="220" y="360" text-anchor="middle" font-size="12" fill="#6B7280">genera línea de captura</text>
+    <text x="220" y="378" text-anchor="middle" font-size="12" fill="#6B7280">paga en Banrural / corresponsal</text>
+    <rect x="100" y="396" width="240" height="30" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+    <text x="220" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#B45309">alerta: ¿hay descuento activo? (50-60%)</text>
+    <text x="364" y="316" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="salida-impugnar" tabindex="0" role="button" style="animation-delay:.33s">
+    <rect x="440" y="300" width="320" height="140" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="600" y="334" text-anchor="middle" font-size="15" font-weight="600" class="node-label">⚖️ Impugnar</text>
+    <text x="600" y="360" text-anchor="middle" font-size="12" fill="#6B7280">checklist de documentos</text>
+    <text x="600" y="378" text-anchor="middle" font-size="12" fill="#6B7280">genera borrador PDF del recurso</text>
+    <rect x="480" y="396" width="240" height="30" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/>
+    <text x="600" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#1D4ED8">plazo: 15 días desde notificación</text>
+    <text x="744" y="316" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="salida-prescribir" tabindex="0" role="button" style="animation-delay:.38s">
+    <rect x="820" y="300" width="320" height="140" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="980" y="334" text-anchor="middle" font-size="15" font-weight="600" class="node-label">⏳ Esperar prescripción</text>
+    <text x="980" y="360" text-anchor="middle" font-size="12" fill="#6B7280">"esta multa NO te fue</text>
+    <text x="980" y="378" text-anchor="middle" font-size="12" fill="#6B7280">notificada correctamente"</text>
+    <rect x="860" y="396" width="240" height="30" rx="6" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+    <text x="980" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">120 días sin notificar → prescribe</text>
+    <text x="1124" y="316" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- INCLUSIÓN -->
+  <g class="node" data-key="inclusion" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="60" y="480" width="1080" height="56" rx="10" fill="#111111" stroke="#111111" stroke-width="1.5"/>
+    <text x="600" y="506" text-anchor="middle" font-size="14" font-weight="600" fill="#FBBF24">Interfaz en español · k'iche' · q'eqchi' · garífuna + audio 🔊</text>
+    <text x="600" y="526" text-anchor="middle" font-size="11" fill="#D1D5DB">cumple el Decreto 19-2003 (Ley de Idiomas Nacionales) que el Estado no cumple</text>
+    <text x="1124" y="496" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="60" y="570">constraint del reto: NO es asesoría legal · NO presenta impugnaciones · NO garantiza resultados</text>
+    <text x="60" y="588">el prototipo genera borradores · el usuario los presenta presencialmente o por correo</text>
+    <text x="60" y="606">Ley 89-2005: todo el procesamiento es local (OCR en navegador · IndexedDB) → sin datos en la nube</text>
+    <text x="60" y="624">fuente: reto5-multas-transito.md §6.2 · analisis-retos.md</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Paso del journey</div>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> Salida a favor del ciudadano</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> Oportunidad de ahorro</div>
+  <div class="legend">💡 Toca cualquier paso</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+paso1:{chip:"Paso 1",title:"Recibe la boleta",body:"El ciudadano recibe la boleta física del agente o una notificación formal. Muchos se enteran de la multa hasta que intentan renovar licencia o calcomanía: son las 'multas fantasmas'.",facts:[["Dolor","Multas que aparecen sin notificación previa"],["Momento clave","Al renovar licencia, imprimir calcomanía o pasar un retén"],["Pregunta","'¿y ahora qué hago?' — nadie lo explica"]],source:"reto5-multas-transito.md §5.1"},
+paso2:{chip:"Paso 2",title:"Consulta",body:"El usuario consulta escaneando el QR de la boleta, tomando foto (OCR) o ingresando el número de remisión. A diferencia del Portal SAT, NO se necesita NIT.",facts:[["Entrada","QR · foto OCR · # de remisión"],["Ventaja","Sin NIT — el SAT lo exige y excluye a quienes no lo tienen"],["Tecnología","Tesseract.js corre en el navegador (local)"]],source:"reto5-multas-transito.md §6.2 · §15.1"},
+paso3:{chip:"Paso 3",title:"Traduce",body:"El prototipo convierte la jerga legal ('Art. 90 del Reglamento') en lenguaje claro: qué hiciste mal, cuánto pagas y con qué pruebas. También evalúa si la notificación cumple el Decreto 33-2024.",facts:[["Ejemplo","Art. 90 → 'no respetaste la señal de alto'"],["Validador","¿La notificación cumple los 6 requisitos del decreto?"],["Glosario","Catálogo de infracciones traducidas"]],source:"reto5-multas-transito.md §6.2 · §10.3"},
+paso4:{chip:"Paso 4",title:"Plazos",body:"Semáforo visual con los días restantes para impugnar (15), pagar (60) o esperar prescripción (120). Verde, amarillo o rojo según la urgencia.",facts:[["15 días","Impugnar (amarillo)"],["60 días","Pagar tras resolución (rojo)"],["120 días","Prescripción si no notifican (verde)"],["V3","Alertas push cuando se acerca el vencimiento"]],source:"reto5-multas-transito.md §6.3 · §10.3"},
+paso5:{chip:"Paso 5",title:"Decide",body:"Con la información clara, el ciudadano toma una decisión informada: pagar, impugnar o esperar la prescripción. El prototipo transforma el miedo en acción.",facts:[["Objetivo","De multa punitiva a educación vial"],["Resultado","Menos pagos por miedo, más defensa de derechos"]],source:"reto5-multas-transito.md §20"},
+"salida-pagar":{chip:"Salida 1",title:"Pagar",body:"El prototipo genera la línea de captura y guía el pago en Banrural o corresponsal. Antes de pagar, alerta si hay descuentos activos.",facts:[["Descuentos","MuniGuate 50-60% con curso vial"],["Villa Nueva","Hasta 90% de descuento"],["Ahorro","Q300 → Q150 para motociclistas"]],source:"reto5-multas-transito.md §5.7"},
+"salida-impugnar":{chip:"Salida 2",title:"Impugnar",body:"Checklist de documentos y generador de borrador PDF del recurso de impugnación, basado en el Decreto 33-2024. El usuario lo presenta presencialmente o por correo.",facts:[["Plazo","15 días desde la notificación"],["Documentos","Boleta, DPI, pruebas de respaldo"],["Constraint","El prototipo NO presenta la impugnación: solo genera el borrador"]],source:"reto5-multas-transito.md §6.2 · §14.3"},
+"salida-prescribir":{chip:"Salida 3",title:"Esperar prescripción",body:"Si la multa no fue notificada correctamente, el prototipo lo detecta y explica: 'tiene X días sin notificar. Si pasan 120 días, prescribirá'.",facts:[["Detección","Multa sin fecha de notificación"],["Plazo","120 días desde la infracción"],["Consejo","No pagues una multa que nunca te notificaron"]],source:"reto5-multas-transito.md §2.4 · §8.3"},
+inclusion:{chip:"Diferenciador",title:"Inclusión lingüística",body:"Interfaz en español, k'iche', q'eqchi' y garífuna, con audio para quienes hablan pero no leen su idioma. Es el único reto que pide explícitamente atender a quien no tiene el español como primera lengua.",facts:[["Idiomas","K'iche' (~1.27M) · Q'eqchi' (~1.37M) · Garífuna (Izabal/Livingston)"],["Ley","Decreto 19-2003 Art. 9: el Estado debe traducir sus avisos"],["Argumento","Cumplimos la ley que el Estado no cumple"]],source:"analisis-retos.md · reto5-multas-transito.md §9.3"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>
