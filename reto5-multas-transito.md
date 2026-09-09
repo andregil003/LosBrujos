@@ -292,7 +292,388 @@ El Decreto 33-2024 crea una **ventana perfecta** para un prototipo:
 
 ---
 
-## 7. Fuentes Consultadas
+## 7. Benchmarking Global — Soluciones de Otros Países
+
+### 7.1 🇮🇳 India — eChallan / Parivahan (nacional unificado)
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | eChallan — plataforma nacional integrada al eGovernance framework |
+| **Backend** | NIC (National Informatics Centre) |
+| **API pública** | **Challan Pro API** (nsdl.co.in/challan-pro-api) — 10M+ solicitudes mensuales, pago 100% en línea, sync en tiempo real con NSDL |
+| **Evidencia** | Payload de evidencia: GPS + timestamp + estructura jerárquica + ID único + payload de pago |
+| **Cobertura** | 33 estados + 7 UTs, 150+ eChallan Centers |
+| **Mobile** | Mobile Parivahan app (iOS/Android) — consulta en línea de infracciones |
+| **Lecciones para GT** | Unificación nacional es posible con voluntad política; API pública facilita integración de terceros; evidencia geolocalizada reduce "multas fantasmas" |
+
+### 7.2 🇪🇸 España — DGT (Dirección General de Tráfico)
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | DEV (Dirección Electrónica Vial) — notificación electrónica desde noviembre 2022 |
+| **Cobertura** | Obligatorio para personas jurídicas; voluntario para personas físicas |
+| **Canales** | Postal por defecto (empresas + individuos sin DEV); **no se notifica por email** (riesgo de phishing) |
+| **Challenge** | 30% de vías sin cobertura 4G/5G; penetración digital heterogénea; fraude con correos/phishing |
+| **App** | DGT online — consultar puntos, infracciones, pagos |
+| **Lecciones para GT** | No depender exclusivamente de email (fraude phishing); cobertura postal como fallback; alternativas offline para zonas sin internet |
+
+### 7.3 🇨🇴 Colombia — SIMIT (Sistema Integrado de Información sobre Multas y Sanciones por Infracciones de Tránsito)
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | Consulta nacional unificada de multas de tránsito |
+| **Web** | [consulta.simit.org.co](https://consulta.simit.org.co) |
+| **API** | API pública REST con integración OAuth2 para instituciones (documentación en GitHub: `sistema-simit/api-simit`) |
+| **Cobertura** | 1,103 municipalidades, 32 departamentos |
+| **Sedes** | 832 sedes del SIMIT en todo el país |
+| **Pago** | En línea, PSE, corresponsales bancarios, ventanilla |
+| **Lecciones para GT** | Modelo de gobierno compartido (nacional + municipal); API abierta para integración; sedes físicas complementan lo digital |
+
+### 7.4 🇲🇽 México — CDMX Estrados Electrónicos
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | [infracciones.cdmx.gob.mx](https://infracciones.cdmx.gob.mx) |
+| **Notificación** | Correo electrónico + SMS (artículo 123 prevé medios electrónicos) |
+| **Servicios** | Consulta de infracciones, pago en línea, línea de captura para pago bancario |
+| **App no oficial** | "Consulta de Multas en CDMX" (terceros) — interfaz móvil para consulta por placa |
+| **Lecciones para GT** | Notificación digital funciona con fallback SMS; portal web responsive es viable; apps de terceros pueden complementar |
+
+### 7.5 🇰🇪 Kenia — Nairobi Digital Traffic Management
+
+| Aspecto | Detalle |
+|---|---|
+| **Cobertura** | 600,000+ vehículos registrados, 22,737+ motociclistas, 19,717+ taxistas |
+| **Dispositivos** | 1,500 tabletas para 1,250 oficiales de tráfico |
+| **App móvil** | Gestión de aparcamiento + consulta y pago de multas |
+| **Ahorro** | 17 millones de Birr/año en papel y tiempo |
+| **Lecciones para GT** | Tabletización de inspectores; app para oficiales en campo; ahorro operativo tangible |
+
+### 7.6 🇰🇷 Corea del Sur — TOPIS (Seoul Transport Operation & Information Service)
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | Integración smart city con servicios de movilidad |
+| **Servicios** | Datos abiertos de movilidad, servicios "sin barreras", análisis de tráfico en tiempo real |
+| **Lecciones para GT** | Datos abiertos como base; integración con ecosistema smart city más amplio |
+
+### 7.7 🇬🇧 Reino Unido — D-TROs (Digital Traffic Regulation Orders)
+
+| Aspecto | Detalle |
+|---|---|
+| **Sistema** | Reforma digital de órdenes de tráfico por sedes locales |
+| **Estándar** | Open Standards para D-TROs (abierto, interoperable) |
+| **Transición** | En curso — Las sedes locales migran de papel a digital |
+| **Lecciones para GT** | Migración gradual es viable; estándares abiertos permiten interoperabilidad |
+
+### 7.8 🇪🇹 Etiopía — Sistema Digital (Oct 2025)
+
+| Aspecto | Detalle |
+|---|---|
+| **Cambio** | De tablets y libretas manuales a sistema digital completo |
+| **Cobertura** | Addis Ababa + ciudades principales |
+| **Lecciones para GT** | Transición desde base muy baja es factible; no se necesita infraestructura perfecta para empezar |
+
+### 7.9 Tabla Comparativa de Benchmarking
+
+| País | Sistema | Unificado | API Pública | Mobile | Notificación Digital | Prescripción |
+|---|---|---|---|---|---|---|
+| **Guatemala** | SAT + PNC + EMETRA + Muni | ❌ Fragmentado | ❌ | ❌ Oficial | ⚠️ Ley exige | 120 días |
+| **India** | eChallan | ✅ Nacional | ✅ (10M+/mes) | ✅ | ✅ | Variable |
+| **España** | DGT/DEV | ✅ Nacional | Parcial | ✅ | ✅ Postal+Electrónico | Variable |
+| **Colombia** | SIMIT | ✅ Nacional | ✅ REST | ✅ | ✅ | Variable |
+| **CDMX** | Estrados Electrónicos | Municipal | ❌ | ✅ 3ra parte | ✅ Email+SMS | Variable |
+| **Kenia** | Nairobi Digital | Municipal | ❌ | ✅ | ✅ | Variable |
+| **Corea** | TOPIS | Smart City | ✅ Datos abiertos | ✅ | ✅ | Variable |
+| **UK** | D-TROs | Sedes locales | ✅ Estándares abiertos | ⚠️ En transición | ✅ | Variable |
+
+---
+
+## 8. Escala y Contexto — Guatemala en Números
+
+### 8.1 Parque vehicular
+
+| Dato | Fuente | Año |
+|---|---|---|
+| **6,300,000+ vehículos** registrados | Prensa Libre | 2025 |
+| **6,700,000+ vehículos** estimados | Proyección | 2026 |
+| **53% motocicletas** | SAT — Parque vehicular | 2025 |
+| **59.56% no han pagado impuesto de circulación** | Prensa Libre | 2025 |
+| **38% aumento en multas** (2026 vs 2025) | Prensa Libre | 2026 |
+
+### 8.2 Brecha digital — El desafío real
+
+| Dato | Fuente |
+|---|---|
+| **~39% brecha digital** nacional | Prensa Libre |
+| **<22% acceso internet** en comunidades rurales | Prensa Libre |
+| **70%+ zonas sin cobertura 4G/5G** fuera de la capital | Estimación basada en EE.UU./Canadá rural |
+| **45% brecha de conocimiento digital** mujeres vs hombres | PNUD 2025 |
+
+> ⚠️ **Implicación para el prototipo:** Cualquier solución digital DEBE funcionar offline-first y tener alternativas no-digitales (SMS, centros de atención). No se puede asumir conectividad permanente.
+
+### 8.3 Flujos de Usuario por Tipo de Vehículo
+
+#### 🏍️ Motocicleta (53% de las multas — el usuario más vulnerable)
+
+```
+FLUJO 1: Consulta simple
+Usuario: motociclista urbano, ingresos bajos-medios
+  1. Recibe boleta física del agente (con photo de evidencia?)
+  2. Abre la app en celular (datos compartidos o WiFi)
+  3. Escanea código QR de la boleta O ingresa # de remisión
+  4. Ve: infracción en lenguaje claro + monto + plazo impugnación
+  5. Decide: pagar o impugnar
+  6. Si paga: genera línea de captura → paga en Banrural/corresponsal
+  7. Si impugnar: ve checklist de documentos + plazo 15 días
+
+FLUJO 2: Multa fantasma (sin notificación previa)
+Usuario: motociclista se entera al querer renovar licencia
+  1. App consulta SAT + EMETRA + PNC con placa
+  2. Detecta multas pendientes sin fecha de notificación
+  3. Alerta: "Esta multa NO te fue notificada correctamente"
+  4. Explica: "Tiene X días sin notificar. Si pasan 120 días, prescribirá"
+  5. Opciones: esperar prescripción O solicitar notificación formal
+
+FLUJO 3: Descuento activo
+Usuario: motociclista que no sabe que hay descuento
+  1. App detecta multa elegible para descuento
+  2. Alerta: "Hay un 50% de descuento disponible hasta [fecha]"
+  3. Guía: proceso para obtener el descuento (curso vial, condonación)
+  4. Ahorro: Q300 → Q150 (significativo para motociclistas de bajos ingresos)
+```
+
+#### 🚗 Auto particular
+
+```
+FLUJO: Consulta + pago rápido
+Usuario: propietario de auto, ingresos medios-altos
+  1. Recibe notificación de tránsito o EMETRA
+  2. Consulta en app para verificar estado
+  3. Opción rápida: pago directo con tarjeta (si implementado)
+  4. Opción informada: revisar si la infracción es válida antes de pagar
+  5. Si múltiples multas: Dashboard que muestra todas las pendientes
+```
+
+#### 🚌 Transporte público (buses/colectivos)
+
+```
+FLUJO: Flota + compliance
+Usuario: conductor o propietario de transporte público
+  1. Dashboard de flota: todas las multas de los vehículos
+  2. Alertas de vencimiento de documentos (licencia, seguro, revisión)
+  3. Descuentos por volumen o convocatorias especiales
+  4. Compliance: verificar que los conductores estén solventes
+```
+
+#### 🚛 Comercial (camiones, carga)
+
+```
+FLUJO: Compliance + operaciones
+Usuario: empresa de transporte de carga
+  1. Dashboard de flota con múltiples vehículos
+  2. Alertas de restricciones por peso/dimensiones
+  3. Gestión centralizada de pagos
+  4. Reportes para auditorías internas
+```
+
+---
+
+## 9. Alineación ODS y Marco Institucional
+
+### 9.1 Objetivos de Desarrollo Sostenible
+
+| ODS | Nombre | Conexión con el Reto 05 |
+|---|---|---|
+| **ODS 16.6** | Desarrollar instituciones eficaces, transparentes y que rindan cuentas | Transparentar el proceso de multas; ciudadanos pueden ver y entender qué les cobran |
+| **ODS 10.2** | Empoderar y promover la integración social de todas las personas, independientemente de su condición | Acceso equitativo a información de multas; personas sin NIT o sin acceso digital pueden consultar |
+| **ODS 8.5** | Lograr el empleo pleno y productivo y el trabajo decente para todas las personas | Reducir la carga económica de multas injustas sobre trabajadores (especialmente motociclistas que usan su vehículo para trabajar) |
+| **ODS 9.C** | Aumentar el acceso a las TIC y proporcionar acceso a Internet en los países menos adelantados | Herramienta digital que funcione con conectividad limitada (PWA offline-first) |
+
+### 9.2 Articulación con Iniciativas Parlamentarias
+
+#### Iniciativa 6626 — Ley de Interoperabilidad del Gobierno Digital
+- **Estado:** Siendo analizada en el Congreso de Guatemala (Foro Presidencial para la Transformación Digital, dip. Jorge Mario Villagrán)
+- **Propósito:** Conectar todas las instituciones públicas, eliminar procedimientos duplicados
+- **Conexión con Reto 05:** El prototipo sería un **ejemplo vivo** de interoperabilidad — consultar multas de PNC + EMETRA + municipalidades en un solo lugar
+- **Argumento para jurado:** "Nuestro prototipo demuestra que la interoperabilidad propuesta por la Iniciativa 6626 es viable y necesaria"
+
+#### Iniciativa 6696 — Gratuidad de Antecedentes
+- **Conexión:** Si los antecedentes de tránsito son gratuitos, el acceso a información de multas también debería serlo
+- **Argumento:** "Nuestro prototipo democratiza el acceso a información que el Estado ya debería proveer de forma gratuita"
+
+### 9.3 Marco Legal de Soporte
+
+| Normativa | Relevancia |
+|---|---|
+| **Decreto 33-2024** | Reformas a Ley de Tránsito — base legal principal |
+| **Ley 19-2003 (Ley de Idiomas Nacionales)** Art. 9 | Derecho a recibir información del Estado en idiomas mayas (K'iche', Q'eqchi', Garífuna) |
+| **Decreto 119-96 (Ley Contencioso Administrativo)** | Recursos de revocatoria y reposición |
+| **Iniciativa 6626** | Marco de interoperabilidad digital |
+
+> 💡 **Oportunidad de diferenciación:** Ofrecer la interfaz en **K'iche', Q'eqchi' y Garífuna** sería un diferenciador único para HACKCREA — alineado con el Decreto 19-2003 y con la misión de ONU de inclusión.
+
+---
+
+## 10. Arquitectura Técnica
+
+### 10.1 APIs Disponibles
+
+| API | Estado | Endpoint | Notas |
+|---|---|---|---|
+| **Portal SAT Multas** | ⚠️ Sin documentación pública | portal.sat.gob.gt/portal/multas | Formulario HTML, no API REST expuesta |
+| **PNC Tránsito** | ⚠️ Sin documentación pública | transito.gob.gt/remisiones-y-multas | Consulta por placa + NIT |
+| **EMETRA** | ⚠️ Sin documentación pública | muniguate.com/emetra | Solo multas CDMX |
+| **API SAT alternativa** | Comunidad | apisat.com/api/query | APIs de prueba sin documentación oficial |
+
+> ⚠️ **Realidad:** Guatemala NO tiene APIs públicas documentadas. Para el hackathon, la opción más viable es **web scraping** de los portales existentes o **simulación de datos** (mock API) para demostrar el concepto.
+
+### 10.2 Stack Técnico Recomendado 2026
+
+```
+┌─────────────────────────────────────────┐
+│           FRONTEND (PWA)                │
+│  Vite + TypeScript + Tailwind CSS       │
+│  Service Worker (offline-first)         │
+│  OCR: Tesseract.js (en navegador)       │
+│  PDF: jsPDF / pdf-lib (generación)      │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│           BACKEND (API)                 │
+│  Cloudflare Workers / Pages Functions   │
+│  SQLite (D1) o JSON (datos de prueba)   │
+│  Web scraping → BeautifulSoup/Puppeteer │
+│  LLM: Llama 3 / Mistral (traducción)   │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│         SERVICIOS                       │
+│  Cloudflare Pages (hosting)             │
+│  Cloudflare D1 (base de datos)          │
+│  Cloudflare Workers (API)               │
+│  ntfy.sh (notificaciones push)          │
+│  GitHub (control de versiones)          │
+└─────────────────────────────────────────┘
+```
+
+### 10.3 Funcionalidades Clave del Prototipo
+
+| Funcionalidad | Descripción | Complejidad |
+|---|---|---|
+| **Consulta de multas** | Ingresar placa → ver multas de todas las entidades | ⭐⭐ (requiere scraping o mock) |
+| **Traductor de jerga legal** | Art. 90 → "No respetaste el semáforo en rojo" | ⭐⭐⭐ (LLM o reglas) |
+| **OCR de boletas** | Fotografiar boleta → extraer datos automáticamente | ⭐⭐ (Tesseract.js) |
+| **Calculadora de prescripción** | Ingresar fecha de infracción → ¿prescribe? | ⭐ (lógica simple) |
+| **Generador de escrito de impugnación** | Generar borrador del recurso (PDF) | ⭐⭐ (plantillas) |
+| **Alertas de plazos** | Notificación push cuando se acerca el vencimiento | ⭐⭐ (Service Worker) |
+| **Dashboard de flota** | Ver todas las multas de múltiples vehículos | ⭐⭐⭐ (auth + datos) |
+| **Multilingual** | Interfaz en español + K'iche' + Q'eqchi' | ⭐⭐ (i18n) |
+
+### 10.4 Datos de Prueba Iniciales
+
+Para el hackathon, necesitamos datos simulados realistas:
+
+```json
+{
+  "remision": "2026-001234",
+  "fecha": "2026-03-15",
+  "hora": "14:30",
+  "lugar": "13 Calle 5-42, Zona 1, Ciudad de Guatemala",
+  "entidad": "EMETRA",
+  "vehiculo": {
+    "placa": "P123ABC",
+    "marca": "Honda",
+    "modelo": "Wave 110",
+    "año": 2020
+  },
+  "infraccion": {
+    "codigo": "Art. 90 Reglamento",
+    "descripcion": "No respetar señal de alto",
+    "monto": 400,
+    "descuento_curso_vial": 300
+  },
+  "notificacion": {
+    "fecha": null,
+    "metodo": null,
+    "dias_desde_infraccion": 180,
+    "prescribida": true
+  }
+}
+```
+
+---
+
+## 11. Monetización y Sostenibilidad
+
+### 11.1 Modelos GovTech Aplicables
+
+| Modelo | Descripción | Aplicabilidad |
+|---|---|---|
+| **Freemium** | Consulta básica gratis; funciones avanzadas de pago | ⭐⭐⭐ Alto — consulta simple es el hook |
+| **B2G (Business to Government)** | El gobierno paga por la plataforma como servicio | ⭐⭐⭐ Alto — más viable a largo plazo |
+| **B2B (Transportistas)** | Empresas de transporte pagan por dashboard de flota | ⭐⭐ Medio — mercado nicho pero rentable |
+| **Publicidad contextual** | Seguros de auto, cursos vial, servicios legales | ⭐⭐ Medio — requiere tráfico significativo |
+| **Data anonymized** | Datos agregados de infracciones para investigación | ⭐ Bajo — cuestiones éticas |
+
+### 11.2 Benchmarks de Conversión
+
+| Métrica | Industria (MWM) | GovTech estimado |
+|---|---|---|
+| Conversión freemium → pago | 3-8% | 1-3% (usuarios son más reacios a pagar) |
+| Median ARPU | $0.14/30 días | Variable — B2G más rentable |
+| Retención D1 | ~25% apps finanzas | ~15-20% (uso esporádico) |
+| Retención D30 | ~10% | ~5-8% |
+
+### 11.3 Ruta de Sostenibilidad
+
+```
+FASE 1 (Hackathon - 0-3 meses):
+  → Producto gratuito, datos de prueba
+  → Validación con usuarios reales
+  → Sin monetización
+
+FASE 2 (Post-hackathon - 3-12 meses):
+  → Freemium: consulta básica gratis, funciones premium
+  → B2G: propuesta a MinGob / EMETRA / SAT
+  → B2B: empresas de transporte
+
+FASE 3 (Escalamiento - 12+ meses):
+  → Contrato gubernamental como SaaS
+  → Expansión regional (El Salvador, Honduras — sistemas similares)
+  → Datos abiertos para investigación académica
+```
+
+---
+
+## 12. Sugerencias de Jurado y Funcionalidades Extra
+
+### 12.1 Ideas del Gemini (Jurado)
+
+| Funcionalidad | Descripción | Prioridad |
+|---|---|---|
+| **Generador de escrito de impugnación** | Generar PDF con el recurso legal prellenado | ⭐⭐⭐ Alta |
+| **Simulador de prescripción** | Ingresar fecha → saber si la multa prescribe | ⭐⭐⭐ Alta |
+| **Validador de notificación** | Verificar si la notificación cumple Decreto 33-2024 | ⭐⭐⭐ Alta |
+| **Calculadora de descuentos** | ¿Cuánto ahorrarías con curso vial? | ⭐⭐ Media |
+| **Mapa de entidades** | ¿Dónde impugnar según tu zona? | ⭐⭐ Media |
+| **Notificación de vencimiento** | Push cuando queda 1 día para impugnar | ⭐⭐ Media |
+
+### 12.2 Diferenciadores vs Soluciones Existentes
+
+| Solución actual | Nuestro prototipo |
+|---|---|
+| Consulta por placa + NIT | Consulta por placa + foto de boleta (OCR) |
+| Solo muestra monto | Explica EN LUGAR CLARO qué pasó |
+| Sin información de impugnación | Guía paso a paso + genera borrador |
+| No dice si hay descuentos | Alerta de descuentos activos |
+| Sin plazos | Calculadora de prescripción + alertas |
+| Solo español | Multilingual (español + idiomas mayas) |
+| Solo web | PWA offline-first |
+
+---
+
+## 13. Fuentes Consultadas
 
 | Fuente | URL | Tipo |
 |---|---|---|
@@ -320,15 +701,48 @@ El Decreto 33-2024 crea una **ventana perfecta** para un prototipo:
 | App Multas Guate | play.google.com/store/apps/details?id=multas.guate | App |
 | Solvencia en línea | transito.gob.gt/tramita-tu-solvencia-de-multas-en-linea | Portal oficial |
 | Proceso pago circulación | guatemala.cuentanos.org/articles/12338688022813 | Guía ciudadana |
+| **Benchmarking Global** | | |
+| India eChallan API | nsdl.coistand/challan-pro-api | API benchmark |
+| India eChallan | wikipedia.org/wiki/Echallan | Benchmark |
+| España DGT/DEV | digital.gob.es/repositorio-politicas-saijpro/uploads/c5f22c3c-f297-4884-8d16-8d0a6f2313a3/20240715-Digital_Gov_2024_Spain_neutral.pdf | Benchmark |
+| Colombia SIMIT | consulta.simit.org.co | Benchmark |
+| Colombia API SIMIT | github.com/sistema-simit/api-simit | API benchmark |
+| México CDMX Estrados | infracciones.cdmx.gob.mx | Benchmark |
+| Kenia Nairobi Digital | allafrica.com/stories/read/45190950 | Benchmark |
+| Corea TOPIS | pdf.sciencedirectassets.com | Benchmark |
+| UK D-TROs | digiservicelondon.com/research-and-insights/d-tro-research-and-insights/digital-traffic-regulation-orders | Benchmark |
+| Etiopía Digital | ethiopiatoday.gov.et/…/digital-traffic-management-system | Benchmark |
+| **Escala y Contexto** | | |
+| Guatemala 6.3M vehículos | prensalibre.com/guatemala/ministerio-publico/.../5956-vehiculos-no-han-pagado-el-impuesto-de-circulacion | Dato clave |
+| Guatemala 6.7M+ vehículos 2026 | transito.gob.gt/wp-content/uploads/2025/11/Boletin-Prensa-Nov-2025.pdf | Dato clave |
+| Guatemala 53% motos | portal.sat.gob.gt/portal/parque-vehicular | Dato clave |
+| Guatemala 38% aumento multas | prensalibre.com/guatemala/pnc/.../por-que-aumentaron-las-multas-de-transito-y-cuantas-ha-expedido-la-policia-de-civil-en-2026 | Dato clave |
+| Guatemala brecha digital | prensalibre.com/guatemala/pnc/.../5599-solo-el-44-de-guatemaltecos-tiene-acceso-a-internet | Dato clave |
+| Guatemala breaches rurales | piie.gob.gt/wp-content/uploads/2024/02/Informe-de-Progreso-2023.pdf | Dato clave |
+| **Institucional** | | |
+| Iniciativa 6626 Congreso | congreso.gob.gt/noticias_congreso/15714/2026/1 | Marco institucional |
+| Foro Transformación Digital | foroportransformaciondigital.gob.gt/foros/11 | Marco institucional |
+| Iniciativa 6696 Gratuidad | congreso.gob.gt/noticias_congreso/15536/2026/1 | Marco institucional |
+| Iniciativa 6590 Antecedentes | congreso.gob.gt/noticias_congreso/15262/2025/1 | Marco institucional |
+| **Gobernanza Digital** | | |
+| OECD Digital Gov LATAM | oecd.org/es/publications/2023/09/digital-government-review-of-latin-america-and-the-caribbean_75a4be05/ | Benchmark |
+| OECD Digital Gov 2026 | digitalpublicgoods.org/dpga/oecd-digital-government-studies | Benchmark |
+| **Tendencias Globales** | | |
+| Deloitte GovTech 2026 | shs.cair.i/2025/02/04/a-comprehensive-analysis-of-the-government-technology-govtech-market-2025-2026/ | Benchmark |
+| The National Law Review | natlawreview.com/article/government-technology-gov-tech-market-trends | Benchmark |
+| MWM Revenue Benchmarks | mwm.app/blog/what-is-a-good-30-day-retention-rate-for-an-app | Benchmark |
+| Data.ai Latin America | data.ai/en/insights/market-data/top-downloads-in-latin-america/ | Benchmark |
 
 ---
 
-## 8. Resumen Ejecutivo para el Equipo
+## 14. Resumen Ejecutivo para el Equipo
 
-**El problema central:** En Guatemala, llegar una multa de tránsito es como recibir una carta en idioma alienígena. El ciudadano no entiende qué le cobran, no sabe que puede impugnar, pierde los plazos, y termina pagando de más o con la licencia retenida.
+**El problema central:** En Guatemala, llegar una multa de tránsito es como recibir una carta en idioma alienígena. El ciudadano no entiende qué le cobran, no sabe que puede impugnar, pierde los plazos, y termina pagando de más o con la licencia retenida. Con 6.7M+ vehículos, 53% motos, 38% aumento de multas, y una brecha digital del 39%, el problema es masivo y urgente.
 
-**La oportunidad:** El Decreto 33-2024 (dic 2024) exige notificación + explicación + plazos claros, pero **no existe una herramienta digital** que ayude al ciudadano a entender y actuar sobre su multa.
+**La oportunidad:** El Decreto 33-2024 (dic 2024) exige notificación + explicación + plazos claros, pero **no existe una herramienta digital** que ayude al ciudadano a entender y actuar sobre su multa. Países como India (eChallan), Colombia (SIMIT) y España (DGT/DEV) ya resolvieron problemas similares con sistemas unificados — Guatemala puede aprender de ellos.
 
-**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. Funciona en celular (donde más se necesita), consulta el estado real de la multa, y guía al ciudadano en su derecho de defensa.
+**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. PWA offline-first (para zonas sin internet), OCR para escanear boletas, generador de impugnaciones, calculadora de prescripción, y alertas de plazos. **Diferenciador único:** interfaz en K'iche', Q'eqchi' y Garífuna (alineado con Ley 19-2003).
 
-**El impacto potencial:** Millones de guatemaltecos con vehículos, 53% de multas a motociclistas (población vulnerable), sistemas fragmentados que nadie entiende.
+**Alineación ODS:** ODS 16.6 (instituciones transparentes), ODS 10.2 (inclusión social), ODS 8.5 (trabajo decente), ODS 9.C (acceso a TIC).
+
+**El impacto potencial:** 6.7M+ propietarios de vehículos, 53% motociclistas (población vulnerable), sistemas fragmentados que nadie entiende. Articulación con Iniciativa 6626 (Interoperabilidad Digital) demuestra que el prototipo es un ejemplo vivo de lo que Guatemala necesita.
