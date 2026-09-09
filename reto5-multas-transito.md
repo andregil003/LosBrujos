@@ -1075,22 +1075,314 @@ FASE 3 (Escalamiento - 12+ meses):
 
 ---
 
-## 22. Resumen Ejecutivo para el Equipo (Actualizado)
+## 22. Benchmarking Internacional Profundo (Segunda Ronda)
+
+### 22.1 India — eChallan (el más grande del mundo)
+
+| Métrica | Dato |
+|---|---|
+| **Challans totales emitidos** | 424.9 millones (42.49 crore) |
+| **Challans resueltos** | 171.9 millones |
+| **Challans pendientes** | 253 millones |
+| **Monto total** | ₹67,583 crore (~US$8,000M) |
+| **Recaudado** | ₹24,900 crore (~US$3,000M) |
+| **Estados implementados** | 34/36 |
+| **Enviados a corte virtual** | 132 millones |
+
+**Lecciones para Guatemala:**
+1. **Sistema de quejas (Grievance) con 20+ categorías** — el ciudadano puede reportar: "multa duplicada", "placa incorrecta", "evidencia no disponible", "pagué pero sigue pendiente". Esto resuelve las "multas fantasmas" que documentamos en Guatemala.
+2. **Corte virtual integrada** — 132M challans disputados van a corte virtual, no presencial. Guatemala no tiene esto, pero nuestro generador de impugnaciones es el primer paso.
+3. **Notificación por SMS + Speed Post** — si no llega el SMS, llega carta física. Guatemala necesita ambos canales.
+4. **Geo-tagging del lugar de la infracción** — cada challan tiene coordenadas GPS. Esto elimina disputas de "no estaba ahí".
+
+### 22.2 España — DGT (el más ciudadano-céntrico)
+
+| Aspecto | Detalle |
+|---|---|
+| **miDGT app** | Consulta y pago de multas desde el móvil |
+| **Reducción 50%** | Pago voluntario dentro de 20 días |
+| **Alegaciones online** | Presentación de recurso 100% digital con Cl@ve |
+| **MarIA (asistente IA)** | Lanzada junio 2025; 100K usuarios en 2 meses |
+| **Plazo de alegación** | 1 mes desde notificación de resolución |
+| **Recargo 20%** | Si no pagas tras resolución, pasa a Agencia Tributaria |
+
+**Lecciones para Guatemala:**
+1. **El 50% de descuento es el gancho** — España lo usa para incentivar pago temprano. Guatemala tiene el curso vial 60% de MuniGuate — nuestro prototipo debe hacerlo visible.
+2. **MarIA demuestra que un asistente IA funciona** — 100K usuarios en 2 meses con valoración positiva. Nuestro "explicador de multas" puede ser el MarIA guatemalteco.
+3. **Alegación online = derecho real** — España permite impugnar sin ir presencial. Nuestro generador de borradores es el equivalente ciudadano.
+
+### 22.3 Colombia — SIMIT (el más parecido a Guatemala)
+
+| Aspecto | Detalle |
+|---|---|
+| **Prescripción** | 3 años desde el hecho (vs 120 días Guatemala) |
+| **Estado de comparendos** | 66% pagados, 30% pendientes |
+| **Fraudes digitales** | Correos falsos + pasarelas de pago fraudulentas (2025) |
+| **Comparendos manuales** | 100% manuales en algunos municipios (II trim 2025) |
+| **Motos** | 50-88% de comparendos son de motos |
+| **Cobro coactivo** | Estatuto Tributario Art. 823+ |
+
+**Lecciones para Guatemala:**
+1. **El fraude digital es un problema REAL** — Manizales emitió alerta oficial por correos falsos de SIMIT. Guatemala tiene el mismo problema con SMS falsos de PMT/EMETRA. Nuestro "detector de estafas" es un diferenciador crítico.
+2. **Los comparendos manuales dominan** — incluso en Colombia, 100% manual en algunos municipios. Confirma el punto de Gemini: el OCR de manuscritos NO es viable como flujo primario.
+3. **Motos = mayoría de comparendos** — 50-88%. Igual que Guatemala (53% motos). Nuestro prototipo debe priorizar el caso de uso motociclista.
+
+### 22.4 México CDMX — Estrados Electrónicos (el más abierto)
+
+| Aspecto | Detalle |
+|---|---|
+| **Estrados electrónicos** | Notificación por email + SMS |
+| **Datos abiertos** | CSV público de infracciones (actualizado nov 2025) |
+| **Impugnación** | Juicio contencioso administrativo ante tribunal |
+| **Multas por UMA** | 5-40 UMAs según infracción (actualizado feb 2026) |
+| **Fotocívicas** | Sistema de puntos alternativo a multas económicas |
+
+**Lecciones para Guatemala:**
+1. **Datos abiertos de infracciones** — CDMX publica CSV de TODAS las infracciones. Guatemala no tiene nada similar. Nuestro mock data puede inspirarse en este formato.
+2. **Fotocívicas** — CDMX ofrece cursos en lugar de multas. Guatemala tiene el curso vial 60% — mismo concepto, menos conocido.
+
+### 22.5 Uruguay — el líder LATAM en gobierno digital
+
+| Aspecto | Detalle |
+|---|---|
+| **Índice ONU Gobierno Digital** | #1 LATAM, #35 mundial |
+| **Trámites 100% online** | 100% de formalidades |
+| **Conectividad** | 90% personas, 91% hogares |
+| **Fiscalización automatizada** | ANPR + LiDAR (VITRONIC), 41 puntos de control |
+| **SINATRÁN** | Sistema Nacional de Información de Tránsito (desde 2011) |
+
+**Lecciones para Guatemala:**
+1. **La brecha digital NO es excusa** — Uruguay pasó de 0 a 90% de conectividad con política pública. Guatemala (39% brecha) puede hacer lo mismo con el enfoque correcto.
+2. **SINATRÁN** — Uruguay tiene datos de accidentes desde 2011. Guatemala apenas tiene datos parciales de PNC. Nuestro prototipo puede mostrar el valor de datos abiertos de tránsito.
+
+### 22.6 Chile — Licencia Digital + Multas Online
+
+| Aspecto | Detalle |
+|---|---|
+| **Licencia digital** | QR único encriptado, vinculada a Clave Única (2025) |
+| **Pago de multas online** | Ley 21.549 — sitio electrónico habilitado |
+| **Descuento 50%** | Pago dentro de 20 días hábiles |
+| **Impugnación** | Recurso de reposición, resolución en 20 días hábiles |
+| **Registro de infractores** | Registro de Pasajeros Infractores (transporte público) |
+
+**Lecciones para Guatemala:**
+1. **Licencia digital con QR** — Chile la implementó en 2025. Guatemala podría adoptarla; nuestro prototipo puede mostrar el QR de verificación de multa.
+2. **Descuento por pago temprano** — patrón regional consistente (España 50%, Chile 50%, Guatemala 60% curso vial).
+
+### 22.7 Tabla Comparativa Final
+
+| País | Sistema | Descuento | Impugnación online | Datos abiertos | Notificación |
+|---|---|---|---|---|---|
+| **India** | eChallan | No | Corte virtual | Parcial | SMS + Speed Post |
+| **España** | DGT/miDGT | 50% | ✅ Cl@ve | Parcial | Sede electrónica |
+| **Colombia** | SIMIT | No | Parcial | Parcial | Correo físico |
+| **México CDMX** | Estrados | No | ✅ Tribunal | ✅ CSV | Email + SMS |
+| **Uruguay** | SINATRÁN | No | Parcial | ✅ | Digital |
+| **Chile** | Ley 21.549 | 50% | ✅ Reposición | Parcial | Digital |
+| **Guatemala (hoy)** | Fragmentado | 60% curso (MuniGuate) | ❌ No existe | ❌ No existe | Papel |
+
+**Conclusión:** Guatemala es el ÚNICO país de la muestra sin impugnación online, sin datos abiertos y sin sistema unificado. Nuestro prototipo llena exactamente ese vacío.
+
+---
+
+## 23. Crítica Devil's Advocate (Feedback Gemini) y Respuestas
+
+### 23.1 Riesgo de "Incentivo Perverso" frente a autoridades
+
+**El problema:** Si el producto se percibe como herramienta para "zafarse de las multas", MinGob/Tránsito/PMT cerrarán la puerta a colaboración institucional.
+
+**Ajuste (adoptado):** El enfoque NO es evadir, es **certeza jurídica y cultura vial**. La app debe enfatizar:
+- "Si cometiste la falta, te ayudamos a pagar con el 50-60% de descuento vía curso vial"
+- "Si la boleta es ilegal, te orientamos para defender tu derecho constitucional"
+
+**Implementación en el prototipo:**
+1. El flujo de pago con descuento aparece PRIMERO (antes que la impugnación)
+2. Cada explicación de infracción incluye una cápsula de prevención vial
+3. El lenguaje es neutral: "regulariza" no "evade"
+
+### 23.2 La trampa del OCR en boletas guatemaltecas
+
+**El problema:** tesseract.js funciona bien con documentos limpios, pero en Guatemala un porcentaje masivo de boletas PMT/PNC son **talonarios manuales escritos a mano** — borrosos, arrugados, doblados en la billetera.
+
+**Dato duro (benchmarks OCR 2026):**
+| Motor | Texto impreso | Manuscrito |
+|---|---|---|
+| Tesseract 5 | 96.5% CER | 95.4% WER (inútil) |
+| Google Cloud Vision | 99.0% | ~70% |
+| AWS Textract | ~98% | ~89.5% |
+| GPT-5 (LLM vision) | — | 95% |
+| Especialistas (Pen to Print) | — | 98.2% |
+
+**Mitigación (adoptada):**
+- **Flujo primario:** Selector guiado / Formulario de 3 datos (Número de boleta/remisión + Fecha + Entidad emisora)
+- **OCR = asistente de autocompletado** SOLO para boletas térmicas/electrónicas con código de barras/QR
+- **Demo:** NO basar la demo en OCR de talonario manual
+
+### 23.3 Discrepancia de stack técnico entre documentos
+
+**El problema:** `analisis-retos.md` define Vite + Vanilla TS + JSON local + Cloudflare Pages (cero backend). `reto5-multas-transito.md` añade React + Tailwind + Workers + D1 + KV + ntfy.sh + LLM.
+
+**Veredicto (adoptado):** Mantener **Vite + Vanilla TS + Cloudflare Pages con JSON local y localStorage**. Meter D1, Workers y Web Scraping en 48 horas añade puntos de quiebre innecesarios para una base de datos que en la demo será 100% simulada.
+
+**Stack final recomendado:**
+```
+Frontend: Vite + vanilla TS
+├── JSON local (catálogo + plazos + instituciones)
+├── i18n: es / k'iche' / q'eqchi' / garífuna
+├── Audio 🔊 (grabaciones de frases clave)
+├── Iconografía universal + semáforo de plazos
+├── OCR: tesseract.js (SOLO autocompletado, opcional)
+├── PDF: jsPDF (generación de borradores local)
+└── Deploy: Cloudflare Pages (gratis)
+```
+
+---
+
+## 24. Semáforo de Legalidad — Validación Estructural Decreto 33-2024
+
+### 24.1 El checklist de 6 elementos (Art. 2 Decreto 33-2024)
+
+El Art. 2 exige 6 elementos obligatorios para que una notificación sea válida. Nuestro prototipo los convierte en un **checklist interactivo de 6 preguntas rápidas**:
+
+| # | Pregunta | Si falta → |
+|---|---|---|
+| 1 | ¿Tiene fecha, hora y lugar exacto? | ⚠️ "Notificación viciada de origen" |
+| 2 | ¿Incluye placa, marca y modelo correctos? | ⚠️ "Notificación viciada de origen" |
+| 3 | ¿Adjunta foto/video de prueba? | ⚠️ "Notificación viciada de origen" |
+| 4 | ¿Cita la base normativa y el monto exacto? | ⚠️ "Notificación viciada de origen" |
+| 5 | ¿Explica cómo impugnar y el plazo? | ⚠️ "Notificación viciada de origen" |
+| 6 | ¿Fue notificada antes de los 120 días de la infracción? | ⚠️ "Prescripción (Art. 33-2024)" |
+
+**Si falta cualquiera:** la app marca "Notificación viciada de origen (Art. 2 Decreto 33-2024)" y genera el párrafo correspondiente en el borrador de impugnación.
+
+### 24.2 Mapeo de Jurisdicciones y Rutas Nacionales
+
+**Dato clave del Decreto:** Las PMT municipales NO pueden cobrar en rutas nacionales/departamentales sin convenio con PNC.
+
+**Implementación:** Selector de ubicación (ej. Calzada Roosevelt, Carretera a El Salvador, CA-9 Norte). Si un usuario recibió una multa de una municipalidad en un tramo que es ruta nacional, la app emite **advertencia de competencia territorial**.
+
+| Ruta | Tipo | ¿PMT municipal puede multar? |
+|---|---|---|
+| Calzada Roosevelt (Guatemala) | Nacional | ❌ Sin convenio PNC |
+| Carretera a El Salvador (CA-1) | Centroamericana | ❌ Sin convenio PNC |
+| CA-9 Norte (a Puerto Barrios) | Centroamericana | ❌ Sin convenio PNC |
+| Calles internas de Villa Nueva | Municipal | ✅ |
+| Calles internas de Mixco | Municipal | ✅ |
+| Zona 1-21 Ciudad de Guatemala | Municipal (EMETRA) | ✅ |
+
+---
+
+## 25. Micro-Cápsulas de Prevención Vial (Pitch de Impacto ODS)
+
+### 25.1 Concepto
+
+Cuando la app explica una infracción, incluye un **panel inferior de impacto** que conecta la multa con la seguridad vial:
+
+**Ejemplo:** "Art. 90: Te pasaste un semáforo en rojo"
+> 📊 "En Guatemala se registraron 4,233 accidentes y 1,135 muertes en el primer semestre de 2026. Pasarse un semáforo multiplica por 8 el riesgo de atropello."
+
+**Esto demuestra que la herramienta educa mientras orienta** — el argumento clave para el jurado y para las autoridades.
+
+### 25.2 Catálogo de cápsulas por tipo de infracción
+
+| Infracción | Cápsula de prevención |
+|---|---|
+| Exceso de velocidad | "El 40% de los accidentes en Guatemala son por exceso de velocidad" |
+| Semáforo en rojo | "Pasarse un semáforo multiplica por 8 el riesgo de atropello" |
+| No usar casco (moto) | "Las motos son el 53% del parque vehicular y la mayoría de víctimas" |
+| Conducir bajo influencia | "El alcohol está presente en ~15% de los accidentes fatales" |
+| No respetar señales | "Las señales deterioradas causan ~25% de los accidentes" |
+| Vehículo en mal estado | "La inspección vehicular debilitada contribuye a accidentes" |
+
+---
+
+## 26. Inclusión Lingüística Real (No Traducción Literal)
+
+### 26.1 La trampa de la "traducción literal de Google"
+
+Traducir términos jurídicos como "derecho de defensa", "resolución desfavorable" o "prescripción administrativa" al K'iche' o Q'eqchi' mediante traducción automática produce **texto incomprensible**.
+
+**Mejora (adoptada):** Las frases en K'iche' y Q'eqchi' deben ser **explicaciones conceptuales en audio** con lenguaje cotidiano, grabadas o sintetizadas con enfoque funcional:
+
+| Término legal (español) | Explicación conceptual (K'iche') | Audio |
+|---|---|---|
+| "Derecho de defensa" | "Este papel dice que tienes 15 días para responder si no fuiste tú" | 🔊 |
+| "Resolución desfavorable" | "Si la autoridad dice que sí tienes que pagar, tienes 60 días" | 🔊 |
+| "Prescripción administrativa" | "Si pasaron 120 días y no te avisaron, la multa ya no vale" | 🔊 |
+
+### 26.2 Iconografía y Codificación por Color Universal
+
+Para población no alfabetizada (o que habla un idioma nacional pero no lo lee):
+
+| Color | Significado | Acción |
+|---|---|---|
+| 🟩 **Verde** | En plazo hábil para descuento o defensa | Puedes actuar con calma |
+| 🟨 **Amarillo** | Faltan menos de 3 días para vencer | Actúa YA |
+| 🟥 **Rojo** | Vencido o en riesgo de recargos | Urgente — busca ayuda |
+
+**Audio automático al tocar la tarjeta del semáforo** — para quienes no leen.
+
+---
+
+## 27. Matriz de Preguntas Difíciles del Jurado
+
+| Pregunta trampa | Respuesta preparada |
+|---|---|
+| **"¿No están fomentando que la gente no pague sus multas?"** | "Al contrario: el 59.5% del impuesto de circulación y miles de multas no se pagan hoy por desconfianza y confusión. Mostramos los cursos viales con 50-60% de descuento y facilitamos la regularización. Pero el Decreto 33-2024 exige legalidad en la notificación; defender el debido proceso no es promover la impunidad." |
+| **"¿Cómo se conecta esto a los sistemas del gobierno si SAT y PNC no tienen APIs abiertas?"** | "El valor del prototipo hoy no depende de una API estatal. El ciudadano ya tiene el papel en la mano (la boleta o la notificación). Procesamos los datos que el ciudadano ingresa localmente. El día que MinGob implemente la Iniciativa 6626 de Interoperabilidad, nuestra app se convierte en la interfaz ciudadana de esa API." |
+| **"¿Cómo garantizan que no están dando asesoría legal ilegal?"** | "Cumpliendo estrictamente el constraint del reto: mostramos un disclaimer visible permanente, no emitimos dictámenes y el PDF generado es una plantilla estandarizada de derecho de petición ciudadana, dejando claro que no sustituye a un profesional del derecho." |
+| **"¿Por qué no usan OCR para todo?"** | "Los benchmarks 2026 muestran que el OCR de manuscritos tiene 60-85% de precisión — inaceptable para datos legales. Por eso el flujo primario es un formulario guiado de 3 datos, y el OCR es solo autocompletado para boletas térmicas/electrónicas." |
+| **"¿Cómo escalan a todo el país?"** | "El prototipo es offline-first y funciona sin backend. El día que exista una API estatal (Iniciativa 6626), la app se conecta. Mientras tanto, el catálogo JSON cubre las 15 infracciones más comunes de motos y autos." |
+| **"¿Qué pasa con la protección de datos?"** | "Todo el procesamiento es local (Ley 89-2005). No subimos datos personales a ningún servidor. El OCR corre en el navegador del usuario." |
+
+---
+
+## 28. Roadmap de Implementación — 48 Horas del Hackathon
+
+### Horas 0–12 (Data & Contrato UI)
+- Estructurar el catálogo JSON en español, K'iche' y Q'eqchi' con las **15 infracciones más comunes** (motos y autos particulares), sus montos y artículos
+- Crear 3-4 mockups de boletas (PNG) para demo
+- Definir el checklist de 6 elementos del Semáforo de Legalidad
+
+### Horas 12–28 (Frontend Core)
+- Flujo de 3 pantallas en Vite:
+  1. **Ingreso de datos de la boleta** (formulario guiado de 3 datos)
+  2. **Semáforo explicativo** con audios 🔊
+  3. **Opciones de acción** (Pagar con descuento vial vs. Descargar borrador de impugnación)
+- Implementar el checklist de 6 elementos
+
+### Horas 28–38 (Features Diferenciadores)
+- PWA offline manifest
+- Generación de PDF local con jsPDF (borrador de impugnación)
+- Mapeo de jurisdicciones (rutas nacionales vs municipales)
+- Cápsulas de prevención vial
+
+### Horas 38–48 (Polish de Pitch & Deploy)
+- Despliegue en Cloudflare Pages
+- Pruebas de responsividad móvil
+- Ensayar la demo en 3 minutos con un caso real de motociclista multado
+- Preparar respuestas a la matriz de preguntas difíciles
+
+---
+
+## 29. Resumen Ejecutivo para el Equipo (Actualizado)
 
 **El problema central:** En Guatemala, llegar una multa de tránsito es como recibir una carta en idioma alienígena. El ciudadano no entiende qué le cobran, no sabe que puede impugnar, pierde los plazos, y termina pagando de más o con la licencia retenida. Con 6.7M+ vehículos, 53% motos, 38% aumento de multas, y una brecha digital del 39%, el problema es masivo y urgente.
 
-**La oportunidad:** El Decreto 33-2024 (dic 2024) exige notificación + explicación + plazos claros, pero **no existe una herramienta digital** que ayude al ciudadano a entender y actuar sobre su multa. Países como India (eChallan), Colombia (SIMIT) y España (DGT/DEV) ya resolvieron problemas similares con sistemas unificados — Guatemala puede aprender de ellos.
+**La oportunidad:** El Decreto 33-2024 (dic 2024) exige notificación + explicación + plazos claros, pero **no existe una herramienta digital** que ayude al ciudadano a entender y actuar sobre su multa. Países como India (eChallan), España (DGT), Colombia (SIMIT), México (CDMX), Uruguay y Chile ya resolvieron problemas similares — Guatemala es el único de la muestra sin impugnación online, sin datos abiertos y sin sistema unificado.
 
 **Competencia local:** No existe app dedicada de multas en Guatemala. Las existentes (MuniGuate 2.0: ⭐2.8, Multas Guate: ⭐2.1) tienen calificaciones bajas por bugs, falta de explicación, y sin idiomas indígenas. Hay espacio claro para innovar.
 
-**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. PWA offline-first (para zonas sin internet), OCR para escanear boletas, generador de impugnaciones, calculadora de prescripción, y alertas de plazos. **Diferenciador único:** interfaz en K'iche', Q'eqchi' y Garífuna (alineado con Ley 19-2003).
+**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. **Flujo primario: formulario guiado de 3 datos** (número de boleta + fecha + entidad) — NO OCR de manuscritos (inviable, benchmarks 2026). OCR solo como autocompletado para boletas térmicas. Incluye: Semáforo de Legalidad (checklist 6 elementos Art. 2), mapeo de jurisdicciones, cápsulas de prevención vial, generador de borradores PDF, calculadora de prescripción, y alertas de plazos. **Diferenciador único:** interfaz en K'iche', Q'eqchi' y Garífuna con audio conceptual (no traducción literal) + iconografía universal de colores.
 
-**Stack técnico confirmado:** Vite + React + TypeScript + Tailwind (frontend), Cloudflare Workers + D1 (backend), tesseract.js (OCR), jsPDF (generación PDF). Todo funciona en el tier gratuito de Cloudflare.
+**Stack técnico confirmado (simplificado):** Vite + vanilla TS + JSON local + localStorage + Cloudflare Pages. Sin backend, sin Workers, sin D1 — cero puntos de quiebre en 48 horas. jsPDF para PDF local, tesseract.js opcional para autocompletado.
 
-**Cumplimiento legal:** OCR y almacenamiento local (IndexedDB) cumplen Ley 89-2005 de protección de datos. Generador de impugnaciones genera borradores — no asesoría legal (cumple restricción Reto 05).
+**Cumplimiento legal:** OCR y almacenamiento local (localStorage) cumplen Ley 89-2005 de protección de datos. Generador de impugnaciones genera borradores — no asesoría legal (cumple restricción Reto 05). Enfoque "certeza jurídica y cultura vial" — no "evadir multas" (evita riesgo de incentivo perverso con autoridades).
 
 **Alineación ODS:** ODS 16.6 (instituciones transparentes), ODS 10.2 (inclusión social), ODS 8.5 (trabajo decente), ODS 9.C (acceso a TIC).
 
 **El impacto potencial:** 6.7M+ propietarios de vehículos, 53% motociclistas (población vulnerable), 4,233 accidentes en H1 2026 (+9.9%), tasa de mortalidad vial 35% superior al promedio LATAM. Articulación con Iniciativa 6626 (Interoperabilidad Digital) demuestra que el prototipo es un ejemplo vivo de lo que Guatemala necesita.
+
+**Narrativa del pitch:** "De multa a educación" — transformar el sistema punitivo actual en una herramienta preventiva que educa al ciudadano sobre seguridad vial mientras le ayuda a entender y responder a su multa.
 
 **Narrativa del pitch:** "De multa a educación" — transformar el sistema punitivo actual en una herramienta preventiva que educa al ciudadano sobre seguridad vial mientras le ayuda a entender y responder a su multa.
