@@ -26,15 +26,14 @@
 
 ### Iris Palma
 - **Rol en HACKCREA:** Host / Anfitrión
-- **Perfil:** ⚠️ **NO CONFIRMADO** — las búsquedas arrojaron perfiles en Chile/France que no coinciden con el contexto guatemalteco. Posiblemente vinculada a alguna de las organizaciones institucionales (ONU, UNESCO, SENACYT, UVG).
-- **LinkedIn:** No encontrado / no verificado.
-- **Acción pendiente:** Verificar en Instagram @jcv_gt, @unesco.guatemala o @senacytgt.
+- **LinkedIn:** https://www.linkedin.com/in/iris-palma/
+- **Organización:** Por verificar (posiblemente vinculada a alguna de las organizaciones institucionales).
 
 ### Bridfeth Guerra
 - **Rol en HACKCREA:** Host / Anfitrión
-- **Perfil:** ⚠️ **NO CONFIRMADO** — las búsquedas arrojaron artículos de hivos.org sobre hackathon #VIHINFOgt pero sin perfil específico.
+- **Organización:** **JCV (Jóvenes Contra la Violencia)** ✅ CONFIRMADO
+- **Teléfono:** +502 4256 2371
 - **LinkedIn:** No encontrado / no verificado.
-- **Acción pendiente:** Verificar en Instagram o en publicaciones de ONU Guatemala.
 
 ### Nancy Sajvin
 - **Rol en HACKCREA:** ⚠️ **Rol NO CONFIRMADO** — André la mencionó como persona involucrada.
