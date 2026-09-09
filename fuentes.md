@@ -34,13 +34,13 @@
 | OAS Hackathon | https://www.oas.org | Organización de Estados Americanos |
 
 ### Perfiles LinkedIn (Hosts)
-| Persona | URL |
-|---|---|
-| Rodrigo Morán | https://linkedin.com/in/rodromoran |
-| Rubén Aquino | https://linkedin.com/in/joserubenaquino |
-| Iris Palma | ⚠️ No encontrado |
-| Bridfeth Guerra | ⚠️ No encontrado |
-| Nancy Sajvin | ⚠️ No encontrado |
+| Persona | URL | Estado |
+|---|---|---|
+| Rodrigo Morán | https://linkedin.com/in/rodromoran | ✅ |
+| Rubén Aquino | https://linkedin.com/in/joserubenaquino | ✅ |
+| Iris Palma | https://www.linkedin.com/in/iris-palma/ | ✅ |
+| Bridfeth Guerra | ⚠️ No encontrado (JCV, tel: +502 4256 2371) | Parcial |
+| Nancy Sajvin | ⚠️ No encontrado | Pendiente |
 
 ### Contexto Guatemala Tech
 | Fuente | URL | Notas |
@@ -56,3 +56,41 @@
 - **La comunicación oficial de HACKCREA está casi exclusivamente en Instagram** (no se encontró página web propia indexada).
 - Los perfiles de @jcv_gt, @unesco.guatemala y @senacytgt son las fuentes más actualizadas.
 - La empresa "Aracari Studios" (Morán + Aquino) parece ser el brazo operativo de producción del evento.
+
+---
+
+## Gobierno Digital Guatemala (nuevo)
+
+### Portales Gubernamentales
+| Fuente | URL | Notas |
+|---|---|---|
+| tramites.gob.gt | https://tramites.gob.gt | Catálogo Nacional de Trámites |
+| SAT Portal | https://portal.sat.gob.gt/portal/ | Superintendencia de Administración Tributaria |
+| SAT Landing | https://landing.c.sat.gob.gt/ | Landing SAT |
+| GAE (Comisión) | https://gae.gob.gt | Comisión Presidencial de Gobierno Abierto y Electrónico |
+| IGSS | https://www.igssgt.org | Instituto Guatemalteco de Seguridad Social |
+| PNC Comisaría Digital | https://pnc.gob.gt/comisaria-digital | Policía Nacional Civil |
+| Ministerio Público | https://www.mp.gob.gt/denuncias | Denuncias electrónicas |
+| MinGob | https://mingob.gob.gt | Ministerio de Gobernación |
+
+### Documentos Oficiales
+| Fuente | URL | Notas |
+|---|---|---|
+| Plan Transformación Digital | https://gae.gob.gt/wp-content/uploads/2025/11/Plan_TD.pdf | Plan 2025-2030 |
+| ICT Governance Guatemala | https://gae.gob.gt/wp-content/uploads/2025/03/ICTGovernanceobservationsGuatemala.pdf | Auditoría internacional |
+| DRA Guatemala (UNDP) | https://www.undp.org/sites/g/files/zskgke326/files/2023-12/dra_final_6_dic_2023_compressed.pdf | Diagnóstico preparación digital |
+| Open Government Partnership | https://www.opengovpartnership.org/members/guatemala/commitments/GT0110 | Compromiso internacional |
+
+### Noticias y Análisis
+| Fuente | URL | Notas |
+|---|---|---|
+| Prensa Libre - Fallas SAT | https://www.prensalibre.com/guatemala/comunitario/fallas-en-sistemas-de-sat-y-aduana-digital-complican-tramites-tributarios-y-exportaciones-breaking | Fallas mayo 2026 |
+| Congreso - Foro Transformación Digital | https://www.congreso.gob.gt/noticias_congreso/16675/2026/1 | Ley Interoperabilidad |
+| Congreso - Ley Gratuidad Antecedentes | https://www.congreso.gob.gt/noticias_congreso/15150/2026/4 | Iniciativa 6696 |
+| Gobierno GT - Ciudadanía Digikal | https://guatemala.gob.gt/presidente-bernardo-arevalo-presenta-iniciativa-ciudadania-digikal-accion-que-busca-reducir-la-brecha-digital-en-el-pais | Agosto 2026 |
+| BID - WAYFREE | https://www.iadb.org/es/proyecto/GU-T1364 | Internet gratuito |
+| AGN - Plan Transformación Digital | https://agn.gt/presentan-el-plan-estrategico-de-transformacion-digital-del-organismo-ejecutivo-2025-2030 | Noticia oficial |
+| DCA - Medir para transformar | https://dca.gob.gt/noticias-guatemala-diario-centro-america/medir-para-transformar-el-desafio-digital-de-guatemala | Análisis |
+| Prensa Libre - Antecedentes Policiacos | https://www.prensalibre.com/ciudades/guatemala-ciudades/tramite-de-antecedentes-policiacos-es-irregular-por-fallas-en-el-sistema | Fallas 2019 |
+| LA Times - Consulados | https://www.latimes.com/california/story/2022-11-14/guatemalans-criticize-la-consulate-obstacles | Problemas consulares |
+| MINEDUC - Transformación Digital | https://www.trade.gov/market-intelligence/guatemala-public-education-digital-transformation-policy | Análisis trade.gov |
