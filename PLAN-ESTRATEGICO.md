@@ -181,7 +181,7 @@
 | **Lenguaje** | Jurídico ("Art. 90 del Reglamento") | Claro ("Pasaste con luz roja") | ✅ + Glosario expandible |
 | **Montos** | Solo el monto | Monto + descuento curso vial + condonación activa | ✅ El ciudadano ve cuánto AHORRA |
 | **Prevención** | Ninguna | Cápsula de prevención por infracción | ✅ "De multa a educación" |
-| **Accesibilidad** | Solo español desktop | Multilingual + audio + móvil | ✅ Cumple Ley 19-2003 |
+| **Accesibilidad** | Solo español desktop | Multilingüe (ES + K'iche' + Kawchiquel) + tamaño de letra + móvil | ✅ Cumple Ley 19-2003 |
 
 **Decisión:** ESTO es nuestro core. El explicador en lenguaje claro es el deliverable #1.
 
@@ -200,11 +200,10 @@
 
 | Aspecto | Sistema actual | Nuestro prototipo | Mejora |
 |---|---|---|---|
-| **Idiomas** | Solo español | Español + K'iche' + Q'eqchi' + Garífuna | ✅ Primera app de tránsito multilingüe |
-| **Audio** | Ninguno | 🔊 Frases clave en idioma local | ✅ Para analfabetas funcionales |
+| **Idiomas** | Solo español | Español + K'iche' + Kawchiquel | ✅ Primera app de tránsito multilingüe |
 - **Base legal:** Ley 19-2003 Art. 9 (obligatorio, el Estado no lo cumple)
 
-**Decisión:** El i18n es el factor diferenciador más fuerte para el jurado. Priorizar español + K'iche' al menos.
+**Decisión:** El i18n es el factor diferenciador más fuerte para el jurado. Priorizar español + K'iche' + Kawchiquel. **Uriel se encarga del i18n.**
 
 ### 4.5 OFFLINE
 
@@ -221,28 +220,30 @@
 ### Día 1 — Cimientos (P0)
 - [ ] Scaffold Vite + React + shadcn + Tailwind
 - [ ] Tailwind (tema oscuro, responsive)
-- [ ] P0 Inicio (hero + 3 caminos)
+- [ ] P0 Entrada (QR/URL + placa + idioma + tamaño letra)
+- [ ] P0.5 Selección de placa (localStorage)
+- [ ] P0.6 Vista de municipalidades (gris/color/números)
 - [ ] Datos: `entidades.json`
 - [ ] PWA: manifest + sw.js + icons
 
 ### Día 2 — Core (P0)
-- [ ] P1 Formulario con validación de fechas
-- [ ] P2 Explicador con datos del JSON
+- [ ] P1 Formulario con validación de fechas + "¿Sos propietario?"
+- [ ] P2 Explicador con datos del JSON + botones "?"
 - [ ] Lógica core: semáforo + prescripción + plazos
-- [ ] i18n: estructura + español completo
+- [ ] i18n: estructura + español completo (Uriel)
 
 ### Día 3 — Diferenciadores (P0 + P1)
 - [ ] P3 Semáforo de legalidad (UI + lógica)
+- [ ] P3.5 ¿Qué hago? (3 opciones: pagar / oposición / prescripción)
 - [ ] P4 Generador PDF impugnación
-- [ ] P1: K'iche' (al menos UI + frases clave)
+- [ ] P1: K'iche' + Kawchiquel (al menos UI + frases clave) (Uriel)
+- [ ] Backend demo: Google Sheets + Apps Script
 - [ ] Deploy Cloudflare Pages
 - [ ] Tests manuales + fix
 
 ### Día 4 — Pitch + Pulido
-- [ ] P1: Q'eqchi' + Garífuna (parcial)
 - [ ] Guía de estafas
-- [ ] Historial localStorage
-- [ ] Audio 🔊 (si hay tiempo)
+- [ ] Escenario 120 días vencidos
 - [ ] Pulido visual + responsive final
 - [ ] Ensayo de pitch
 
@@ -267,7 +268,7 @@
 |---|---|---|
 | Tiempo de carga | <3s | <2s (PWA offline) |
 | Cobertura de infracciones | — | 15 infracciones explicadas |
-| Idiomas | — | 3 (español + k'iche' + inglés) |
+| Idiomas | — | 3 (español + k'iche' + kawchiquel) |
 | Funciona offline | — | ✅ PWA |
 | PDF generado | — | ✅ Borrador impugnación |
 | Cumple Decreto 33-2024 | — | ✅ 6 requisitos checklist |
@@ -280,7 +281,7 @@
 | # | Pregunta | Decisión |
 |---|---|---|
 | 1 | ¿OCR en el MVP? | **NO** → V2. El usuario ingresa datos a mano de la boleta. |
-| 2 | ¿Idiomas? | **Español + K'iche' + Inglés** (3 idiomas). Inglés para turistas/expats. |
+| 2 | ¿Idiomas? | **Español + K'iche' + Kawchiquel** (3 idiomas). Uriel se encarga del i18n. |
 | 3 | ¿Framework? | **Vite + React + shadcn + Tailwind** (componentes reutilizables, diseño profesional, responsive con Tailwind). Módulos ES, hot reload, build moderno. |
 | 4 | ¿Tema visual? | **Oscuro** (estilo Linear/Notion). |
 | 5 | ¿Deploy? | **Cloudflare Pages** (ya tienen wrangler config en SPEC). |

@@ -50,7 +50,7 @@ reto-5-brujos/
 │   │   └── Accion.jsx        P4: PDF / pago con descuento
 │   ├── lib/
 │   │   ├── core.js           Lógica pura: fechas, prescripción, semáforo, validación
-│   │   ├── i18n.js           Diccionarios: es + skeleton k'iche'/q'eqchi'/garífuna
+│   │   ├── i18n.js           Diccionarios: es + k'iche' + kawchiquel (Uriel)
 │   │   └── data.js           Carga de infracciones.json + entidades
 │   └── hooks/
 │       └── useLocalStorage.js Hook para persistencia local
@@ -411,7 +411,7 @@ André pidió un alcance **ambicioso por capas y fases**. Así lo estructuro:
 | Montos | Solo el monto | Monto + descuentos + ahorro visible |
 | Plazos | No se muestran | Barras de progreso visuales |
 | Legalidad | No se evalúa | Semáforo con iconografía |
-| Accesibilidad | Solo español, desktop | Multilingüe + audio + móvil-first |
+| Accesibilidad | Solo español, desktop | Multilingüe (ES + K'iche' + Kawchiquel) + tamaño de letra + botones "?" + móvil-first |
 | Confianza | "null" en nombres, bugs | Copy cuidado, disclaimers claros |
 | Estética | Portales anticuados | Tema oscuro con Tailwind + shadcn (profesional, responsive) |
 | Offline | Requiere internet | PWA offline-first |

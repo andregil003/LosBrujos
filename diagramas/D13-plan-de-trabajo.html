@@ -224,7 +224,6 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <ul>
       <li>Crea entidades.json (11 entidades, jurisdicciones)</li>
       <li>Escribe copy en lenguaje claro para 15 infracciones</li>
-      <li>Prepara traducciones a Kiche e Ingles</li>
       <li>Crea guia de estafas (notificacion real vs SMS falso)</li>
       <li>Prepara guion del pitch de 5 minutos</li>
     </ul>
@@ -232,11 +231,12 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   </div>
   <div class="role r5">
     <div class="icon">&#127912;</div>
-    <h3>ROL 5: Disenador / QA / Pitch</h3>
-    <div class="sub">Visual + Presentacion</div>
+    <h3>ROL 5: Disenador / QA / Pitch + i18n</h3>
+    <div class="sub">Visual + Presentacion + Idiomas</div>
     <ul>
       <li>Define paleta de colores, tipografia, espaciados</li>
       <li>Disena componentes: tarjetas, botones, iconos SVG</li>
+      <li>Prepara traducciones a K'iche' y Kawchiquel (i18n)</li>
       <li>Revisa que todo se vea bien (QA visual)</li>
       <li>Testea en diferentes pantallas (celular, tablet, desktop)</li>
       <li>Prepara slides + ensayo de pitch</li>
@@ -250,19 +250,19 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <div class="pnl" id="p3">
 <div class="del">
   <div class="del-card"><div class="num" style="color:var(--red)">P0-1</div><h3>Estructura Vite + React + routing SPA</h3><p>Scaffold con npm create vite, estructura de carpetas, componentes shadcn, routing con React Router.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
-  <div class="del-card"><div class="num" style="color:var(--red)">P0-2</div><h3>Pantalla de inicio (landing)</h3><p>"Te llego una multa?" + 3 botones de entrada: manual, OCR, buscador.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-2</div><h3>Pantalla de inicio (landing)</h3><p>"Te llego una multa?" + entrada QR/URL + selector de idioma y tamaño de letra.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-3</div><h3>Formulario de boleta</h3><p>Selector tipo papel, fecha, entidad, infraccion. Validacion estricta. Pregunta "Vos manejabas?"</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-4</div><h3>Explicador de multa</h3><p>Lenguaje claro + montos + descuentos + prevencion. EL CORAZON del reto.</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-5</div><h3>Semaforo de legalidad</h3><p>Verde/Amarillo/Rojo con iconografia + checklist Decreto 33-2024 + barras de plazo.</p><span class="badge b-hi">Alta</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-6</div><h3>Generador PDF impugnacion</h3><p>jsPDF + checkbox obligatorio + plantilla condicional. Borrador listo para presentar.</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-7</div><h3>PWA instalable</h3><p>manifest.json + sw.js + icons. Offline-first. Que funcione sin internet.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-8</div><h3>Datos: entidades.json</h3><p>Catalogo de 11 entidades + jurisdiccion + contacto + horario.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
-  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-1</div><h3>i18n: Kiche + Ingles</h3><p>UI + glosario. Kiche = 1.27M hablantes. Ingles = turistas/expats.</p><span class="badge b-md">Media</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
+  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-1</div><h3>i18n: Kiche + Kawchiquel</h3><p>UI + glosario. Kiche = 1.27M hablantes. Uriel se encarga.</p><span class="badge b-md">Media</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
   <div class="del-card"><div class="num" style="color:var(--yellow)">P1-2</div><h3>Buscador de infracciones</h3><p>"semaforo", "casco", "placa" -&gt; filtra el catalogo.</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
   <div class="del-card"><div class="num" style="color:var(--yellow)">P1-3</div><h3>Historial de consultas</h3><p>localStorage, "Tus ultimas consultas".</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
   <div class="del-card"><div class="num" style="color:var(--yellow)">P1-4</div><h3>Guia de estafas</h3><p>Notificacion real vs SMS falso. Contenido editorial.</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
   <div class="del-card"><div class="num" style="color:var(--green)">P2-1</div><h3>OCR de boletas (Tesseract.js)</h3><p>Fotografiar boleta -&gt; autocompleta datos. 3-4 boletas mock.</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
-  <div class="del-card"><div class="num" style="color:var(--green)">P2-2</div><h3>Alertas push de plazos</h3><p>Notificacion "queda 1 dia para impugnar".</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
+  <div class="del-card"><div class="num" style="color:var(--green)">P2-2</div><h3>¿Qué hago? Oposición vs prescripción</h3><p>Guía localizada: oposición (15 días) o prescripción (120 días).</p><span class="badge b-md">Media</span> <span class="badge b-p2">P2 - Roadmap</span></div>
   <div class="del-card"><div class="num" style="color:var(--green)">P2-3</div><h3>Dashboard de flota B2B</h3><p>Para empresas de transporte. Solo pitch.</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
 </div>
 </div>
@@ -282,7 +282,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <tr><td>Semaforo legalidad</td><td class="help">Ayuda</td><td class="help">UI</td><td class="lead">LIDER</td><td class="na">-</td><td class="help">Iconos</td></tr>
 <tr><td>Generador PDF</td><td class="na">-</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="help">Verifica</td></tr>
 <tr><td>entidades.json</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td></tr>
-<tr><td>i18n (traducciones)</td><td class="na">-</td><td class="help">Conecta</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td></tr>
+<tr><td>i18n (traducciones)</td><td class="na">-</td><td class="help">Conecta</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td></tr>
 <tr><td>Guia estafas</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="help">Disena</td></tr>
 <tr><td>Buscador infracciones</td><td class="na">-</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td></tr>
 <tr><td>Historial localStorage</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td></tr>
@@ -307,7 +307,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <div class="when">CIMIENTOS + ESTRUCTURA</div>
     <ul>
       <li><strong>Arquitecto:</strong> Setup Vite + React + shadcn + Tailwind + estructura + Service Worker</li>
-      <li><strong>Frontend:</strong> Landing "Te llego una multa?" + 3 caminos</li>
+      <li><strong>Frontend:</strong> Landing "Te llego una multa?" + entrada QR/URL + selector idioma</li>
       <li><strong>Logica:</strong> Logica core: prescripcion + validacion fechas + carga datos</li>
       <li><strong>Investigador:</strong> entidades.json + copy infracciones</li>
       <li><strong>Disenador:</strong> Paleta + tipografia + iconos SVG (semaforo, check)</li>
@@ -320,7 +320,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <ul>
       <li><strong>Frontend:</strong> Explicador + semaforo UI + barras de plazo</li>
       <li><strong>Logica:</strong> Semaforo logica + Generador PDF (jsPDF)</li>
-      <li><strong>Investigador:</strong> i18n Kiche + guia de estafas</li>
+      <li><strong>Investigador:</strong> guia de estafas + escenario 120 días</li>
+      <li><strong>Disenador:</strong> i18n K'iche' + Kawchiquel (estructura + frases clave)</li>
       <li><strong>Arquitecto:</strong> Deploy a Cloudflare Pages (v1)</li>
       <li><strong>Disenador:</strong> QA visual en celular/tablet/desktop</li>
       <li style="color:var(--yellow)"><strong>Checkpoint 5:00:</strong> Fix bugs + pulido responsive</li>
@@ -334,8 +335,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
       <li><strong>Frontend:</strong> Pulido visual final</li>
       <li><strong>Logica:</strong> Historial localStorage</li>
       <li><strong>Investigador:</strong> Slides de presentacion</li>
-      <li><strong>Disenador:</strong> Ensayo pitch x2</li>
-      <li style="color:var(--green)"><strong>Checkpoint 8:00:</strong> Todo funciona? PDF genera? Kiche visible?</li>
+      <li><strong>Disenador:</strong> Ensayo pitch x2 + QA i18n</li>
+      <li style="color:var(--green)"><strong>Checkpoint 8:00:</strong> Todo funciona? PDF genera? K'iche' visible?</li>
       <li style="color:var(--pink)"><strong>8:30:</strong> SUBMIT / PRESENTACION</li>
     </ul>
   </div>

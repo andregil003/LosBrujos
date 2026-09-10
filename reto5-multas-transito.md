@@ -511,7 +511,7 @@ Usuario: empresa de transporte de carga
 | **Decreto 119-96 (Ley Contencioso Administrativo)** | Recursos de revocatoria y reposición |
 | **Iniciativa 6626** | Marco de interoperabilidad digital |
 
-> 💡 **Oportunidad de diferenciación:** Ofrecer la interfaz en **K'iche', Q'eqchi' y Garífuna** sería un diferenciador único para HACKCREA — alineado con el Decreto 19-2003 y con la misión de ONU de inclusión.
+> 💡 **Oportunidad de diferenciación:** Ofrecer la interfaz en **K'iche' y Kawchiquel** sería un diferenciador único para HACKCREA — alineado con el Decreto 19-2003 y con la misión de ONU de inclusión.
 
 ---
 
@@ -540,19 +540,15 @@ Usuario: empresa de transporte de carga
 └──────────────┬──────────────────────────┘
                │
 ┌──────────────▼──────────────────────────┐
-│           BACKEND (API)                 │
-│  Cloudflare Workers / Pages Functions   │
-│  SQLite (D1) o JSON (datos de prueba)   │
-│  Web scraping → BeautifulSoup/Puppeteer │
+│           BACKEND (DEMO)                │
+│  Google Sheets + Apps Script (BD demo)  │
+│  Datos ficticios generados por el equipo│
 │  LLM: Llama 3 / Mistral (traducción)   │
 └──────────────┬──────────────────────────┘
                │
 ┌──────────────▼──────────────────────────┐
 │         SERVICIOS                       │
 │  Cloudflare Pages (hosting)             │
-│  Cloudflare D1 (base de datos)          │
-│  Cloudflare Workers (API)               │
-│  ntfy.sh (notificaciones push)          │
 │  GitHub (control de versiones)          │
 └─────────────────────────────────────────┘
 ```
@@ -561,14 +557,14 @@ Usuario: empresa de transporte de carga
 
 | Funcionalidad | Descripción | Complejidad |
 |---|---|---|
-| **Consulta de multas** | Ingresar placa → ver multas de todas las entidades | ⭐⭐ (requiere scraping o mock) |
+| **Consulta de multas** | Ingresar placa → ver multas de todas las entidades (datos demo en Sheets) | ⭐⭐ (mock) |
 | **Traductor de jerga legal** | Art. 90 → "No respetaste el semáforo en rojo" | ⭐⭐⭐ (LLM o reglas) |
 | **OCR de boletas** | Fotografiar boleta → extraer datos automáticamente | ⭐⭐ (Tesseract.js) |
 | **Calculadora de prescripción** | Ingresar fecha de infracción → ¿prescribe? | ⭐ (lógica simple) |
 | **Generador de escrito de impugnación** | Generar borrador del recurso (PDF) | ⭐⭐ (plantillas) |
-| **Alertas de plazos** | Notificación push cuando se acerca el vencimiento | ⭐⭐ (Service Worker) |
-| **Dashboard de flota** | Ver todas las multas de múltiples vehículos | ⭐⭐⭐ (auth + datos) |
-| **Multilingual** | Interfaz en español + K'iche' + Q'eqchi' | ⭐⭐ (i18n) |
+| **Vista de municipalidades** | Gris=sin multas, color=con multas, números | ⭐⭐ (UI + datos) |
+| **Dashboard de flota** | Ver todas las multas de múltiples vehículos (placas en localStorage) | ⭐⭐ (localStorage) |
+| **Multilingual** | Interfaz en español + K'iche' + Kawchiquel | ⭐⭐ (i18n) |
 
 ### 10.4 Datos de Prueba Iniciales
 
@@ -679,7 +675,7 @@ FASE 3 (Escalamiento - 12+ meses):
 
 | App / Plataforma | Tipo | Estado | Calificación | Limitaciones |
 |---|---|---|---|---|
-| **Multas Guate** | Android (Google Play) | Activa | ⭐ 2.1 (100+ reseñas) | Solo consulta básica; no genera impugnaciones; sin OCR; sin idiomas indígenas; sin notificaciones de plazos |
+| **Multas Guate** | Android (Google Play) | Activa | ⭐ 2.1 (100+ reseñas) | Solo consulta básica; no genera impugnaciones; sin OCR; sin idiomas indígenas |
 | **MuniGuate 2.0** | iOS + Android | Activa (última actualización 2020) | ⭐ 2.8 (App Store) | Solo EMETRA; sin integra multas SAT; bugs reportados en pago; interfaz anticuada |
 | **App TransitoGT** | Android | Inactiva (2022) | ⭐ 1.5 | Solo mapas de tráfico; sin función multas; abandonada |
 | **Portal SAT** | Web | Activo | N/A | Sin app móvil; interfaz desktop-only; sin explicación ciudadana; sin idiomas indígenas |
@@ -772,16 +768,15 @@ FASE 3 (Escalamiento - 12+ meses):
 
 **Problema conocido:** No hay imágenes de muestra de boletas de tránsito de Guatemala disponibles en línea. **Solución:** Crear 3-4 mockups de boletas (PNG) durante el hackathon para demostrar el OCR.
 
-### 15.2 Cloudflare Workers (Backend Serverless)
+### 15.2 Backend Demo: Google Sheets + Apps Script
 
-| Tier | Requests/día | CPU/request | RAM | Almacenamiento |
-|---|---|---|---|---|
-| **Free** | 100,000 | 10ms | 128MB | — |
-| **Workers Paid ($5/mes)** | 10M | 30s | 128GB | 1GB |
-| **Workers KV** | — | — | — | 1GB free tier |
-| **D1 (SQLite)** | — | — | — | 5GB free tier |
+| Componente | Rol | Por qué |
+|---|---|---|
+| **Google Sheets** | Base de datos demo (multas ficticias) | Cero costo, fácil de editar por el equipo |
+| **Apps Script** | API REST (doGet) que lee el Sheet | Gratis, sin servidor, JSON nativo |
+| **Datos** | Ficticios generados por el equipo | El reto entrega una propuesta, no datos reales |
 
-**Para el prototipo:** Free tier es más que suficiente (100K req/día para hackathon).
+**Para el prototipo:** El equipo genera datos ficticios realistas (placas, multas, entidades) y la app los consulta vía Apps Script. Sin scraping, sin APIs estatales.
 
 ### 15.3 Stack Técnico Recomendado
 
@@ -790,15 +785,14 @@ FASE 3 (Escalamiento - 12+ meses):
 │  FRONTEND: Vite + React + shadcn + Tailwind        │
 │  ↕ pwa-service-worker (offline-first)            │
 │  OCR: tesseract.js v5 (WebAssembly, local)       │
-│  Storage: IndexedDB (local, cumple Ley 89-2005)  │
+│  Storage: IndexedDB + localStorage (Ley 89-2005) │
 │  PDF: jsPDF / pdfmake (generación local)         │
 └─────────────────────────────────────────────────┘
                      ↓
 ┌─────────────────────────────────────────────────┐
-│  BACKEND: Cloudflare Workers (mock API)          │
-│  ↕ D1 (mock database de multas)                 │
-│  ↕ KV (cache de glosario/legal)                 │
-│  API: REST JSON (mock data)                      │
+│  BACKEND DEMO: Google Sheets + Apps Script       │
+│  ↕ Datos ficticios (multas por placa)           │
+│  API: REST JSON (doGet)                          │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -806,14 +800,14 @@ FASE 3 (Escalamiento - 12+ meses):
 
 | # | Funcionalidad | Complejidad | Prioridad | Dependencia |
 |---|---|---|---|---|
-| 1 | **Consulta de multas** (mock API) | 🟢 Baja | MVP | Cloudflare Workers + D1 |
+| 1 | **Consulta de multas** (datos demo) | 🟢 Baja | MVP | Google Sheets + Apps Script |
 | 2 | **Explicador de multas** (lenguaje claro + glosario) | 🟢 Baja | MVP | JSON de glosario |
 | 3 | **Calculadora de prescripción** | 🟢 Baja | MVP | Lógica de fechas |
 | 4 | **Generador de impugnaciones PDF** | 🟡 Media | MVP | jsPDF + plantillas |
 | 5 | **OCR de boletas** | 🟡 Media | V2 | tesseract.js + mock boletas |
-| 6 | **Idiomas indígenas** (K'iche', Q'eqchi', Garífuna) | 🟡 Media | V2 | i18n JSON files |
-| 7 | **Alertas de plazos** (push notifications) | 🟠 Alta | V3 | Service Worker + permisos |
-| 8 | **Dashboard de historial** | 🟢 Baja | V2 | IndexedDB |
+| 6 | **Idiomas indígenas** (K'iche', Kawchiquel) | 🟡 Media | V2 | i18n JSON files |
+| 7 | **Vista de municipalidades** (gris/color/números) | 🟢 Baja | MVP | UI + datos demo |
+| 8 | **Placas guardadas** (múltiples vehículos) | 🟢 Baja | MVP | localStorage |
 
 ---
 
@@ -966,14 +960,14 @@ FASE 3 (Escalamiento - 12+ meses):
 - **"Una multa que nadie entiende no cambia el comportamiento"**
 - **"De multa a educación: transformamos punitivo en preventivo"**
 - **"Offline-first porque el 39% de Guatemala no tiene internet confiable"**
-- **"Interfaz en K'iche', Q'eqchi' y Garífuna — la primera app de tránsito multilingüe"**
+- **"Interfaz en K'iche' y Kawchiquel — la primera app de tránsito multilingüe"**
 - **"Ejemplo vivo de la Interoperabilidad Digital que la Iniciativa 6626 propone"**
 
 ### 20.3 Jurado: Cómo Apuntar a Cada Perfil
 
 | Perfil del jurado | Valor que busca | Cómo lo address |
 |---|---|---|
-| **Tech** | Viabilidad técnica, innovación | OCR + offline + Cloudflare Workers |
+| **Tech** | Viabilidad técnica, innovación | OCR + offline + PWA |
 | **Negocio** | Escalabilidad, monetización | Modelo GovTech + convenio EMETRA |
 | **Social** | Impacto, inclusión | Idiomas indígenas + brecha digital |
 | **Legal** | Cumplimiento normativo | Decreto 33-2024 + Ley 89-2005 |
@@ -1324,14 +1318,13 @@ FASE 3 (Escalamiento - 12+ meses):
 
 **El problema:** `analisis-retos.md` define Vite + React + shadcn + Tailwind + JSON local + Cloudflare Pages (cero backend). `reto5-multas-transito.md` añadía Workers + D1 + KV + ntfy.sh + LLM.
 
-**Veredicto (adoptado):** Usar **Vite + React + shadcn + Tailwind + Cloudflare Pages con JSON local y localStorage**. Meter D1, Workers y Web Scraping en 48 horas añade puntos de quiebre innecesarios para una base de datos que en la demo será 100% simulada. shadcn da componentes UI profesionales sin construir desde cero.
+**Veredicto (adoptado):** Usar **Vite + React + shadcn + Tailwind + Cloudflare Pages con Google Sheets + Apps Script (datos demo) y localStorage**. Meter D1, Workers y Web Scraping en 48 horas añade puntos de quiebre innecesarios para una base de datos que en la demo será 100% simulada. shadcn da componentes UI profesionales sin construir desde cero.
 
 **Stack final recomendado:**
 ```
 Frontend: Vite + React + shadcn + Tailwind
-├── JSON local (catálogo + plazos + instituciones)
-├── i18n: es / k'iche' / q'eqchi' / garífuna
-├── Audio 🔊 (grabaciones de frases clave)
+├── Google Sheets + Apps Script (datos demo)
+├── i18n: es / k'iche' / kawchiquel
 ├── Iconografía universal + semáforo de plazos
 ├── OCR: tesseract.js (SOLO autocompletado, opcional)
 ├── PDF: jsPDF (generación de borradores local)
@@ -1402,15 +1395,15 @@ Cuando la app explica una infracción, incluye un **panel inferior de impacto** 
 
 ### 26.1 La trampa de la "traducción literal de Google"
 
-Traducir términos jurídicos como "derecho de defensa", "resolución desfavorable" o "prescripción administrativa" al K'iche' o Q'eqchi' mediante traducción automática produce **texto incomprensible**.
+Traducir términos jurídicos como "derecho de defensa", "resolución desfavorable" o "prescripción administrativa" al K'iche' o Kawchiquel mediante traducción automática produce **texto incomprensible**.
 
-**Mejora (adoptada):** Las frases en K'iche' y Q'eqchi' deben ser **explicaciones conceptuales en audio** con lenguaje cotidiano, grabadas o sintetizadas con enfoque funcional:
+**Mejora (adoptada):** Las frases en K'iche' y Kawchiquel deben ser **explicaciones conceptuales en lenguaje cotidiano**, redactadas por Uriel (i18n) con enfoque funcional:
 
-| Término legal (español) | Explicación conceptual (K'iche') | Audio |
-|---|---|---|
-| "Derecho de defensa" | "Este papel dice que tienes 15 días para responder si no fuiste tú" | 🔊 |
-| "Resolución desfavorable" | "Si la autoridad dice que sí tienes que pagar, tienes 60 días" | 🔊 |
-| "Prescripción administrativa" | "Si pasaron 120 días y no te avisaron, la multa ya no vale" | 🔊 |
+| Término legal (español) | Explicación conceptual (K'iche') |
+|---|---|
+| "Derecho de defensa" | "Este papel dice que tienes 15 días para responder si no fuiste tú" |
+| "Resolución desfavorable" | "Si la autoridad dice que sí tienes que pagar, tienes 60 días" |
+| "Prescripción administrativa" | "Si pasaron 120 días y no te avisaron, la multa ya no vale" |
 
 ### 26.2 Iconografía y Codificación por Color Universal
 
@@ -1422,7 +1415,7 @@ Para población no alfabetizada (o que habla un idioma nacional pero no lo lee):
 | 🟨 **Amarillo** | Faltan menos de 3 días para vencer | Actúa YA |
 | 🟥 **Rojo** | Vencido o en riesgo de recargos | Urgente — busca ayuda |
 
-**Audio automático al tocar la tarjeta del semáforo** — para quienes no leen.
+**Iconografía + color + botones "?" con explicación** — para quienes no leen.
 
 ---
 
@@ -1442,15 +1435,16 @@ Para población no alfabetizada (o que habla un idioma nacional pero no lo lee):
 ## 28. Roadmap de Implementación — 48 Horas del Hackathon
 
 ### Horas 0–12 (Data & Contrato UI)
-- Estructurar el catálogo JSON en español, K'iche' y Q'eqchi' con las **15 infracciones más comunes** (motos y autos particulares), sus montos y artículos
+- Estructurar el catálogo JSON en español, K'iche' y Kawchiquel con las **15 infracciones más comunes** (motos y autos particulares), sus montos y artículos
 - Crear 3-4 mockups de boletas (PNG) para demo
 - Definir el checklist de 6 elementos del Semáforo de Legalidad
 
 ### Horas 12–28 (Frontend Core)
-- Flujo de 3 pantallas en Vite:
-  1. **Ingreso de datos de la boleta** (formulario guiado de 3 datos)
-  2. **Semáforo explicativo** con audios 🔊
-  3. **Opciones de acción** (Pagar con descuento vial vs. Descargar borrador de impugnación)
+- Flujo de pantallas en Vite:
+  1. **Ingreso de placa** (o QR/URL) → selección de idioma y tamaño de letra
+  2. **Vista de municipalidades** (gris = sin multas, color = con multas, números)
+  3. **Semáforo explicativo** con botones "?" 
+  4. **Opciones de acción** (Pagar con descuento vial vs. Descargar borrador de impugnación)
 - Implementar el checklist de 6 elementos
 
 ### Horas 28–38 (Features Diferenciadores)
@@ -1475,16 +1469,14 @@ Para población no alfabetizada (o que habla un idioma nacional pero no lo lee):
 
 **Competencia local:** No existe app dedicada de multas en Guatemala. Las existentes (MuniGuate 2.0: ⭐2.8, Multas Guate: ⭐2.1) tienen calificaciones bajas por bugs, falta de explicación, y sin idiomas indígenas. Hay espacio claro para innovar.
 
-**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. **Flujo primario: formulario guiado de 3 datos** (número de boleta + fecha + entidad) — NO OCR de manuscritos (inviable, benchmarks 2026). OCR solo como autocompletado para boletas térmicas. Incluye: Semáforo de Legalidad (checklist 6 elementos Art. 2), mapeo de jurisdicciones, cápsulas de prevención vial, generador de borradores PDF, calculadora de prescripción, y alertas de plazos. **Diferenciador único:** interfaz en K'iche', Q'eqchi' y Garífuna con audio conceptual (no traducción literal) + iconografía universal de colores.
+**El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. **Flujo primario: ingreso de placa (o QR/URL) → idioma → vista de municipalidades** — NO OCR de manuscritos (inviable, benchmarks 2026). OCR solo como autocompletado para boletas térmicas. Incluye: Semáforo de Legalidad (checklist 6 elementos Art. 2), mapeo de jurisdicciones, cápsulas de prevención vial, generador de borradores PDF, calculadora de prescripción, y botones "?" de ayuda. **Diferenciador único:** interfaz en K'iche' y Kawchiquel con explicaciones conceptuales (no traducción literal) + iconografía universal de colores.
 
-**Stack técnico confirmado (simplificado):** Vite + React + shadcn + Tailwind + JSON local + localStorage + Cloudflare Pages. Sin backend, sin Workers, sin D1 — cero puntos de quiebre en 48 horas. jsPDF para PDF local, tesseract.js opcional para autocompletado.
+**Stack técnico confirmado (simplificado):** Vite + React + shadcn + Tailwind + Google Sheets + Apps Script (datos demo) + localStorage + Cloudflare Pages. Sin backend complejo, sin Workers, sin D1 — cero puntos de quiebre en 48 horas. jsPDF para PDF local, tesseract.js opcional para autocompletado.
 
 **Cumplimiento legal:** OCR y almacenamiento local (localStorage) cumplen Ley 89-2005 de protección de datos. Generador de impugnaciones genera borradores — no asesoría legal (cumple restricción Reto 05). Enfoque "certeza jurídica y cultura vial" — no "evadir multas" (evita riesgo de incentivo perverso con autoridades).
 
 **Alineación ODS:** ODS 16.6 (instituciones transparentes), ODS 10.2 (inclusión social), ODS 8.5 (trabajo decente), ODS 9.C (acceso a TIC).
 
 **El impacto potencial:** 6.7M+ propietarios de vehículos, 53% motociclistas (población vulnerable), 4,233 accidentes en H1 2026 (+9.9%), tasa de mortalidad vial 35% superior al promedio LATAM. Articulación con Iniciativa 6626 (Interoperabilidad Digital) demuestra que el prototipo es un ejemplo vivo de lo que Guatemala necesita.
-
-**Narrativa del pitch:** "De multa a educación" — transformar el sistema punitivo actual en una herramienta preventiva que educa al ciudadano sobre seguridad vial mientras le ayuda a entender y responder a su multa.
 
 **Narrativa del pitch:** "De multa a educación" — transformar el sistema punitivo actual en una herramienta preventiva que educa al ciudadano sobre seguridad vial mientras le ayuda a entender y responder a su multa.

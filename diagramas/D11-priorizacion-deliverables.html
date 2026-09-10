@@ -83,7 +83,7 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
   <g class="node" data-key="p02" tabindex="0" role="button" style="animation-delay:.06s">
     <rect x="30" y="155" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
     <text x="120" y="185" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-2 · Pantalla inicio</text>
-    <text x="120" y="205" text-anchor="middle" font-size="10" fill="#6B7280">hero + 3 caminos</text>
+    <text x="120" y="205" text-anchor="middle" font-size="10" fill="#6B7280">QR/URL → idioma → placa</text>
     <text x="120" y="221" text-anchor="middle" font-size="10" fill="#6B7280">"¿Te llegó una multa?"</text>
     <text x="194" y="171" font-size="13" fill="#DC2626" class="hint">＋</text>
   </g>
@@ -139,7 +139,7 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
     <rect x="440" y="55" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
     <text x="530" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-1 · i18n 3 idiomas</text>
     <text x="530" y="105" text-anchor="middle" font-size="10" fill="#6B7280">español + k'iche'</text>
-    <text x="530" y="121" text-anchor="middle" font-size="10" fill="#6B7280">+ inglés</text>
+    <text x="530" y="121" text-anchor="middle" font-size="10" fill="#6B7280">+ kawchiquel</text>
     <text x="604" y="71" font-size="13" fill="#D97706" class="hint">＋</text>
   </g>
 
@@ -170,12 +170,12 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
     <text x="604" y="371" font-size="13" fill="#D97706" class="hint">＋</text>
   </g>
 
-  <!-- P1-5: Audio -->
+  <!-- P1-5: Botones ? -->
   <g class="node" data-key="p15" tabindex="0" role="button" style="animation-delay:.17s">
     <rect x="440" y="455" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
-    <text x="530" y="485" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-5 · Audio 🔊</text>
-    <text x="530" y="505" text-anchor="middle" font-size="10" fill="#6B7280">frases clave en</text>
-    <text x="530" y="521" text-anchor="middle" font-size="10" fill="#6B7280">k'iche' e inglés</text>
+    <text x="530" y="485" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-5 · Botones "?"</text>
+    <text x="530" y="505" text-anchor="middle" font-size="10" fill="#6B7280">info contextual</text>
+    <text x="530" y="521" text-anchor="middle" font-size="10" fill="#6B7280">junto a cada texto</text>
     <text x="604" y="471" font-size="13" fill="#D97706" class="hint">＋</text>
   </g>
 
@@ -206,12 +206,12 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
     <text x="1014" y="171" font-size="13" fill="#059669" class="hint">＋</text>
   </g>
 
-  <!-- P2-3: Alertas -->
+  <!-- P2-3: ¿Qué hago? -->
   <g class="node" data-key="p23" tabindex="0" role="button" style="animation-delay:.13s">
     <rect x="850" y="255" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
-    <text x="940" y="285" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-3 · Alertas push</text>
-    <text x="940" y="305" text-anchor="middle" font-size="10" fill="#6B7280">"queda 1 día para</text>
-    <text x="940" y="321" text-anchor="middle" font-size="10" fill="#6B7280">impugnar"</text>
+    <text x="940" y="285" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-3 · ¿Qué hago?</text>
+    <text x="940" y="305" text-anchor="middle" font-size="10" fill="#6B7280">oposición vs</text>
+    <text x="940" y="321" text-anchor="middle" font-size="10" fill="#6B7280">prescripción</text>
     <text x="1014" y="271" font-size="13" fill="#059669" class="hint">＋</text>
   </g>
 
@@ -265,21 +265,21 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 <script>
 const INFO={
 p01:{chip:"P0 · Imprescindible",title:"P0-1 · Estructura Vite + React + routing SPA",body:"Scaffold con npm create vite, estructura de carpetas (src/screens, src/components/ui, src/lib), componentes shadcn, routing con React Router. Base de toda la app.",facts:[["Complejidad","⭐ Baja"],["Dependencias","React + shadcn + Tailwind"],["Tiempo","~1 hora"],["Stack","Vite + React + shadcn + Tailwind"]],source:"PLAN-ESTRATEGICO.md §3 · SPEC.md §3"},
-p02:{chip:"P0 · Imprescindible",title:"P0-2 · Pantalla de inicio",body:"Hero '¿Te llegó una multa? Te la explicamos' + 3 caminos: ingresar datos de la boleta (principal), escanear (V2/OCR, marcado 'pronto'), o buscar infracción por nombre. Footer con disclaimer legal.",facts:[["Complejidad","⭐ Baja"],["Caminos","3 botones"],["Disclaimer","Herramienta educativa, no asesoría legal"]],source:"SPEC.md §5 P0"},
+p02:{chip:"P0 · Imprescindible",title:"P0-2 · Pantalla de inicio",body:"Hero '¿Te llegó una multa? Te la explicamos' + entrada por QR/URL. Selector de idioma (ES/K'iche'/Kawchiquel) y tamaño de letra. Footer con disclaimer legal.",facts:[["Complejidad","⭐ Baja"],["Entrada","QR o URL"],["Idioma","ES · K'iche' · Kawchiquel"],["Disclaimer","Herramienta educativa, no asesoría legal"]],source:"SPEC.md §5 P0"},
 p03:{chip:"P0 · Imprescindible",title:"P0-3 · Formulario de boleta",body:"Selector de tipo de papel (boleta/requerimiento/citación), número, entidad (11), fecha de infracción con validación estricta (no futura, no >5 años), fecha de notificación opcional, select de infracción, y la pregunta clave: ¿Vos manejabas el vehículo? Si el notificado no era el conductor, se activa la guía de responsabilidad solidaria (Art. 3 Decreto 132-96). La fecha es crítica para el semáforo.",facts:[["Complejidad","⭐⭐ Media"],["Validación","Fecha requerida, ≤ hoy, ≥ hoy-5años"],["Entidades","11 en select"],["Infracciones","15 en catálogo"],["Pregunta clave","¿Vos manejabas? → guía si NO"]],source:"SPEC.md §5 P1 · PLAN-ESTRATEGICO.md §4.0"},
 p04:{chip:"P0 · Imprescindible",title:"P0-4 · Explicador de multa",body:"El corazón del reto: traduce la jerga legal a lenguaje claro. Muestra qué hiciste, cuánto cuesta (monto + descuento curso vial + condonación), por qué es peligroso (cápsula de prevención) y glosario expandible.",facts:[["Complejidad","⭐⭐ Media"],["Montos","Del JSON, nunca inventar"],["Descuento","25% curso vial"],["Prevención","Dato de seguridad vial"]],source:"SPEC.md §5 P2"},
 p05:{chip:"P0 · Imprescindible",title:"P0-5 · Semáforo de legalidad",body:"Evalúa si la multa es defendible: verde (notificación OK), amarillo (datos incompletos), rojo (prescripción o vicio grave). Checklist de 6 requisitos del Decreto 33-2024 + barras de plazos visuales (15 días impugnar, 120 días prescripción).",facts:[["Complejidad","⭐⭐⭐ Alta"],["Estados","Verde / Amarillo / Rojo"],["Checklist","6 requisitos Decreto 33-2024"],["Plazos","15 días impugnar · 120 días prescripción"]],source:"SPEC.md §5 P3"},
 p06:{chip:"P0 · Imprescindible",title:"P0-6 · Generador de PDF de impugnación",body:"Genera borrador del recurso con jsPDF usando la plantilla condicional (7 vicios). Checkbox obligatorio de disclaimer antes de generar. Vista previa en pantalla + botón copiar texto.",facts:[["Complejidad","⭐⭐ Media"],["Librería","jsPDF"],["Vicios","7 condicionales"],["Checkbox","Obligatorio antes de generar"]],source:"SPEC.md §5 P4 · data/plantilla-impugnacion.md"},
 p07:{chip:"P0 · Imprescindible",title:"P0-7 · PWA instalable + offline",body:"manifest.json + service worker que precachea todo. La app funciona sin internet (los datos viajan en JSON local). Instalable desde el navegador. Cumple Ley 89-2005 (todo local).",facts:[["Complejidad","⭐ Baja"],["Offline","Precache total"],["Privacidad","Todo en localStorage"],["Ley","89-2005 cumplida"]],source:"SPEC.md §2 · §3"},
-p11:{chip:"P1 · Valor añadido",title:"P1-1 · i18n: español + k'iche' + inglés",body:"Interfaz completa en 3 idiomas. K'iche' (~1.27M hablantes) cumple la Ley 19-2003 que el Estado no cumple. Inglés para turistas y expats que manejan en Guatemala. Diccionarios en JSON.",facts:[["Complejidad","⭐⭐ Media"],["Idiomas","Español + K'iche' + Inglés"],["Base legal","Ley 19-2003 Art. 9"],["Diferenciador","Primera app de tránsito multilingüe"]],source:"PLAN-ESTRATEGICO.md §8 · analisis-retos.md"},
+p11:{chip:"P1 · Valor añadido",title:"P1-1 · i18n: español + k'iche' + kawchiquel",body:"Interfaz completa en 3 idiomas. K'iche' (~1.27M hablantes) cumple la Ley 19-2003 que el Estado no cumple. Uriel se encarga del i18n. Diccionarios en JSON.",facts:[["Complejidad","⭐⭐ Media"],["Idiomas","Español + K'iche' + Kawchiquel"],["Base legal","Ley 19-2003 Art. 9"],["Diferenciador","Primera app de tránsito multilingüe"]],source:"PLAN-ESTRATEGICO.md §8 · analisis-retos.md"},
 p12:{chip:"P1 · Valor añadido",title:"P1-2 · Buscador de infracciones",body:"Búsqueda por palabra clave: 'semáforo', 'casco', 'placa' → filtra el catálogo de 15 infracciones. Para quien no sabe qué código tiene su multa.",facts:[["Complejidad","⭐ Baja"],["Búsqueda","Por palabra clave"],["Catálogo","15 infracciones"]],source:"PLAN-ESTRATEGICO.md §3"},
 p13:{chip:"P1 · Valor añadido",title:"P1-3 · Historial de consultas",body:"Guarda las últimas consultas en localStorage. 'Tus últimas consultas' en la pantalla de inicio. Todo local, sin servidor.",facts:[["Complejidad","⭐ Baja"],["Storage","localStorage"],["Privacidad","Todo en el dispositivo"]],source:"PLAN-ESTRATEGICO.md §3"},
 p14:{chip:"P1 · Valor añadido",title:"P1-4 · Guía de estafas",body:"Contenido editorial para distinguir una notificación real de un SMS falso. Prensa Libre reportó estafas con códigos QR y multas falsas (junio 2025).",facts:[["Complejidad","⭐ Baja"],["Contenido","Editorial"],["Fuente","Prensa Libre jun 2025"],["Valor","Genera confianza"]],source:"reto5-multas-transito.md §5.9"},
-p15:{chip:"P1 · Valor añadido",title:"P1-5 · Audio de frases clave",body:"Grabaciones HTML audio para personas que hablan pero no leen su idioma. Frases clave en k'iche' e inglés.",facts:[["Complejidad","⭐⭐ Media"],["Formato","HTML audio"],["Idiomas","K'iche' + inglés"]],source:"PLAN-ESTRATEGICO.md §3"},
+p15:{chip:"P1 · Valor añadido",title:"P1-5 · Botones '?' de ayuda",body:"Botones '?' junto a cada texto clave que abren una explicación contextual en lenguaje claro. Para que nadie se quede con dudas sobre plazos, montos o términos legales.",facts:[["Complejidad","⭐ Baja"],["Formato","Tooltip / modal"],["Valor","Reduce dudas y fricción"]],source:"PLAN-ESTRATEGICO.md §3"},
 p16:{chip:"P1 · Valor añadido",title:"P1-6 · Guía ¿Dónde impugnar?",body:"Dirección, horario y documentos a acompañar según la entidad emisora. Del catálogo de entidades.",facts:[["Complejidad","⭐ Baja"],["Datos","Del catálogo de entidades"],["Valor","Reduce fricción"]],source:"PLAN-ESTRATEGICO.md §3"},
 p21:{chip:"P2 · Post-hackathon",title:"P2-1 · OCR de boletas",body:"Escanear la boleta con la cámara y que la app lea los datos automáticamente (Tesseract.js, WebAssembly en navegador). Requiere crear 3-4 boletas mock PNG. Complejo de demostrar bien en poco tiempo.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Librería","Tesseract.js v6"],["Requiere","Boletas mock PNG"],["Decisión","V2 — entrada manual primero"]],source:"PLAN-ESTRATEGICO.md §3 · reto5 §15.1"},
 p22:{chip:"P2 · Post-hackathon",title:"P2-2 · Cálculo automático de prescripción",body:"Detectar automáticamente si la multa prescribió (120 días sin notificar). La lógica ya está en core.js, solo falta UI extra.",facts:[["Complejidad","⭐ Baja"],["Lógica","Ya existe en core"],["Plazo","120 días"]],source:"PLAN-ESTRATEGICO.md §3"},
-p23:{chip:"P2 · Post-hackathon",title:"P2-3 · Alertas push de plazos",body:"Notificación push cuando queda poco tiempo para impugnar o pagar. Requiere Service Worker + permisos del navegador.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Requiere","SW + permisos"],["Ejemplo","'Queda 1 día para impugnar'"]],source:"PLAN-ESTRATEGICO.md §3"},
+p23:{chip:"P2 · Post-hackathon",title:"P2-3 · ¿Qué hago? Oposición vs prescripción",body:"Guía localizada en la misma app: si la multa es injusta → oposición (15 días); si no te notificaron en 120 días → prescripción. Con pasos concretos y plantillas.",facts:[["Complejidad","⭐⭐ Media"],["Oposición","15 días desde notificación"],["Prescripción","120 días sin notificar"],["Valor","La gente no sabe que puede pelear"]],source:"PLAN-ESTRATEGICO.md §3"},
 p24:{chip:"P2 · Post-hackathon",title:"P2-4 · Dashboard de flota B2B",body:"Para empresas de transporte: ver todas las multas de sus vehículos, alertas de vencimiento, gestión centralizada. Solo para el pitch/roadmap.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Requiere","Auth + datos"],["Mercado","Empresas de transporte"],["Uso","Solo pitch"]],source:"PLAN-ESTRATEGICO.md §3"},
 p25:{chip:"P2 · Post-hackathon",title:"P2-5 · Temas CSS oscuro/claro",body:"Tema oscuro por defecto + tema claro que responde al sistema del teléfono (prefers-color-scheme).",facts:[["Complejidad","⭐ Baja"],["Default","Oscuro (Linear/Notion)"],["Auto","prefers-color-scheme"]],source:"PLAN-ESTRATEGICO.md §8"},
 reglaoro:{chip:"Regla de oro",title:"P0 completo y pulido > P0 + P1 a medias",body:"La prioridad absoluta es que la Capa 1 (P0) funcione perfecta: formulario → explicador → semáforo → PDF. Todo lo demás es bonus. El jurado premia lo que funciona, no lo que promete.",facts:[["Prioridad","P0 completo primero"],["Riesgo","Feature creep"],["Máxima","Capa 1 completa y pulida"]],source:"SPEC.md §6"}

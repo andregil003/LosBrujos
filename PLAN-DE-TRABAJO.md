@@ -179,7 +179,7 @@ PASO 8: Toma acción
 | 2:30 | Semaforo UI: tarjeta gigante + iconografía + checklist Decreto 33-2024 | **Frontend + Diseñador** | |
 | 3:00 | ¿Qué hago? — 3 opciones: pagar / oposición / prescripción | **Frontend + Lógica** | |
 | 3:00 | Generador de PDF de impugnación (jsPDF + checkbox obligatorio + plantilla) | **Lógica** | |
-| 3:30 | Estructura i18n + traducciones a K'iche' + Kawchiquel (al menos UI + frases clave) | **Investigador** | |
+| 3:30 | Estructura i18n + traducciones a K'iche' + Kawchiquel (al menos UI + frases clave) | **Uriel** | |
 | 4:00 | Backend demo: Google Sheets + Apps Script (datos ficticios) | **Arquitecto** | |
 | 4:00 | Guía de estafas (notificación real vs SMS falso) | **Investigador** | |
 | 4:30 | Escenario 120 días vencidos (qué hacer cuando ya prescribió) | **Lógica** | |
@@ -288,7 +288,6 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Qué hace:**
 - Crea `entidades.json` con las 11 entidades, jurisdicciones, contactos, horarios
 - Escribe el copy en lenguaje claro para las 15 infracciones
-- Prepara las traducciones a K'iche' y Kawchiquel (UI + frases clave)
 - Crea la guía de estafas (notificación real vs SMS falso)
 - Crea el escenario 120 días vencidos (qué hacer cuando ya prescribió)
 - Investigación adicional si el jurado pregunta por algo específico
@@ -299,7 +298,6 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Entregables:**
 - `data/entidades.json` (11 entidades completas)
 - Copy de las 15 infracciones en lenguaje claro
-- Archivos de i18n: español, K'iche', Kawchiquel
 - Guía de estafas (contenido editorial)
 - Guía de prescripción (120 días vencidos)
 - Guion de pitch de 5 minutos
@@ -308,23 +306,25 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 
 ---
 
-### ROL 5: DISEÑADOR / QA / PITCH
-**Quién lo lleva:** [Nombre del compañero]
+### ROL 5: DISEÑADOR / QA / PITCH + i18n
+**Quién lo lleva:** [Nombre del compañero] — **Uriel**
 
 **Qué hace:**
 - Define la paleta de colores, tipografía, espaciados en Tailwind
 - Diseña los componentes: tarjetas, botones, iconos SVG
+- **Prepara las traducciones a K'iche' y Kawchiquel (UI + frases clave) — i18n**
 - Revisa que todo se vea bien (QA visual)
 - Testea la app en diferentes pantallas (celular, tablet, desktop)
 - Prepara las slides de la presentación
 - Ensaya el pitch con el equipo
 - Hace el deploy final y verificación
 
-**Herramientas que usa:** Tailwind CSS, SVG, Figma (si lo usan), presentaciones
+**Herramientas que usa:** Tailwind CSS, SVG, Figma (si lo usan), presentaciones, JSON de i18n
 
 **Entregables:**
 - Paleta de colores definida (oscuro + acentos verde/ámbar/rojo)
 - Componentes SVG (iconos de semáforo, check, warning)
+- **Archivos de i18n: español, K'iche', Kawchiquel**
 - Lista de bugs visuales para que los developes arreglen
 - Slides de presentación
 - Checklist post-deploy
@@ -349,7 +349,7 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 | ¿Qué hago? (3 opciones) | — | **LÍDER** | **LÍDER** | — | Diseña |
 | Generador PDF | — | Ayuda | **LÍDER** | — | Verifica |
 | entidades.json | — | — | — | **LÍDER** | — |
-| i18n (K'iche' + Kawchiquel) | — | Conecta | — | **LÍDER** | — |
+| i18n (K'iche' + Kawchiquel) | — | Conecta | — | Ayuda | **LÍDER** |
 | Guía estafas | — | — | — | **LÍDER** | Diseña |
 | Escenario 120 días | — | — | **LÍDER** | Ayuda | — |
 | Backend demo (Sheets + Apps Script) | **LÍDER** | — | Ayuda | — | — |
@@ -381,7 +381,7 @@ Usá estas frases en la presentación:
 - **"Una multa que nadie entiende no cambia el comportamiento"**
 - **"De multa a educación: transformamos punitivo en preventivo"**
 - **"Offline-first porque el 39% de Guatemala no tiene internet confiable"**
-- **"Interfaz en K'iche', Q'eqchi' y Garífuna — la primera app de tránsito multilingüe"**
+- **"Interfaz en K'iche' y Kawchiquel — la primera app de tránsito multilingüe"**
 - **"Ejemplo vivo de la Interoperabilidad Digital que la Iniciativa 6626 propone"**
 
 ---

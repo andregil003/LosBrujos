@@ -1,6 +1,6 @@
 # Análisis Riguroso de Retos — HACKCREA 2026
 
-> **Propósito:** quejas reales documentadas + alcance + stack por reto, pensando en TODA la población guatemalteca (incluyendo pueblos mayas y garífunas).
+> **Propósito:** quejas reales documentadas + alcance + stack por reto, pensando en TODA la población guatemalteca (incluyendo pueblos mayas).
 
 ---
 
@@ -45,8 +45,7 @@
 |---|---|---|
 | Frontend | Vite + React + shadcn + Tailwind | Rápido, componentes reutilizables, demo estable |
 | Datos | JSON local (catálogo + plazos + instituciones) | Funciona sin backend — cero riesgo en demo |
-| i18n | JSON por idioma (es, k'iche', q'eqchi', garífuna) | Inclusión lingüística |
-| Audio | Grabaciones 🔊 (HTML audio) | Para quienes hablan pero no leen su idioma |
+| i18n | JSON por idioma (es, k'iche', kawchiquel) | Inclusión lingüística |
 | AI Agent (opcional) | n8n + Claude API | Explicar el texto de la boleta en lenguaje simple |
 | Deploy | Cloudflare Pages | Gratis, rápido, CDN |
 
@@ -55,7 +54,7 @@
 - El reto **menciona explícitamente** "quien no tiene el español como primera lengua" → es el único reto que lo pide.
 - Plataformas oficiales (PNC, SAT) son **solo en español** — documentado por Canada.ca.
 - Personas mayores mayahablantes que reciben una boleta en lenguaje legal → **no entienden ni el papel ni el plazo**.
-- Garífuna: comunidades de Izabal/Livingston donde el español es segunda lengua.
+- K'iche' y Kawchiquel: los idiomas mayas más hablados en Guatemala.
 
 ---
 
@@ -98,14 +97,13 @@
 | Frontend | Vite + React + shadcn + Tailwind | Quiz + checklist, sin backend |
 | Datos | JSON local (tipos de establecimiento + requisitos + costos del catálogo) | Datos reales verificables |
 | i18n | JSON por idioma | Inclusión lingüística |
-| Audio | Grabaciones 🔊 | Emprendedores que no leen su idioma |
 | Deploy | Cloudflare Pages | Gratis |
 
 ### Inclusión lingüística — por qué pega aquí
 
 - El reto dice **"sobre todo fuera de la capital"** → departamentos con alta población maya (Alta Verapaz, Quiché, Totonicapán, Sololá).
 - **Cooperativas y grupos de productores** (Reto 07) son mayormente indígenas — el Reto 08 tiene el mismo público emprendedor.
-- Un emprendedor q'eqchi' que quiere abrir su farmacia en Cobán: necesita saber los requisitos **en su idioma** antes de invertir.
+- Un emprendedor k'iche' que quiere abrir su farmacia en Quiché: necesita saber los requisitos **en su idioma** antes de invertir.
 - MSPAS tiene una **Unidad de Atención de la Salud de los Pueblos Indígenas e interculturalidad** — hay un precedente institucional que valida el enfoque.
 
 ---
@@ -154,14 +152,13 @@
 | Persistencia | localStorage | El usuario guarda sus constancias en su dispositivo |
 | Datos | JSON local (costo, vigencia, sedes, trámites que lo exigen) | Datos reales del catálogo |
 | i18n | JSON por idioma | Inclusión lingüística |
-| Audio | Grabaciones 🔊 | Personas que no leen su idioma |
 | Deploy | Cloudflare Pages | Gratis |
 
 ### Inclusión lingüística — por qué pega aquí
 
 - La plataforma PNC es **solo en español** (documentado por Canada.ca) → una persona mayahablante que busca empleo no puede usar el portal en línea y tiene que ir presencial (fila + día perdido).
 - El costo Q30 + fila + repetir cada 6 meses golpea más a quienes buscan empleo en comunidades rurales.
-- El código de verificación es **universal** (no depende del idioma) → la verificación funciona para todos, pero la UI de registro necesita idiomas + audio.
+- El código de verificación es **universal** (no depende del idioma) → la verificación funciona para todos, pero la UI de registro necesita idiomas.
 
 ---
 
@@ -182,8 +179,7 @@
 ```
 Frontend Vite + React + shadcn + Tailwind
 ├── JSON local (datos del catálogo por reto)
-├── i18n: es / k'iche' / q'eqchi' / garífuna
-├── Audio 🔊 (grabaciones de frases clave)
+├── i18n: es / k'iche' / kawchiquel
 ├── Iconografía universal + semáforo de plazos
 └── Deploy: Cloudflare Pages
 
@@ -191,6 +187,6 @@ Opcional (solo Reto 05):
 └── n8n + Claude API → AI Agent "explica mi boleta"
 ```
 
-**Prioridad de idiomas:** K'iche' (~1.27M) y Q'eqchi' (~1.37M) son los más hablados; garífuna es el símbolo de la costa caribe (Izabal/Livingston). Prototipo: español + k'iche' + q'eqchi' + garífuna.
+**Prioridad de idiomas:** K'iche' (~1.27M) y Kawchiquel son los más hablados en Guatemala. Prototipo: español + k'iche' + kawchiquel.
 
 **Fuente legal para el ángulo lingüístico:** Decreto 19-2003 (Ley de Idiomas Nacionales) Art. 9 — "las leyes, instituciones, avisos, disposiciones… deberán traducirse y divulgarse en los idiomas Mayas, Garífuna y Xinka". Nuestro prototipo **cumple la ley que el Estado no cumple** → argumento potente ante el jurado.

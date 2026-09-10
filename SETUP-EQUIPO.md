@@ -12,8 +12,8 @@
 | 1 | **André** | **Arquitecto** (líder) | Setup del proyecto, lógica core, deploy, decisiones técnicas |
 | 2 | **Kevin** | **Frontend** | Construye las pantallas con React + shadcn, responsive, animaciones |
 | 3 | **Lemus** | **Lógica de Negocio** | Conecta las piezas: formulario → explicador → semáforo → PDF |
-| 4 | **Diego** | **Investigador** | entidades.json, copy de infracciones, traducciones K'iche', guía de estafas |
-| 5 | **Uriel** | **Diseñador / QA / Pitch** | Paleta de colores, iconos SVG, tests visuales, slides, pitch |
+| 4 | **Diego** | **Investigador** | entidades.json, copy de infracciones, guía de estafas, escenario 120 días |
+| 5 | **Uriel** | **Diseñador / QA / Pitch + i18n** | Paleta de colores, iconos SVG, tests visuales, slides, pitch, **traducciones K'iche' + Kawchiquel** |
 
 **Cada uno trabaja en SU rama (branch).** Nadie toca `main` directamente.
 
@@ -290,8 +290,10 @@ git checkout [nombre-de-la-rama]
 ## 10. QUÉ HACE CADA ROL (resumen rápido)
 
 ### Kevin — Frontend
-- Creá los componentes React de cada pantalla (Home, Form, Explicador, Semaforo, Accion)
-- Usá los componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs)
+- Creá los componentes React de cada pantalla (Home, Placas, Municipios, Form, Explicador, Semaforo, QueHago, Accion)
+- Usá los componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs, Tooltip)
+- Implementá el selector de idioma (ES/K'iche'/Kawchiquel) + tamaño de letra
+- Implementá los botones "?" para info contextual
 - Aplicá Tailwind para responsive y tema oscuro
 - Hacé que se vea bien en celular
 - **Tu rama:** `kevin-frontend`
@@ -299,20 +301,23 @@ git checkout [nombre-de-la-rama]
 ### Lemus — Lógica de Negocio
 - Conectá el formulario con el explicador (props de React)
 - Implementá la lógica del semáforo (verde/amarillo/rojo) en `core.js`
+- Implementá la lógica de prescripción (120 días) y oposición (15 días)
 - Manejá el JSON de infracciones
+- Conectá con Google Sheets + Apps Script (datos demo)
 - Generá el PDF con jsPDF
 - **Tu rama:** `lemus-logica`
 
 ### Diego — Investigador
 - Creá `entidades.json` con las 11 entidades
 - Escribí el copy en lenguaje claro para cada infracción
-- Prepará las traducciones a K'iche'
 - Creá la guía de estafas
+- Creá el escenario 120 días vencidos (qué hacer cuando ya prescribió)
 - **Tu rama:** `diego-investigador`
 
-### Uriel — Diseñador / QA / Pitch
+### Uriel — Diseñador / QA / Pitch + i18n
 - Definí la paleta de colores en Tailwind (theme en `tailwind.config.js`)
 - Creá los iconos SVG (semáforo, check, warning)
+- **Prepará las traducciones a K'iche' y Kawchiquel (UI + frases clave)**
 - Testeá la app en diferentes pantallas
 - Prepará las slides y ensayá el pitch
 - **Tu rama:** `uriel-disenador`
