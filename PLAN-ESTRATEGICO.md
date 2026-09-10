@@ -100,7 +100,7 @@
 
 | # | Deliverable | Complejidad | Dependencias | Notas |
 |---|---|---|---|---|
-| **P0-1** | **Estructura Vite + routing SPA** | ⭐ Baja | Ninguna | Scaffold con `npm create vite@latest`, estructura de carpetas, routing con hash. |
+| **P0-1** | **Estructura Vite + React + routing SPA** | ⭐ Baja | Ninguna | Scaffold con `npm create vite`, estructura de carpetas, componentes shadcn, routing con React Router. |
 | **P0-2** | **P0 — Inicio** (hero + 3 caminos) | ⭐ Baja | P0-1 | Landing page: "¿Te llegó una multa?" + botones de entrada |
 | **P0-3** | **P1 — Formulario de boleta** | ⭐⭐ Media | P0-1 | Selector tipo papel, fecha, entidad, infracción. Validación estricta de fechas. **+ pregunta "¿Vos manejabas?" con guía especial si no.** |
 | **P0-4** | **P2 — Explicador de multa** | ⭐⭐ Media | P0-3 + JSON | Lenguaje claro + montos + descuentos + prevención. El CORAZÓN del reto. |
@@ -281,6 +281,6 @@
 |---|---|---|
 | 1 | ¿OCR en el MVP? | **NO** → V2. El usuario ingresa datos a mano de la boleta. |
 | 2 | ¿Idiomas? | **Español + K'iche' + Inglés** (3 idiomas). Inglés para turistas/expats. |
-| 3 | ¿Framework? | **Vite + Vanilla JS** (HTML + CSS + JS puro, sin React/Vue). Módulos ES, hot reload, build moderno. |
+| 3 | ¿Framework? | **Vite + React + shadcn + Tailwind** (componentes reutilizables, diseño profesional, responsive con Tailwind). Módulos ES, hot reload, build moderno. |
 | 4 | ¿Tema visual? | **Oscuro** (estilo Linear/Notion). |
 | 5 | ¿Deploy? | **Cloudflare Pages** (ya tienen wrangler config en SPEC). |

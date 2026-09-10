@@ -1322,13 +1322,13 @@ FASE 3 (Escalamiento - 12+ meses):
 
 ### 23.3 Discrepancia de stack técnico entre documentos
 
-**El problema:** `analisis-retos.md` define Vite + Vanilla TS + JSON local + Cloudflare Pages (cero backend). `reto5-multas-transito.md` añade React + Tailwind + Workers + D1 + KV + ntfy.sh + LLM.
+**El problema:** `analisis-retos.md` define Vite + React + shadcn + Tailwind + JSON local + Cloudflare Pages (cero backend). `reto5-multas-transito.md` añadía Workers + D1 + KV + ntfy.sh + LLM.
 
-**Veredicto (adoptado):** Mantener **Vite + Vanilla TS + Cloudflare Pages con JSON local y localStorage**. Meter D1, Workers y Web Scraping en 48 horas añade puntos de quiebre innecesarios para una base de datos que en la demo será 100% simulada.
+**Veredicto (adoptado):** Usar **Vite + React + shadcn + Tailwind + Cloudflare Pages con JSON local y localStorage**. Meter D1, Workers y Web Scraping en 48 horas añade puntos de quiebre innecesarios para una base de datos que en la demo será 100% simulada. shadcn da componentes UI profesionales sin construir desde cero.
 
 **Stack final recomendado:**
 ```
-Frontend: Vite + vanilla TS
+Frontend: Vite + React + shadcn + Tailwind
 ├── JSON local (catálogo + plazos + instituciones)
 ├── i18n: es / k'iche' / q'eqchi' / garífuna
 ├── Audio 🔊 (grabaciones de frases clave)
@@ -1477,7 +1477,7 @@ Para población no alfabetizada (o que habla un idioma nacional pero no lo lee):
 
 **El prototipo:** Un "traductor de multas" que tome la boleta/notificación y la convierta en lenguaje claro con pasos accionables. **Flujo primario: formulario guiado de 3 datos** (número de boleta + fecha + entidad) — NO OCR de manuscritos (inviable, benchmarks 2026). OCR solo como autocompletado para boletas térmicas. Incluye: Semáforo de Legalidad (checklist 6 elementos Art. 2), mapeo de jurisdicciones, cápsulas de prevención vial, generador de borradores PDF, calculadora de prescripción, y alertas de plazos. **Diferenciador único:** interfaz en K'iche', Q'eqchi' y Garífuna con audio conceptual (no traducción literal) + iconografía universal de colores.
 
-**Stack técnico confirmado (simplificado):** Vite + vanilla TS + JSON local + localStorage + Cloudflare Pages. Sin backend, sin Workers, sin D1 — cero puntos de quiebre en 48 horas. jsPDF para PDF local, tesseract.js opcional para autocompletado.
+**Stack técnico confirmado (simplificado):** Vite + React + shadcn + Tailwind + JSON local + localStorage + Cloudflare Pages. Sin backend, sin Workers, sin D1 — cero puntos de quiebre en 48 horas. jsPDF para PDF local, tesseract.js opcional para autocompletado.
 
 **Cumplimiento legal:** OCR y almacenamiento local (localStorage) cumplen Ley 89-2005 de protección de datos. Generador de impugnaciones genera borradores — no asesoría legal (cumple restricción Reto 05). Enfoque "certeza jurídica y cultura vial" — no "evadir multas" (evita riesgo de incentivo perverso con autoridades).
 

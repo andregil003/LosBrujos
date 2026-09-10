@@ -54,7 +54,7 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 <header>
   <div>
     <h1>Stack técnico: moderno, liviano, sin backend</h1>
-    <div class="sub">Vite + Vanilla JS + CSS puro + JSON local + jsPDF + PWA → Cloudflare Pages — toca cada capa</div>
+    <div class="sub">Vite + React + shadcn/ui + Tailwind CSS + PWA → Cloudflare Pages — toca cada capa</div>
   </div>
   <button class="export" onclick="exportPNG()">Exportar PNG</button>
 </header>
@@ -81,15 +81,15 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 
   <g class="node" data-key="vanilla" tabindex="0" role="button" style="animation-delay:.09s">
     <rect x="290" y="100" width="200" height="80" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
-    <text x="390" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Vanilla JS</text>
-    <text x="390" y="152" text-anchor="middle" font-size="10" fill="#6B7280">módulos ES</text>
-    <text x="390" y="166" text-anchor="middle" font-size="10" fill="#6B7280">cero frameworks</text>
+    <text x="390" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">React + shadcn</text>
+    <text x="390" y="152" text-anchor="middle" font-size="10" fill="#6B7280">componentes UI</text>
+    <text x="390" y="166" text-anchor="middle" font-size="10" fill="#6B7280">reutilizables</text>
     <text x="474" y="116" font-size="13" fill="#2563EB" class="hint">＋</text>
   </g>
 
   <g class="node" data-key="css" tabindex="0" role="button" style="animation-delay:.12s">
     <rect x="520" y="100" width="200" height="80" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
-    <text x="620" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">CSS puro</text>
+    <text x="620" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Tailwind CSS</text>
     <text x="620" y="152" text-anchor="middle" font-size="10" fill="#6B7280">tema oscuro</text>
     <text x="620" y="166" text-anchor="middle" font-size="10" fill="#6B7280">responsive móvil</text>
     <text x="704" y="116" font-size="13" fill="#2563EB" class="hint">＋</text>
@@ -237,10 +237,10 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 
 <script>
 const INFO={
-capa_frontend:{chip:"Capa 1",title:"Frontend (PWA)",body:"La interfaz completa corre en el navegador. Vite como herramienta de desarrollo (dev server + build), Vanilla JS sin frameworks, CSS puro con tema oscuro, y PWA para instalación y uso offline.",facts:[["Stack","Vite + Vanilla JS + CSS"],["Razón","Moderno sin ser pesado"],["Demo","Estable, sin build roto"]],source:"PLAN-ESTRATEGICO.md §8"},
-vite:{chip:"Herramienta",title:"Vite",body:"Dev server con hot reload instantáneo y build optimizado a dist/. Es la herramienta de build moderna por defecto en 2026. Sin framework encima: solo vanilla JS con módulos ES.",facts:[["Comando","npm create vite@latest"],["Dev","npm run dev"],["Build","npm run build → dist/"],["Por qué","Moderno, rápido, sin deps pesadas"]],source:"PLAN-ESTRATEGICO.md §8"},
-vanilla:{chip:"Lenguaje",title:"Vanilla JS (módulos ES)",body:"JavaScript puro con import/export. Cero React, cero Vue, cero Angular. Estructura limpia: src/js/core.js (lógica pura), i18n.js (diccionarios), data.js (carga JSON), script.js (UI).",facts:[["Patrón","Módulos ES"],["Estructura","core.js · i18n.js · data.js · script.js"],["Por qué","Simple, rápido, nada se rompe"]],source:"SPEC.md §3"},
-css:{chip:"Estilo",title:"CSS puro — tema oscuro",body:"Tema oscuro estilo Linear/Notion (patrón QUIZZO). Tipografía legible (Space Grotesk o Inter), tarjetas con glass blur bajo, iconografía SVG inline, animaciones sutiles de entrada.",facts:[["Tema","Oscuro (default)"],["Fuente","Inter / Space Grotesk"],["Responsive","Móvil-first"],["Accesibilidad","Contraste alto + iconografía"]],source:"SPEC.md §7"},
+capa_frontend:{chip:"Capa 1",title:"Frontend (PWA)",body:"La interfaz completa corre en el navegador. Vite como herramienta de desarrollo, React con componentes reutilizables, shadcn/ui para UI profesional, Tailwind CSS para responsive y tema oscuro, y PWA para instalación y uso offline.",facts:[["Stack","Vite + React + shadcn + Tailwind"],["Razón","Componentes reutilizables, diseño profesional"],["Demo","Estable, sin build roto"]],source:"PLAN-ESTRATEGICO.md §8"},
+vite:{chip:"Herramienta",title:"Vite",body:"Dev server con hot reload instantáneo y build optimizado a dist/. Es la herramienta de build moderna por defecto en 2026. Con React como framework de UI.",facts:[["Comando","npm create vite"],["Dev","npm run dev"],["Build","npm run build → dist/"],["Por qué","Moderno, rápido, con React"]],source:"PLAN-ESTRATEGICO.md §8"},
+vanilla:{chip:"UI",title:"React + shadcn/ui",body:"React como framework de componentes con shadcn/ui para UI profesional: Button, Card, Select, Input, Checkbox, Tabs, Dialog, Badge, Progress. Componentes copiados al proyecto (no dependencia npm), personalizables con Tailwind.",facts:[["Framework","React + Vite"],["UI","shadcn/ui (Button, Card, Select…)"],["Estilo","Tailwind CSS"],["Por qué","Componentes listos, diseño profesional"]],source:"SPEC.md §3"},
+css:{chip:"Estilo",title:"Tailwind CSS — tema oscuro",body:"Tema oscuro con Tailwind CSS. Utilidades para responsive, dark mode, contraste alto, glass blur. Paleta: slate-900 (fondo), emerald/amber/red (semáforo). Tipografía: Inter + JetBrains Mono.",facts:[["Tema","Oscuro (slate-900)"],["Responsive","Móvil-first con Tailwind"],["Accesibilidad","Contraste alto + iconografía"],["Paleta","emerald · amber · red (semáforo)"]],source:"SPEC.md §7"},
 pwa:{chip:"PWA",title:"PWA instalable + offline",body:"manifest.json + service worker que precachea todo. La app se instala desde el navegador y funciona sin internet. Los datos viajan en JSON local. Cumple Ley 89-2005 (todo queda en el dispositivo).",facts:[["Manifest","manifest.json"],["Offline","sw.js precache"],["Instalable","Desde el navegador"],["Ley","89-2005 cumplida"]],source:"SPEC.md §2 · §3"},
 capa_datos:{chip:"Capa 2",title:"Datos (JSON local)",body:"Toda la información viaja en archivos JSON dentro de la app. Cero backend, cero servidores, cero riesgo de API caída en la demo. Los datos del usuario quedan en su dispositivo (localStorage).",facts:[["Formato","JSON local"],["Backend","Ninguno"],["Privacidad","Todo en el dispositivo"]],source:"SPEC.md §3"},
 infracciones:{chip:"Datos",title:"infracciones.json",body:"Catálogo de 15 infracciones con: código normativo, nombre en lenguaje claro, descripción, monto, descuento por curso vial, categoría, emisores y consejo de prevención. Los montos null se muestran como 'verificar en boleta'.",facts:[["Cantidad","15 infracciones"],["Montos","Verificados o null (nunca inventar)"],["Descuento","25% curso vial"],["Consejo","Cápsula de prevención"]],source:"data/infracciones.json"},

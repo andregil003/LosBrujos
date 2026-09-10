@@ -183,7 +183,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <h3>ROL 1: Arquitecto</h3>
     <div class="sub">Desarrollador Principal</div>
     <ul>
-      <li>Crea la estructura del proyecto (Vite, carpetas)</li>
+      <li>Crea la estructura del proyecto (Vite + React + shadcn + Tailwind)</li>
       <li>Configura Service Worker + manifest (PWA)</li>
       <li>Escribe la logica core: prescripcion, semaforo, validacion</li>
       <li>Despliega a Cloudflare Pages</li>
@@ -197,8 +197,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <div class="sub">Constructor de Interfaces</div>
     <ul>
       <li>Construye las pantallas: inicio, formulario, explicador, semaforo, PDF</li>
-      <li>Escribe el HTML de cada vista</li>
-      <li>Aplica CSS (tema oscuro, responsive, tarjetas)</li>
+      <li>Crea componentes React de cada vista</li>
+      <li>Aplica Tailwind (tema oscuro, responsive, tarjetas)</li>
       <li>Implementa animaciones y transiciones</li>
       <li>Asegura que todo se vea bien en celular</li>
     </ul>
@@ -249,7 +249,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <!-- PANEL 3: Deliverables -->
 <div class="pnl" id="p3">
 <div class="del">
-  <div class="del-card"><div class="num" style="color:var(--red)">P0-1</div><h3>Estructura Vite + routing SPA</h3><p>Scaffold con npm create vite, estructura de carpetas, routing con hash.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-1</div><h3>Estructura Vite + React + routing SPA</h3><p>Scaffold con npm create vite, estructura de carpetas, componentes shadcn, routing con React Router.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-2</div><h3>Pantalla de inicio (landing)</h3><p>"Te llego una multa?" + 3 botones de entrada: manual, OCR, buscador.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-3</div><h3>Formulario de boleta</h3><p>Selector tipo papel, fecha, entidad, infraccion. Validacion estricta. Pregunta "Vos manejabas?"</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
   <div class="del-card"><div class="num" style="color:var(--red)">P0-4</div><h3>Explicador de multa</h3><p>Lenguaje claro + montos + descuentos + prevencion. EL CORAZON del reto.</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
@@ -273,7 +273,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <table class="mx">
 <thead><tr><th>Tarea</th><th>Arquitecto</th><th>Frontend</th><th>Logica</th><th>Investigador</th><th>Disenador/QA</th></tr></thead>
 <tbody>
-<tr><td>Setup proyecto Vite</td><td class="lead">LIDER</td><td class="help">Ayuda</td><td class="na">-</td><td class="na">-</td><td class="na">-</td></tr>
+<tr><td>Setup proyecto Vite + React + shadcn</td><td class="lead">LIDER</td><td class="help">Ayuda</td><td class="na">-</td><td class="na">-</td><td class="na">-</td></tr>
 <tr><td>Service Worker / PWA</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="help">Verifica</td></tr>
 <tr><td>CSS / Estilos base</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td></tr>
 <tr><td>Pantalla inicio</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="help">Disena</td></tr>
@@ -306,7 +306,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
     <h3>Mañana (9:00-12:30)</h3>
     <div class="when">CIMIENTOS + ESTRUCTURA</div>
     <ul>
-      <li><strong>Arquitecto:</strong> Setup Vite + estructura + CSS base + Service Worker</li>
+      <li><strong>Arquitecto:</strong> Setup Vite + React + shadcn + Tailwind + estructura + Service Worker</li>
       <li><strong>Frontend:</strong> Landing "Te llego una multa?" + 3 caminos</li>
       <li><strong>Logica:</strong> Logica core: prescripcion + validacion fechas + carga datos</li>
       <li><strong>Investigador:</strong> entidades.json + copy infracciones</li>

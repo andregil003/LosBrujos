@@ -111,6 +111,7 @@ Este es el repo donde vamos a poner TODO el código de la app. **Hacé esto una 
 cd C:\Users\[tu-usuario]\Documents
 git clone https://github.com/ithackathonnacionalgt/reto-5-brujos.git
 cd reto-5-brujos
+npm install
 ```
 
 ### Mac (Terminal)
@@ -119,9 +120,18 @@ cd reto-5-brujos
 cd ~/Documents
 git clone https://github.com/ithackathonnacionalgt/reto-5-brujos.git
 cd reto-5-brujos
+npm install
 ```
 
-**Listo.** Ya tenés el repo en tu computadora.
+**Listo.** Ya tenés el repo en tu computadora con todas las dependencias instaladas.
+
+### Probar que todo funciona
+
+```
+npm run dev
+```
+
+Abrí el link que te muestre (algo como `http://localhost:5173`) en tu navegador. Si ves la app, está todo bien.
 
 ---
 
@@ -280,14 +290,15 @@ git checkout [nombre-de-la-rama]
 ## 10. QUÉ HACE CADA ROL (resumen rápido)
 
 ### Kevin — Frontend
-- Creá el HTML de cada pantalla (inicio, formulario, explicador, semáforo)
-- Aplicá el CSS (tema oscuro, responsive)
+- Creá los componentes React de cada pantalla (Home, Form, Explicador, Semaforo, Accion)
+- Usá los componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs)
+- Aplicá Tailwind para responsive y tema oscuro
 - Hacé que se vea bien en celular
 - **Tu rama:** `kevin-frontend`
 
 ### Lemus — Lógica de Negocio
-- Conectá el formulario con el explicador
-- Implementá la lógica del semáforo (verde/amarillo/rojo)
+- Conectá el formulario con el explicador (props de React)
+- Implementá la lógica del semáforo (verde/amarillo/rojo) en `core.js`
 - Manejá el JSON de infracciones
 - Generá el PDF con jsPDF
 - **Tu rama:** `lemus-logica`
@@ -300,7 +311,7 @@ git checkout [nombre-de-la-rama]
 - **Tu rama:** `diego-investigador`
 
 ### Uriel — Diseñador / QA / Pitch
-- Definí la paleta de colores y tipografía
+- Definí la paleta de colores en Tailwind (theme en `tailwind.config.js`)
 - Creá los iconos SVG (semáforo, check, warning)
 - Testeá la app en diferentes pantallas
 - Prepará las slides y ensayá el pitch
@@ -313,6 +324,8 @@ git checkout [nombre-de-la-rama]
 - [ ] Descargué ntfy y me suscribí a `losbrujos-hackcrea-2026`
 - [ ] Instalé Git
 - [ ] Cloné el repo `reto-5-brujos`
+- [ ] Corrí `npm install` para instalar dependencias
+- [ ] Corrí `npm run dev` y vi la app en el navegador
 - [ ] Creé mi rama con mi nombre y rol
 - [ ] Instalé Node.js
 - [ ] (Opcional) Instalé opencode

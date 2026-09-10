@@ -3,7 +3,7 @@
 > **Equipo:** LosBrujos · HACKCREA 2026
 > **Narrativa:** "De multa a educación" — transformar el castigo en comprensión.
 > **Constraint del reto:** El prototipo NO es asesoría legal, NO presenta impugnaciones, NO garantiza resultados.
-> **Base técnica:** Arquitectura reutilizada de QUIZZO (PWA estática, vanilla JS, sin backend, localStorage, i18n, Cloudflare Pages).
+> **Base técnica:** Vite + React + shadcn/ui + Tailwind CSS (PWA estática, sin backend, localStorage, i18n, Cloudflare Pages).
 
 ---
 
@@ -28,30 +28,58 @@ El ciudadano recibe una boleta de tránsito y no entiende nada: ni qué hizo, ni
 
 ---
 
-## 3. Arquitectura (reutilizada de QUIZZO)
+## 3. Arquitectura (Vite + React + shadcn + Tailwind)
 
 ```
-app/
-├── index.html          SPA con vistas (patrón #view-* de QUIZZO)
-├── sw.js               Service worker: precache offline + banner de updates
-├── manifest.json       PWA instalable
-├── css/styles.css      Tema oscuro estilo Linear/Notion (tokens de QUIZZO adaptados)
-├── js/
-│   ├── core.js         Lógica pura y testeable: fechas, prescripción, semáforo, validación
-│   ├── i18n.js         Diccionarios: es + skeleton k'iche'/q'eqchi'/garífuna
-│   ├── data.js         Carga de infracciones.json + catálogo de entidades
-│   └── script.js       UI: navegación entre vistas + render
-├── data/
-│   ├── infracciones.json   Catálogo de 15 infracciones (ya existe, se expande)
-│   └── entidades.json      Entidades emisoras + jurisdicción + contacto
-├── icons/              Favicon + PNGs PWA
-├── _headers            Cache control para SW/version
-└── wrangler.jsonc      Deploy Cloudflare Pages
+reto-5-brujos/
+├── index.html                Entry point (PWA meta tags)
+├── vite.config.js            Vite + React + Tailwind + PWA plugin
+├── src/
+│   ├── main.jsx              Bootstrap de React
+│   ├── App.jsx               Router principal (vistas)
+│   ├── index.css             Tailwind imports + tema oscuro
+│   ├── lib/
+│   │   └── utils.js          cn() helper para shadcn (clsx + tailwind-merge)
+│   ├── components/ui/        Componentes shadcn (Button, Card, Select, etc.)
+│   ├── screens/
+│   │   ├── Home.jsx          P0: Landing "¿Te llegó una multa?"
+│   │   ├── Form.jsx          P1: Formulario guiado de la boleta
+│   │   ├── Explicador.jsx    P2: Traducción de la multa
+│   │   ├── Semaforo.jsx      P3: Semáforo de legalidad
+│   │   └── Accion.jsx        P4: PDF / pago con descuento
+│   ├── lib/
+│   │   ├── core.js           Lógica pura: fechas, prescripción, semáforo, validación
+│   │   ├── i18n.js           Diccionarios: es + skeleton k'iche'/q'eqchi'/garífuna
+│   │   └── data.js           Carga de infracciones.json + entidades
+│   └── hooks/
+│       └── useLocalStorage.js Hook para persistencia local
+├── public/
+│   ├── infracciones.json     Catálogo de 15+ infracciones
+│   ├── entidades.json        11 entidades emisoras
+│   ├── favicon.svg           Icono de la app
+│   ├── icon-192.png          PWA icon 192x192
+│   ├── icon-512.png          PWA icon 512x512
+│   └── robots.txt
+├── _headers                  Cache control para Cloudflare
+└── package.json              Dependencias
 ```
+
+**Componentes shadcn que usamos:**
+- `Button` → CTAs de la landing, "Explicar mi multa", "Generar PDF"
+- `Card` → Tarjetas del explicador, semáforo, entidades
+- `Select` → Selector de entidad, tipo de infracción
+- `Input` → Fecha de infracción, fecha de notificación, número de boleta
+- `Checkbox` → "¿Vos manejabas?" + disclaimer obligatorio
+- `Badge` → Estados del semáforo, prioridades
+- `Dialog` → Confirmación antes de generar PDF
+- `Tabs` → Las 3 opciones de la landing
+- `Progress` → Barras de plazos (días restantes)
 
 **Decisiones:**
-- Vanilla JS, cero frameworks, cero build step (patrón QUIZZO) → demo estable, sin riesgo de build roto.
+- React + shadcn → componentes reutilizables, diseño profesional, responsive con Tailwind.
+- Tailwind CSS → dark mode + contraste alto + responsive en minutos.
 - Datos en JSON local → cero backend, cero riesgo en demo.
+- PWA con vite-plugin-pwa → service worker automático, offline-first.
 - Deploy: Cloudflare Pages (gratis, CDN, HTTPS).
 
 ---
@@ -272,15 +300,15 @@ André pidió un alcance **ambicioso por capas y fases**. Así lo estructuro:
 | Legalidad | No se evalúa | Semáforo con iconografía |
 | Accesibilidad | Solo español, desktop | Multilingüe + audio + móvil-first |
 | Confianza | "null" en nombres, bugs | Copy cuidado, disclaimers claros |
-| Estética | Portales anticuados | Tema oscuro estilo Linear/Notion (de QUIZZO) |
+| Estética | Portales anticuados | Tema oscuro con Tailwind + shadcn (profesional, responsive) |
 | Offline | Requiere internet | PWA offline-first |
 
 **Detalles visuales:**
-- Tema oscuro con acento verde/ámbar/rojo según semáforo
-- Tipografía legible (Space Grotesk de QUIZZO o similar)
-- Tarjetas con glass blur (patrón QUIZZO, blur bajo para rendimiento)
-- Iconografía SVG inline (sin dependencias)
-- Animaciones sutiles de entrada (fade/slide, patrón QUIZZO)
+- Tema oscuro con acento verde/ámbar/rojo según semáforo (Tailwind: `emerald`, `amber`, `red`)
+- Tipografía legible (Inter para UI, JetBrains Mono para código normativo)
+- Tarjetas con glass blur (Tailwind: `backdrop-blur` + `bg-white/5`)
+- Iconografía con Lucide React (shadcn default)
+- Animaciones sutiles de entrada (fade/slide, CSS transitions de Tailwind)
 
 ---
 

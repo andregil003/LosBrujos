@@ -19,7 +19,7 @@ Diagramas interactivos (click en cada cuadro para ver el detalle) desplegados en
 | D9 | Del problema a la solución (el puente) | [Abrir](https://andregil003.github.io/LosBrujos/D9-del-problema-a-la-solucion.html) |
 | D10 | Ecosistema de multas en Guatemala (lo que ya existe) | [Abrir](https://andregil003.github.io/LosBrujos/D10-ecosistema-multas-guatemala.html) |
 | D11 | Priorización de deliverables (P0 · P1 · P2) | [Abrir](https://andregil003.github.io/LosBrujos/D11-priorizacion-deliverables.html) |
-| D12 | Stack técnico del prototipo (Vite + Vanilla + Cloudflare) | [Abrir](https://andregil003.github.io/LosBrujos/D12-stack-tecnico.html) |
+| D12 | Stack técnico del prototipo (Vite + React + shadcn + Tailwind + Cloudflare) | [Abrir](https://andregil003.github.io/LosBrujos/D12-stack-tecnico.html) |
 | **D13** | **Plan de Trabajo · 5 Roles · Cronograma** | [**Abrir**](https://andregil003.github.io/LosBrujos/D13-plan-de-trabajo.html) |
 
 > 💡 Cada diagrama tiene botón **Exportar PNG** y es responsive (móvil incluido).

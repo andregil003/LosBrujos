@@ -43,7 +43,7 @@
 
 | Capa | Tecnología | Por qué |
 |---|---|---|
-| Frontend | Vite + vanilla TS | Rápido, sin deps pesadas, demo estable |
+| Frontend | Vite + React + shadcn + Tailwind | Rápido, componentes reutilizables, demo estable |
 | Datos | JSON local (catálogo + plazos + instituciones) | Funciona sin backend — cero riesgo en demo |
 | i18n | JSON por idioma (es, k'iche', q'eqchi', garífuna) | Inclusión lingüística |
 | Audio | Grabaciones 🔊 (HTML audio) | Para quienes hablan pero no leen su idioma |
@@ -95,7 +95,7 @@
 
 | Capa | Tecnología | Por qué |
 |---|---|---|
-| Frontend | Vite + vanilla TS | Quiz + checklist, sin backend |
+| Frontend | Vite + React + shadcn + Tailwind | Quiz + checklist, sin backend |
 | Datos | JSON local (tipos de establecimiento + requisitos + costos del catálogo) | Datos reales verificables |
 | i18n | JSON por idioma | Inclusión lingüística |
 | Audio | Grabaciones 🔊 | Emprendedores que no leen su idioma |
@@ -149,7 +149,7 @@
 
 | Capa | Tecnología | Por qué |
 |---|---|---|
-| Frontend | Vite + vanilla TS | Registro + verificación |
+| Frontend | Vite + React + shadcn + Tailwind | Registro + verificación |
 | Lógica de códigos | JS puro (hash + fecha de vigencia) | Sin backend — el código se genera y verifica localmente |
 | Persistencia | localStorage | El usuario guarda sus constancias en su dispositivo |
 | Datos | JSON local (costo, vigencia, sedes, trámites que lo exigen) | Datos reales del catálogo |
@@ -180,7 +180,7 @@
 ## Stack común (los 3 retos)
 
 ```
-Frontend Vite + vanilla TS
+Frontend Vite + React + shadcn + Tailwind
 ├── JSON local (datos del catálogo por reto)
 ├── i18n: es / k'iche' / q'eqchi' / garífuna
 ├── Audio 🔊 (grabaciones de frases clave)
