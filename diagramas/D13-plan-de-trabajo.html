@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -81,7 +81,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .tl-day ul li strong{color:var(--text)}
 /* Responsive */
 @media(max-width:768px){
-  .tl{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr!important}
   .roles{grid-template-columns:1fr}
   .del{grid-template-columns:1fr}
   .flow::before{left:18px}
@@ -101,7 +101,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   <div class="tab" data-p="p2">5 Roles del Equipo</div>
   <div class="tab" data-p="p3">Deliverables</div>
   <div class="tab" data-p="p4">Matriz de Responsabilidades</div>
-  <div class="tab" data-p="p5">Cronograma (4 dias)</div>
+  <div class="tab" data-p="p5">Cronograma (HOY)</div>
 </div>
 
 <!-- PANEL 1: Flujo -->
@@ -301,49 +301,42 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 <!-- PANEL 5: Cronograma -->
 <div class="pnl" id="p5">
-<div class="tl">
+<div class="tl" style="grid-template-columns:repeat(3,1fr)">
   <div class="tl-day d1">
-    <h3>Dia 1 - Cimientos</h3>
-    <div class="when">Mañana + Tarde</div>
+    <h3>Mañana (9:00-12:30)</h3>
+    <div class="when">CIMIENTOS + ESTRUCTURA</div>
     <ul>
-      <li><strong>Arquitecto:</strong> Setup Vite + estructura + Service Worker</li>
-      <li><strong>Frontend:</strong> CSS base + paleta de colores</li>
-      <li><strong>Investigador:</strong> entidades.json (11 entidades)</li>
-      <li><strong>Disenador:</strong> Paleta + tipografia + componentes SVG</li>
-      <li><strong>Logica:</strong> Ayuda con setup y datos</li>
+      <li><strong>Arquitecto:</strong> Setup Vite + estructura + CSS base + Service Worker</li>
+      <li><strong>Frontend:</strong> Landing "Te llego una multa?" + 3 caminos</li>
+      <li><strong>Logica:</strong> Logica core: prescripcion + validacion fechas + carga datos</li>
+      <li><strong>Investigador:</strong> entidades.json + copy infracciones</li>
+      <li><strong>Disenador:</strong> Paleta + tipografia + iconos SVG (semaforo, check)</li>
+      <li style="color:var(--accent)"><strong>Checkpoint 12:00:</strong> App carga? CSS se ve? PWA instala?</li>
     </ul>
   </div>
   <div class="tl-day d2">
-    <h3>Dia 2 - Core</h3>
-    <div class="when">Mañana + Tarde</div>
+    <h3>Tarde (1:30-6:00)</h3>
+    <div class="when">CORE FUNCIONAL</div>
     <ul>
-      <li><strong>Arquitecto:</strong> Logica core + carga de datos</li>
-      <li><strong>Frontend:</strong> Formulario + Explicador</li>
-      <li><strong>Logica:</strong> Conectar formulario + explicador + semaforo</li>
-      <li><strong>Investigador:</strong> i18n estructura + copy infracciones</li>
-      <li><strong>Disenador:</strong> Revisar UI + iconos semaforo</li>
-    </ul>
-  </div>
-  <div class="tl-day d3">
-    <h3>Dia 3 - Diferenciadores</h3>
-    <div class="when">Mañana + Tarde</div>
-    <ul>
-      <li><strong>Arquitecto:</strong> Deploy a Cloudflare Pages</li>
-      <li><strong>Frontend:</strong> Semaforo UI + barras de plazo</li>
-      <li><strong>Logica:</strong> Generador PDF + checklist</li>
-      <li><strong>Investigador:</strong> Kiche (UI + frases clave)</li>
-      <li><strong>Disenador:</strong> Tests manuales + fix bugs</li>
+      <li><strong>Frontend:</strong> Explicador + semaforo UI + barras de plazo</li>
+      <li><strong>Logica:</strong> Semaforo logica + Generador PDF (jsPDF)</li>
+      <li><strong>Investigador:</strong> i18n Kiche + guia de estafas</li>
+      <li><strong>Arquitecto:</strong> Deploy a Cloudflare Pages (v1)</li>
+      <li><strong>Disenador:</strong> QA visual en celular/tablet/desktop</li>
+      <li style="color:var(--yellow)"><strong>Checkpoint 5:00:</strong> Fix bugs + pulido responsive</li>
     </ul>
   </div>
   <div class="tl-day d4">
-    <h3>Dia 4 - Pitch + Pulido</h3>
-    <div class="when">Mañana + Tarde</div>
+    <h3>Noche (6:00-9:00)</h3>
+    <div class="when">PITCH + DEPLOY FINAL</div>
     <ul>
-      <li><strong>Arquitecto:</strong> Deploy final + verificacion</li>
-      <li><strong>Frontend:</strong> Responsive final + pulido</li>
-      <li><strong>Logica:</strong> Historial localStorage + guia estafas</li>
-      <li><strong>Investigador:</strong> Guion pitch +Ayuda con contenido</li>
-      <li><strong>Disenador:</strong> Slides + ensayo pitch + QA final</li>
+      <li><strong>Arquitecto:</strong> Deploy final Cloudflare Pages</li>
+      <li><strong>Frontend:</strong> Pulido visual final</li>
+      <li><strong>Logica:</strong> Historial localStorage</li>
+      <li><strong>Investigador:</strong> Slides de presentacion</li>
+      <li><strong>Disenador:</strong> Ensayo pitch x2</li>
+      <li style="color:var(--green)"><strong>Checkpoint 8:00:</strong> Todo funciona? PDF genera? Kiche visible?</li>
+      <li style="color:var(--pink)"><strong>8:30:</strong> SUBMIT / PRESENTACION</li>
     </ul>
   </div>
 </div>

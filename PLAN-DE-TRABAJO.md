@@ -145,43 +145,49 @@ PASO 5: Toma acción
 
 ---
 
-## CRONOGRAMA (cómo repartimos el tiempo)
+## CRONOGRAMA — HOY (10 septiembre, hackathon presencial)
 
-### DÍA 1 — CIMIENTOS
-| Hora | Tarea | Responsable |
-|------|-------|-------------|
-| Mañana | Setup del proyecto Vite + estructura de carpetas + CSS base | Desarrollador 1 |
-| Mañana | Crear `entidades.json` (catálogo de 11 entidades) | Investigador |
-| Tarde | Pantalla de inicio (landing con 3 caminos) | Desarrollador 2 |
-| Tarde | Service Worker + manifest.json (PWA) | Desarrollador 1 |
-| Todo el día | Infraestructura de diseño: paleta de colores, tipografía, componentes | Diseñador |
+**Todo sale HOY.** El día está dividido en 3 bloques. Cada persona trabaja en su rol desde el minuto 1.
 
-### DÍA 2 — CORE
-| Hora | Tarea | Responsable |
-|------|-------|-------------|
-| Mañana | Formulario de boleta con validación de fechas | Desarrollador 2 |
-| Mañana | Cargar infracciones.json + lógica de datos | Desarrollador 1 |
-| Tarde | Explicador de multa (lenguaje claro + montos + prevención) | Desarrollador 1 |
-| Tarde | Lógica del semáforo de legalidad | Desarrollador 2 |
-| Tarde | i18n: estructura + español completo | Investigador |
+### MAÑANA (9:00 – 12:30) — CIMIENTOS + ESTRUCTURA
+| Bloque | Tarea | Responsable | Estado |
+|--------|-------|-------------|--------|
+| 9:00 | Setup Vite + estructura de carpetas + CSS base (tema oscuro) | **Arquitecto** | |
+| 9:00 | Paleta de colores, tipografía, componentes SVG (semáforo, check, warning) | **Diseñador** | |
+| 9:00 | Crear `entidades.json` (11 entidades, jurisdicciones, contactos, horarios) | **Investigador** | |
+| 9:30 | Service Worker + manifest.json (PWA instalable + offline) | **Arquitecto** | |
+| 10:00 | Pantalla de inicio — landing "¿Te llegó una multa?" + 3 caminos | **Frontend** | |
+| 10:00 | Empezar copy de las 15 infracciones en lenguaje claro | **Investigador** | |
+| 10:30 | Lógica core: cálculo de prescripción (120 días), validación de fechas | **Lógica** | |
+| 11:00 | Formulario de boleta (P1) con validación estricta + "¿Vos manejabas?" | **Frontend** | |
+| 11:00 | Conectar infracciones.json + carga de datos | **Lógica** | |
+| 12:00 | Revisión rápida: ¿la app carga? ¿el CSS se ve? ¿la PWA instala? | **Todos** | |
 
-### DÍA 3 — DIFERENCIADORES
-| Hora | Tarea | Responsable |
-|------|-------|-------------|
-| Mañana | Semáforo UI (tarjeta + checklist + barras de plazo) | Desarrollador 1 + Diseñador |
-| Mañana | Generador de PDF de impugnación | Desarrollador 2 |
-| Tarde | K'iche' (al menos UI + frases clave) | Investigador |
-| Tarde | Deploy a Cloudflare Pages | Desarrollador 1 |
-| Tarde | Tests manuales + fix de bugs | QA / Todos |
+### TARDE (1:30 – 6:00) — CORE FUNCIONAL
+| Bloque | Tarea | Responsable | Estado |
+|--------|-------|-------------|--------|
+| 1:30 | Explicador de multa: lenguaje claro + montos + descuentos + prevención | **Frontend + Lógica** | |
+| 2:00 | Lógica del semáforo: leer datos → decidir verde/amarillo/rojo | **Lógica** | |
+| 2:30 | Semaforo UI: tarjeta gigante + iconografía + checklist Decreto 33-2024 | **Frontend + Diseñador** | |
+| 3:00 | Generador de PDF de impugnación (jsPDF + checkbox obligatorio + plantilla) | **Lógica** | |
+| 3:00 | Estructura i18n + traducciones a K'iche' (al menos UI + frases clave) | **Investigador** | |
+| 3:30 | Barras de plazo visual ("12 de 15 días para impugnar") | **Frontend** | |
+| 4:00 | Deploy a Cloudflare Pages (primera versión funcional) | **Arquitecto** | |
+| 4:00 | Guía de estafas (notificación real vs SMS falso) | **Investigador** | |
+| 4:30 | Historial de consultas (localStorage) | **Lógica** | |
+| 5:00 | QA visual: probar en celular, tablet, desktop. Lista de bugs | **Diseñador** | |
+| 5:30 | Fix de bugs + pulido visual + responsive final | **Frontend + Arquitecto** | |
 
-### DÍA 4 — PITCH + PULIDO
-| Hora | Tarea | Responsable |
-|------|-------|-------------|
-| Mañana | Pulido visual + responsive final | Diseñador + Desarrolladores |
-| Mañana | Guía de estafas + historial localStorage | Investigador + Desarrollador 2 |
-| Tarde | Ensayo de pitch (5 min) | Líder de pitch |
-| Tarde | Deploy final + verificación | Desarrollador 1 |
-| Tarde | Preparar slides de presentación | Líder de pitch |
+### NOCHE (6:00 – 9:00) — PITCH + DEPLOY FINAL
+| Bloque | Tarea | Responsable | Estado |
+|--------|-------|-------------|--------|
+| 6:00 | Deploy final a Cloudflare Pages (versión pulida) | **Arquitecto** | |
+| 6:00 | Slides de presentación (5 min) | **Diseñador + Investigador** | |
+| 6:30 | Ensayo de pitch #1 | **Todos** | |
+| 7:00 | Ajustes según feedback del ensayo | **Responsable de cada area** | |
+| 7:30 | Ensayo de pitch #2 (final) | **Todos** | |
+| 8:00 | Verificación final: app carga, PDF genera, offline funciona, K'iche' visible | **Todos** | |
+| 8:30 | Submit / presentación | **Líder de pitch** | |
 
 ---
 
