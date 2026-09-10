@@ -8,13 +8,13 @@
 
 ## 📊 PROGRESO GENERAL
 
-**P0 (imprescindible):** `[x]` 2 / 12
+**P0 (imprescindible):** `[x]` 6 / 12
 **P1 (valor añadido):** `[ ]` 0 / 4
 **P2 (roadmap):** `[ ]` 0 / 3
 **Investigación/planificación:** `[x]` 12 / 12 ✅
 **Pitch + deploy:** `[ ]` 0 / 5
 
-**Total:** 14 / 33
+**Total:** 18 / 33
 
 ---
 
@@ -40,19 +40,19 @@
 | # | Entregable | Responsable | Estado |
 |---|-----------|-------------|--------|
 | P0-1 | Estructura del proyecto con Vite + React + shadcn + Tailwind | Arquitecto | `[x]` |
-| P0-2 | Pantalla de entrada (QR/URL + placa + idioma + tamaño letra) | Frontend | `[ ]` |
+| P0-2 | Pantalla de entrada (QR/URL + placa + idioma + tamaño letra) | Frontend | `[x]` |
 | P0-2b | Selección de placa (múltiples placas en localStorage) | Frontend + Lógica | `[ ]` |
-| P0-2c | Vista de municipalidades (gris=sin multas, color=con multas, número) | Frontend + Lógica | `[ ]` |
+| P0-2c | Vista de municipalidades (gris=sin multas, color=con multas, número) | Frontend + Lógica | `[x]` |
 | P0-3 | Formulario de la boleta (+ "¿Sos propietario?" + "¿Vos manejabas?") | Frontend | `[ ]` |
 | P0-4 | Explicador de multa (lenguaje claro + montos + descuentos + botones "?") | Frontend + Lógica | `[ ]` |
 | P0-5 | Semáforo de legalidad (verde/amarillo/rojo + checklist Decreto 33-2024) | Lógica | `[ ]` |
 | P0-5b | ¿Qué hago? (pagar / oposición 15 días / prescripción 120 días) | Frontend + Lógica | `[ ]` |
 | P0-6 | Generador de PDF de impugnación (jsPDF + checkbox disclaimer) | Lógica | `[ ]` |
 | P0-7 | PWA instalable (Service Worker + manifest + offline) | Arquitecto | `[x]` |
-| P0-8 | Catálogo de entidades — `entidades.json` (11 entidades) | Investigador | `[ ]` |
-| P0-9 | Backend demo: Google Sheets + Apps Script (datos ficticios) | Arquitecto | `[ ]` |
+| P0-8 | Catálogo de entidades — `entidades.json` (11 entidades) | Investigador | `[x]` |
+| P0-9 | Backend demo: Google Sheets + Apps Script (datos ficticios) | Arquitecto | `[x]` |
 
-**P0 completados:** 2 / 12
+**P0 completados:** 6 / 12
 
 ---
 
@@ -84,43 +84,43 @@
 ## 🎨 ENTREGABLES POR ROL
 
 ### Arquitecto (André)
-- [ ] Setup Vite + React + shadcn + Tailwind + estructura de carpetas
-- [ ] Service Worker + manifest.json (PWA instalable + offline)
-- [ ] Backend demo: Google Sheets + Apps Script conectado
+- [x] Setup Vite + React + shadcn + Tailwind + estructura de carpetas
+- [x] Service Worker + manifest.json (PWA instalable + offline)
+- [x] Backend demo: Google Sheets + Apps Script conectado
 - [ ] Deploy a Cloudflare Pages
 
 ### Frontend (Kevin)
-- [ ] Pantalla de entrada — QR/URL + placa + idioma + tamaño letra
+- [x] Pantalla de entrada — QR/URL + placa + idioma + tamaño letra
 - [ ] Selección de placa (localStorage, múltiples placas)
-- [ ] Vista de municipalidades (gris/color + números)
+- [x] Vista de municipalidades (gris/color + números)
 - [ ] Formulario de boleta con validación + "¿Sos propietario?" + "¿Vos manejabas?"
 - [ ] Explicador de multa (montos, descuentos, prevención, botones "?")
 - [ ] Tarjeta de semáforo (iconografía + barras de plazo)
 - [ ] Pantalla "¿Qué hago?" (3 opciones)
-- [ ] Todo responsive (mobile-first)
+- [x] Todo responsive (mobile-first)
 
 ### Lógica de Negocio (Lemus)
-- [ ] `constantes.js` — plazos legales (15/60/120 días)
-- [ ] `core.js` — función de semáforo (verde/amarillo/rojo)
-- [ ] `core.js` — función de prescripción (120 días) y oposición (15 días)
-- [ ] `data.js` — carga de infracciones.json + entidades.json
+- [x] `constantes.js` — plazos legales (15/60/120 días)
+- [x] `core.js` — función de semáforo (verde/amarillo/rojo)
+- [x] `core.js` — función de prescripción (120 días) y oposición (15 días)
+- [x] `data.js` — carga de infracciones.json + entidades.json
 - [ ] Conexión formulario → explicador → semáforo → ¿qué hago? → PDF
 - [ ] Búsqueda de infracciones por palabra
 - [ ] Placas guardadas en localStorage
-- [ ] Conexión con datos demo (Sheets + Apps Script)
+- [x] Conexión con datos demo (Sheets + Apps Script)
 - [ ] Generador de PDF (jsPDF + plantilla + disclaimer)
 
 ### Investigador (Diego)
-- [ ] `entidades.json` — 11 entidades (jurisdicciones, contactos, horarios)
-- [ ] Copy de las 15 infracciones en lenguaje claro
+- [x] `entidades.json` — 11 entidades (jurisdicciones, contactos, horarios)
+- [x] Copy de las 15 infracciones en lenguaje claro
 - [ ] Guía de estafas (contenido editorial)
 - [ ] Escenario 120 días vencidos (guía)
 - [ ] Guion de pitch de 5 minutos
 
 ### Diseñador / QA / Pitch + i18n (Uriel)
-- [ ] Paleta de colores + tipografía + espaciados en Tailwind
+- [x] Paleta de colores + tipografía + espaciados en Tailwind
 - [ ] Componentes SVG (semáforo, check, warning)
-- [ ] `i18n/es.json` — traducciones español
+- [x] `i18n/es.json` — traducciones español
 - [ ] `i18n/kiche.json` — traducciones K'iche'
 - [ ] `i18n/kawchiquel.json` — traducciones Kawchiquel
 - [ ] QA visual: probar en celular, tablet, desktop
