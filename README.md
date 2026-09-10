@@ -45,3 +45,4 @@ El documento **[`PLAN-DE-TRABAJO.md`](PLAN-DE-TRABAJO.md)** contiene todo lo que
 - `reto5-multas-transito.md` — investigación principal del Reto 05
 - `analisis-retos.md` — comparativa de los retos del hackathon
 - `evento.md` / `perfiles.md` — contexto del evento y hosts
+- **`SETUP-EQUIPO.md`** — guía de setup para todo el equipo (ntfy, Git, ramas, roles)
