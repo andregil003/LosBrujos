@@ -8,13 +8,13 @@
 
 ## 📊 PROGRESO GENERAL
 
-**P0 (imprescindible):** `[x]` 1 / 12
+**P0 (imprescindible):** `[x]` 2 / 12
 **P1 (valor añadido):** `[ ]` 0 / 4
 **P2 (roadmap):** `[ ]` 0 / 3
 **Investigación/planificación:** `[x]` 12 / 12 ✅
 **Pitch + deploy:** `[ ]` 0 / 5
 
-**Total:** 13 / 33
+**Total:** 14 / 33
 
 ---
 
@@ -48,11 +48,11 @@
 | P0-5 | Semáforo de legalidad (verde/amarillo/rojo + checklist Decreto 33-2024) | Lógica | `[ ]` |
 | P0-5b | ¿Qué hago? (pagar / oposición 15 días / prescripción 120 días) | Frontend + Lógica | `[ ]` |
 | P0-6 | Generador de PDF de impugnación (jsPDF + checkbox disclaimer) | Lógica | `[ ]` |
-| P0-7 | PWA instalable (Service Worker + manifest + offline) | Arquitecto | `[ ]` |
+| P0-7 | PWA instalable (Service Worker + manifest + offline) | Arquitecto | `[x]` |
 | P0-8 | Catálogo de entidades — `entidades.json` (11 entidades) | Investigador | `[ ]` |
 | P0-9 | Backend demo: Google Sheets + Apps Script (datos ficticios) | Arquitecto | `[ ]` |
 
-**P0 completados:** 1 / 12
+**P0 completados:** 2 / 12
 
 ---
 
