@@ -8,13 +8,13 @@
 
 ## 📊 PROGRESO GENERAL
 
-**P0 (imprescindible):** `[ ]` 0 / 9
+**P0 (imprescindible):** `[x]` 1 / 12
 **P1 (valor añadido):** `[ ]` 0 / 4
 **P2 (roadmap):** `[ ]` 0 / 3
 **Investigación/planificación:** `[x]` 12 / 12 ✅
 **Pitch + deploy:** `[ ]` 0 / 5
 
-**Total:** 12 / 33
+**Total:** 13 / 33
 
 ---
 
@@ -39,7 +39,7 @@
 
 | # | Entregable | Responsable | Estado |
 |---|-----------|-------------|--------|
-| P0-1 | Estructura del proyecto con Vite + React + shadcn + Tailwind | Arquitecto | `[ ]` |
+| P0-1 | Estructura del proyecto con Vite + React + shadcn + Tailwind | Arquitecto | `[x]` |
 | P0-2 | Pantalla de entrada (QR/URL + placa + idioma + tamaño letra) | Frontend | `[ ]` |
 | P0-2b | Selección de placa (múltiples placas en localStorage) | Frontend + Lógica | `[ ]` |
 | P0-2c | Vista de municipalidades (gris=sin multas, color=con multas, número) | Frontend + Lógica | `[ ]` |
@@ -52,7 +52,7 @@
 | P0-8 | Catálogo de entidades — `entidades.json` (11 entidades) | Investigador | `[ ]` |
 | P0-9 | Backend demo: Google Sheets + Apps Script (datos ficticios) | Arquitecto | `[ ]` |
 
-**P0 completados:** 0 / 12
+**P0 completados:** 1 / 12
 
 ---
 
