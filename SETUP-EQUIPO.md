@@ -10,7 +10,7 @@
 | # | Nombre | Rol | Qué hace |
 |---|--------|-----|----------|
 | 1 | **André** | **Arquitecto** (líder) | Setup del proyecto, lógica core, deploy, decisiones técnicas |
-| 2 | **Kevin** | **Frontend** | Construye las pantallas, HTML, CSS, responsive, animaciones |
+| 2 | **Kevin** | **Frontend** | Construye las pantallas con React + shadcn, responsive, animaciones |
 | 3 | **Lemus** | **Lógica de Negocio** | Conecta las piezas: formulario → explicador → semáforo → PDF |
 | 4 | **Diego** | **Investigador** | entidades.json, copy de infracciones, traducciones K'iche', guía de estafas |
 | 5 | **Uriel** | **Diseñador / QA / Pitch** | Paleta de colores, iconos SVG, tests visuales, slides, pitch |
@@ -26,7 +26,7 @@ Tenemos **2 repos**. Esto es importante:
 | Repo | Para qué | Quién lo usa |
 |------|----------|--------------|
 | **[andregil003/LosBrujos](https://github.com/andregil003/LosBrujos)** | Investigación, datos, plan de trabajo, diagramas | Todo el equipo (lee) |
-| **[ithackathonnacionalgt/reto-5-brujos](https://github.com/ithackathonnacionalgt/reto-5-brujos)** | Código de la app (HTML, CSS, JS, entregables) | Todo el equipo (escribe) |
+| **[ithackathonnacionalgt/reto-5-brujos](https://github.com/ithackathonnacionalgt/reto-5-brujos)** | Código de la app (React, componentes, entregables) | Todo el equipo (escribe) |
 
 **REGLA:** La info de investigación se queda en `LosBrujos`. El código de la app va en `reto-5-brujos`.
 

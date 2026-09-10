@@ -219,8 +219,8 @@
 ## 5. CRONOGRAMA SUGERIDO (Hackathon)
 
 ### Día 1 — Cimientos (P0)
-- [ ] Scaffold Vite + estructura de carpetas
-- [ ] CSS (tema oscuro, responsive)
+- [ ] Scaffold Vite + React + shadcn + Tailwind
+- [ ] Tailwind (tema oscuro, responsive)
 - [ ] P0 Inicio (hero + 3 caminos)
 - [ ] Datos: `entidades.json`
 - [ ] PWA: manifest + sw.js + icons

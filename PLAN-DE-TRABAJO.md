@@ -134,14 +134,15 @@ PASO 5: Toma acción
 | Tecnología | Para qué | Por qué |
 |------------|----------|---------|
 | **Vite** | Herramienta de desarrollo | Rápido, moderno, hot reload |
-| **HTML + CSS + JavaScript puro** | La app en sí | Sin frameworks complicados, estable |
-| **Tailwind CSS** | Estilos | Rápido de diseñar, responsive |
+| **React** | Framework de componentes | Componentes reutilizables, ecosistema grande |
+| **shadcn/ui** | Componentes UI | Button, Card, Select, Input, Checkbox — listos y profesionales |
+| **Tailwind CSS** | Estilos | Responsive, dark mode, contraste alto en minutos |
 | **JSON** | Datos de infracciones y entidades | Simple, sin backend |
 | **jsPDF** | Generar PDFs de impugnación | Funciona en el navegador |
 | **Service Worker** | Modo offline (PWA) | Que funcione sin internet |
 | **Cloudflare Pages** | Desplegar la app | Gratis, rápido, CDN global |
 
-**Decisión clave:** NO usamos React, Vue, ni Angular. Es JavaScript puro. Esto es intencional: menos cosas que se rompan durante el hackathon.
+**Decisión clave:** Usamos React + shadcn/ui + Tailwind. Componentes listos = menos código = menos bugs en el hackathon.
 
 ---
 
@@ -152,7 +153,7 @@ PASO 5: Toma acción
 ### MAÑANA (9:00 – 12:30) — CIMIENTOS + ESTRUCTURA
 | Bloque | Tarea | Responsable | Estado |
 |--------|-------|-------------|--------|
-| 9:00 | Setup Vite + estructura de carpetas + CSS base (tema oscuro) | **Arquitecto** | |
+| 9:00 | Setup Vite + React + shadcn + Tailwind + estructura de carpetas | **Arquitecto** | |
 | 9:00 | Paleta de colores, tipografía, componentes SVG (semáforo, check, warning) | **Diseñador** | |
 | 9:00 | Crear `entidades.json` (11 entidades, jurisdicciones, contactos, horarios) | **Investigador** | |
 | 9:30 | Service Worker + manifest.json (PWA instalable + offline) | **Arquitecto** | |
@@ -161,7 +162,7 @@ PASO 5: Toma acción
 | 10:30 | Lógica core: cálculo de prescripción (120 días), validación de fechas | **Lógica** | |
 | 11:00 | Formulario de boleta (P1) con validación estricta + "¿Vos manejabas?" | **Frontend** | |
 | 11:00 | Conectar infracciones.json + carga de datos | **Lógica** | |
-| 12:00 | Revisión rápida: ¿la app carga? ¿el CSS se ve? ¿la PWA instala? | **Todos** | |
+| 12:00 | Revisión rápida: ¿la app carga? ¿Tailwind se ve? ¿la PWA instala? | **Todos** | |
 
 ### TARDE (1:30 – 6:00) — CORE FUNCIONAL
 | Bloque | Tarea | Responsable | Estado |
@@ -200,12 +201,13 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 
 **Qué hace:**
 - Crea la estructura del proyecto (carpetas, archivos, configuración)
-- Configura Vite, el Service Worker, el manifest.json
+- Configura Vite + React + shadcn + Tailwind
+- Configura el Service Worker y el manifest.json (PWA)
 - Escribe la lógica core: cálculo de prescripción, semáforo, validación de fechas
 - Despliega a Cloudflare Pages
 - Decide las decisiones técnicas (qué librería usar, cómo organizar el código)
 
-**Herramientas que usa:** Vite, JavaScript puro, Service Worker, Cloudflare Pages
+**Herramientas que usa:** Vite, React, shadcn/ui, Tailwind CSS, Service Worker, Cloudflare Pages
 
 **Entregables:**
 - Proyecto funcionando en `npm run dev`
@@ -222,12 +224,12 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 
 **Qué hace:**
 - Construye las pantallas: inicio, formulario, explicador, semáforo, PDF
-- Escribe el HTML de cada vista
-- Aplica los estilos CSS (tema oscuro, responsive, tarjetas)
+- Crea componentes React de cada vista (Home, Form, Explicador, Semaforo, Accion)
+- Usa componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs)
+- Aplica Tailwind para responsive y tema oscuro
 - Hace que todo se vea bien en celular y en desktop
-- Implementa las animaciones y transiciones
 
-**Herramientas que usa:** HTML, CSS, Tailwind, SVGs
+**Herramientas que usa:** React, shadcn/ui, Tailwind CSS, SVGs
 
 **Entregables:**
 - Pantalla de inicio con 3 botones
@@ -291,15 +293,15 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Quién lo lleva:** [Nombre del compañero]
 
 **Qué hace:**
-- Define la paleta de colores, tipografía, espaciados
+- Define la paleta de colores, tipografía, espaciados en Tailwind
 - Diseña los componentes: tarjetas, botones, iconos SVG
-- Revisa que todo se vea bien ( QA visual)
+- Revisa que todo se vea bien (QA visual)
 - Testea la app en diferentes pantallas (celular, tablet, desktop)
 - Prepara las slides de la presentación
 - Ensaya el pitch con el equipo
 - Hace el deploy final y verificación
 
-**Herramientas que usa:** CSS, SVG, Figma (si lo usan), presentaciones
+**Herramientas que usa:** Tailwind CSS, SVG, Figma (si lo usan), presentaciones
 
 **Entregables:**
 - Paleta de colores definida (oscuro + acentos verde/ámbar/rojo)
@@ -316,9 +318,9 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 
 | Tarea | Arquitecto | Frontend | Lógica | Investigador | Diseñador/QA |
 |-------|:----------:|:--------:|:------:|:------------:|:------------:|
-| Setup proyecto Vite | **LÍDER** | Ayuda | — | — | — |
+| Setup Vite + React + shadcn | **LÍDER** | Ayuda | — | — | — |
 | Service Worker / PWA | **LÍDER** | — | — | — | Verifica |
-| CSS / Estilos base | Ayuda | **LÍDER** | — | — | **LÍDER** |
+| Tailwind / Estilos base | Ayuda | **LÍDER** | — | — | **LÍDER** |
 | Pantalla inicio | — | **LÍDER** | — | — | Diseña |
 | Formulario boleta | — | **LÍDER** | Conecta | — | Revisa |
 | Explicador multa | — | **LÍDER** | **LÍDER** | Copy | Diseña |

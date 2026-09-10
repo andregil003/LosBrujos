@@ -533,7 +533,7 @@ Usuario: empresa de transporte de carga
 ```
 ┌─────────────────────────────────────────┐
 │           FRONTEND (PWA)                │
-│  Vite + TypeScript + Tailwind CSS       │
+│  Vite + React + shadcn + Tailwind CSS    │
 │  Service Worker (offline-first)         │
 │  OCR: Tesseract.js (en navegador)       │
 │  PDF: jsPDF / pdf-lib (generación)      │
@@ -787,7 +787,7 @@ FASE 3 (Escalamiento - 12+ meses):
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  FRONTEND: Vite + React + TypeScript + Tailwind  │
+│  FRONTEND: Vite + React + shadcn + Tailwind        │
 │  ↕ pwa-service-worker (offline-first)            │
 │  OCR: tesseract.js v5 (WebAssembly, local)       │
 │  Storage: IndexedDB (local, cumple Ley 89-2005)  │
