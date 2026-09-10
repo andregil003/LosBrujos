@@ -14,6 +14,9 @@ Diagramas interactivos (click en cada cuadro para ver el detalle) desplegados en
 | D4 | Arquitectura técnica (PWA · serverless · servicios) | [Abrir](https://andregil003.github.io/LosBrujos/D4-arquitectura-tecnica.html) |
 | D5 | Ecosistema HACKCREA (organizadores · hosts · timeline) | [Abrir](https://andregil003.github.io/LosBrujos/D5-ecosistema-hackcrea.html) |
 | D6 | Comparativa de retos (por qué Reto 05) | [Abrir](https://andregil003.github.io/LosBrujos/D6-comparativa-retos.html) |
+| D7 | Benchmarking internacional (8 países) | [Abrir](https://andregil003.github.io/LosBrujos/D7-benchmarking-internacional.html) |
+| D8 | Guatemala en números (stats clave) | [Abrir](https://andregil003.github.io/LosBrujos/D8-guatemala-en-numeros.html) |
+| D9 | Del problema a la solución (el puente) | [Abrir](https://andregil003.github.io/LosBrujos/D9-del-problema-a-la-solucion.html) |
 
 > 💡 Cada diagrama tiene botón **Exportar PNG** y es responsive (móvil incluido).
 

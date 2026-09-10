@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D7 · Benchmarking internacional — soluciones que ya funcionan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Otros países ya resolvieron esto</h1>
+    <div class="sub">8 sistemas de multas en el mundo · unificados, con API pública, offline, mobile — Guatemala es la excepción — toca cada país</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- FILA 1: 4 países -->
+  <text x="300" y="34" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">SISTEMAS UNIFICADOS NACIONALES</text>
+  <text x="900" y="34" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">MUNICIPAL / EN TRANSICIÓN</text>
+
+  <!-- India -->
+  <g class="node" data-key="india" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="40" y="56" width="270" height="140" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="175" y="82" text-anchor="middle" font-size="20">🇮🇳</text>
+    <text x="175" y="102" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">India · eChallan</text>
+    <text x="175" y="120" text-anchor="middle" font-size="11" fill="#6B7280">33 estados · 150+ centros</text>
+    <text x="175" y="136" text-anchor="middle" font-size="11" fill="#6B7280">API pública · 10M+ req/mes</text>
+    <text x="175" y="152" text-anchor="middle" font-size="11" fill="#6B7280">evidencia GPS + timestamp</text>
+    <text x="294" y="72" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- Colombia -->
+  <g class="node" data-key="colombia" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="330" y="56" width="270" height="140" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="465" y="82" text-anchor="middle" font-size="20">🇨🇴</text>
+    <text x="465" y="102" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Colombia · SIMIT</text>
+    <text x="465" y="120" text-anchor="middle" font-size="11" fill="#6B7280">1,103 municipalidades</text>
+    <text x="465" y="136" text-anchor="middle" font-size="11" fill="#6B7280">API REST + OAuth2</text>
+    <text x="465" y="152" text-anchor="middle" font-size="11" fill="#6B7280">832 sedes físicas</text>
+    <text x="594" y="72" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- España -->
+  <g class="node" data-key="espana" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="40" y="210" width="270" height="140" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="175" y="236" text-anchor="middle" font-size="20">🇪🇸</text>
+    <text x="175" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">España · DGT</text>
+    <text x="175" y="274" text-anchor="middle" font-size="11" fill="#6B7280">DEV — notificación electrónica</text>
+    <text x="175" y="290" text-anchor="middle" font-size="11" fill="#6B7280">postal como fallback (phishing)</text>
+    <text x="175" y="306" text-anchor="middle" font-size="11" fill="#6B7280">app DGT online</text>
+    <text x="294" y="226" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- Corea -->
+  <g class="node" data-key="corea" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="330" y="210" width="270" height="140" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="465" y="236" text-anchor="middle" font-size="20">🇰🇷</text>
+    <text x="465" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Corea · TOPIS</text>
+    <text x="465" y="274" text-anchor="middle" font-size="11" fill="#6B7280">Smart City integrada</text>
+    <text x="465" y="290" text-anchor="middle" font-size="11" fill="#6B7280">datos abiertos de movilidad</text>
+    <text x="465" y="306" text-anchor="middle" font-size="11" fill="#6B7280">análisis tráfico en tiempo real</text>
+    <text x="594" y="226" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- CDMX -->
+  <g class="node" data-key="cdmx" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="660" y="56" width="270" height="140" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="795" y="82" text-anchor="middle" font-size="20">🇲🇽</text>
+    <text x="795" y="102" text-anchor="middle" font-size="14" font-weight="700" class="node-label">CDMX · Estrados</text>
+    <text x="795" y="120" text-anchor="middle" font-size="11" fill="#6B7280">notificación email + SMS</text>
+    <text x="795" y="136" text-anchor="middle" font-size="11" fill="#6B7280">portal responsive</text>
+    <text x="795" y="152" text-anchor="middle" font-size="11" fill="#6B7280">apps de terceros complementan</text>
+    <text x="914" y="72" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- Kenia -->
+  <g class="node" data-key="kenia" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="950" y="56" width="210" height="140" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="1055" y="82" text-anchor="middle" font-size="20">🇰🇪</text>
+    <text x="1055" y="102" text-anchor="middle" font-size="14" font-weight="700" class="node-label">Kenia</text>
+    <text x="1055" y="120" text-anchor="middle" font-size="11" fill="#6B7280">600K+ vehículos</text>
+    <text x="1055" y="136" text-anchor="middle" font-size="11" fill="#6B7280">1,500 tabletas</text>
+    <text x="1055" y="152" text-anchor="middle" font-size="11" fill="#6B7280">app móvil + ahorro 17M Birr/año</text>
+    <text x="1144" y="72" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- UK -->
+  <g class="node" data-key="uk" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="660" y="210" width="270" height="140" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="795" y="236" text-anchor="middle" font-size="20">🇬🇧</text>
+    <text x="795" y="256" text-anchor="middle" font-size="14" font-weight="700" class="node-label">UK · D-TROs</text>
+    <text x="795" y="274" text-anchor="middle" font-size="11" fill="#6B7280">estándares abiertos</text>
+    <text x="795" y="290" text-anchor="middle" font-size="11" fill="#6B7280">migración gradual papel → digital</text>
+    <text x="795" y="306" text-anchor="middle" font-size="11" fill="#6B7280">sedes locales en transición</text>
+    <text x="914" y="226" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- Etiopía -->
+  <g class="node" data-key="etiopia" tabindex="0" role="button" style="animation-delay:.31s">
+    <rect x="950" y="210" width="210" height="140" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="1055" y="236" text-anchor="middle" font-size="20">🇪🇹</text>
+    <text x="1055" y="256" text-anchor="middle" font-size="14" font-weight="700" class="node-label">Etiopía</text>
+    <text x="1055" y="274" text-anchor="middle" font-size="11" fill="#6B7280">de tablets y libretas → digital</text>
+    <text x="1055" y="290" text-anchor="middle" font-size="11" fill="#6B7280">Addis Ababa + ciudades</text>
+    <text x="1055" y="306" text-anchor="middle" font-size="11" fill="#6B7280">transición desde base baja</text>
+    <text x="1144" y="226" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- GUATEMALA — el problema -->
+  <g class="node" data-key="guatemala" tabindex="0" role="button" style="animation-delay:.35s">
+    <rect x="40" y="400" width="1120" height="80" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="175" y="434" text-anchor="middle" font-size="20">🇬🇹</text>
+    <text x="330" y="430" text-anchor="start" font-size="16" font-weight="700" fill="#DC2626" class="node-label">Guatemala — la excepción</text>
+    <text x="330" y="452" text-anchor="start" font-size="13" fill="#B91C1C">SAT + PNC + EMETRA + 8+ municipalidades → fragmentado · sin API · sin app oficial · sin notificación digital</text>
+    <text x="1144" y="416" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- LECCIONES -->
+  <text x="40" y="530" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">LECCIONES CLAVE PARA GUATEMALA</text>
+
+  <g class="node" data-key="leccion1" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="40" y="548" width="260" height="100" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="170" y="574" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Unificación es posible</text>
+    <text x="170" y="592" text-anchor="middle" font-size="11" fill="#6B7280">India integró 33 estados</text>
+    <text x="170" y="608" text-anchor="middle" font-size="11" fill="#6B7280">Colombia conectó 1,103 munis</text>
+    <text x="170" y="624" text-anchor="middle" font-size="11" fill="#6B7280">GT solo necesita 11 entidades</text>
+    <text x="284" y="564" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="leccion2" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="320" y="548" width="260" height="100" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="450" y="574" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">API pública = ecosistema</text>
+    <text x="450" y="592" text-anchor="middle" font-size="11" fill="#6B7280">India: 10M+ solicitudes/mes</text>
+    <text x="450" y="608" text-anchor="middle" font-size="11" fill="#6B7280">Colombia: REST + OAuth2</text>
+    <text x="450" y="624" text-anchor="middle" font-size="11" fill="#6B7280">Corea: datos abiertos</text>
+    <text x="564" y="564" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="leccion3" tabindex="0" role="button" style="animation-delay:.47s">
+    <rect x="600" y="548" width="260" height="100" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="730" y="574" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Offline-first no es opcional</text>
+    <text x="730" y="592" text-anchor="middle" font-size="11" fill="#6B7280">España: postal como fallback</text>
+    <text x="730" y="608" text-anchor="middle" font-size="11" fill="#6B7280">Kenia: tabletas en campo</text>
+    <text x="730" y="624" text-anchor="middle" font-size="11" fill="#6B7280">UK: migración gradual</text>
+    <text x="844" y="564" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="leccion4" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="880" y="548" width="280" height="100" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="1020" y="574" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Evidencia = confianza</text>
+    <text x="1020" y="592" text-anchor="middle" font-size="11" fill="#6B7280">India: GPS + timestamp</text>
+    <text x="1020" y="608" text-anchor="middle" font-size="11" fill="#6B7280">Reduce "multas fantasmas"</text>
+    <text x="1020" y="624" text-anchor="middle" font-size="11" fill="#6B7280">Oportunidad: Iniciativa 6626</text>
+    <text x="1144" y="564" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- NOTAS -->
+  <g font-size="11" fill="#9CA3AF">
+    <text x="40" y="690">el prototipo LosBrujos demuestra que la interoperabilidad propuesta por la Iniciativa 6626 es viable y necesaria</text>
+    <text x="40" y="708">fuente: reto5-multas-transito.md §7 · tabla comparativa §7.9</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> Unificado nacional</div>
+  <div class="legend"><span class="dot" style="background:#fff"></span> Municipal / transición</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Guatemala (fragmentado)</div>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Lecciones para GT</div>
+  <div class="legend">💡 Toca cada país</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+india:{chip:"Benchmarking · India",title:"eChallan / Parivahan",body:"Plataforma nacional integrada al eGovernance framework. Backend del NIC (National Informatics Centre). La Challan Pro API procesa 10M+ solicitudes mensuales con pago 100% en línea.",facts:[["Cobertura","33 estados + 7 UTs, 150+ centros"],["API","Challan Pro API (nsdl.co.in) — REST, OAuth2"],["Evidencia","GPS + timestamp + estructura jerárquica + ID único"],["Mobile","Mobile Parivahan app (iOS/Android)"],["Lección","Unificación nacional es posible con voluntad política"]],source:"reto5-multas-transito.md §7.1"},
+colombia:{chip:"Benchmarking · Colombia",title:"SIMIT",body:"Sistema Integrado de Información sobre Multas y Sanciones por Infracciones de Tránsito. Consulta nacional unificada con API pública REST.",facts:[["Cobertura","1,103 municipalidades, 32 departamentos"],["Sedes","832 sedes físicas en todo el país"],["API","REST + OAuth2 para instituciones (GitHub: sistema-simit/api-simit)"],["Pago","En línea, PSE, corresponsales bancarios, ventanilla"],["Lección","Gobierno compartido (nacional + municipal) funciona"]],source:"reto5-multas-transito.md §7.3"},
+espana:{chip:"Benchmarking · España",title:"DGT — Dirección General de Tráfico",body:"DEV (Dirección Electrónica Vial) implementa notificación electrónica desde noviembre 2022. Obligatorio para personas jurídicas; voluntario para físicas.",facts:[["Notificación","Postal por defecto, DEV opcional"],["Riesgo","30% de vías sin cobertura 4G/5G"],["Phishing","No se notifica por email (riesgo de fraude)"],["App","DGT online — puntos, infracciones, pagos"],["Lección","No depender de email; postal como fallback; offline para zonas sin internet"]],source:"reto5-multas-transito.md §7.2"},
+corea:{chip:"Benchmarking · Corea",title:"TOPIS — Seoul",body:"Transport Operation & Information Service. Integración smart city con servicios de movilidad. Datos abiertos como base del ecosistema.",facts:[["Servicios","Datos abiertos de movilidad"],["Análisis","Tráfico en tiempo real"],["Accesibilidad","Servicios 'sin barreras'"],["Lección","Datos abiertos permiten que terceros construyan soluciones"]],source:"reto5-multas-transito.md §7.6"},
+cdmx:{chip:"Benchmarking · CDMX",title:"Estrados Electrónicos",body:"Sistema de notificación y consulta de infracciones de tránsito de Ciudad de México. Notificación por correo electrónico + SMS.",facts:[["Notificación","Email + SMS (artículo 123)"],["Portal","infracciones.cdmx.gob.mx"],["Apps","No oficial: 'Consulta de Multas en CDMX' por terceros"],["Lección","Notificación digital funciona con fallback SMS; portal responsive es viable"]],source:"reto5-multas-transito.md §7.4"},
+kenia:{chip:"Benchmarking · Kenia",title:"Nairobi Digital Traffic",body:"Sistema digital de gestión de tráfico en Nairobi con 600,000+ vehículos registrados. Tabletización de inspectores en campo.",facts:[["Cobertura","600K+ vehículos, 22K+ motociclistas, 19K+ taxistas"],["Tabletas","1,500 tabletas para 1,250 oficiales"],["App","Gestión de aparcamiento + consulta y pago"],["Ahorro","17 millones de Birr/año en papel y tiempo"],["Lección","Tabletización de inspectores; app para oficiales en campo"]],source:"reto5-multas-transito.md §7.5"},
+uk:{chip:"Benchmarking · UK",title:"D-TROs (Digital Traffic Regulation Orders)",body:"Reforma digital de órdenes de tráfico por sedes locales. Estándares abiertos para D-TROs permiten interoperabilidad.",facts:[["Modelo","Sedes locales migran de papel a digital"],["Estándar","Open Standards para D-TROs"],["Estado","En curso — migración gradual"],["Lección","Migración gradual es viable; estándares abiertos permiten interoperabilidad"]],source:"reto5-multas-transito.md §7.7"},
+etiopia:{chip:"Benchmarking · Etiopía",title:"Sistema Digital (Oct 2025)",body:"Transición completa de tablets y libretas manuales a sistema digital en Addis Ababa y ciudades principales.",facts:[["Cambio","De libretas manuales a digital"],["Cobertura","Addis Ababa + ciudades principales"],["Lección","Transición desde base muy baja es factible; no se necesita infraestructura perfecta para empezar"]],source:"reto5-multas-transito.md §7.8"},
+guatemala:{chip:"El problema · Guatemala",title:"La excepción — sistema fragmentado",body:"Guatemala es el único país de la comparativa sin sistema unificado, sin API pública, sin app oficial y sin notificación digital efectiva. 11+ entidades multan de forma aislada.",facts:[["Fragmentación","SAT + PNC + EMETRA + 8+ municipalidades"],["API","Ninguna pública"],["App","Ninguna oficial actualizada"],["Notificación","Ley exige (Decreto 33-2024) pero no hay herramienta"],["Oportunidad","Menos entidades que India (33) o Colombia (1,103) → más factible unificar"]],source:"reto5-multas-transito.md §1 · §7.9"},
+leccion1:{chip:"Lección",title:"Unificación es posible",body:"India integró 33 estados. Colombia conectó 1,103 municipalidades. Guatemala solo necesita unificar 11 entidades. El precedente regional e internacional es claro.",facts:[["India","33 estados + 7 UTs en un solo sistema"],["Colombia","1,103 municipalidades + 32 departamentos"],["Guatemala","11 entidades — el más pequeño de la comparativa"],["Dato","La Iniciativa 6626 ya propone la interoperabilidad"]],source:"reto5-multas-transito.md §7 · §9.2"},
+leccion2:{chip:"Lección",title:"API pública = ecosistema",body:"Cuando India abrió su Challan Pro API, procesó 10M+ solicitudes/mes. Colombia tiene REST + OAuth2 documentado en GitHub. Corea comparte datos abiertos. Una API pública cataliza soluciones de terceros.",facts:[["India","10M+ solicitudes mensuales vía API"],["Colombia","REST + OAuth2, documentación en GitHub"],["Corea","Datos abiertos de movilidad"],["Impacto","Permite que terceros construyan sobre la misma base"]],source:"reto5-multas-transito.md §7"},
+leccion3:{chip:"Lección",title:"Offline-first no es opcional",body:"España usa postal como fallback porque el 30% de sus vías no tiene 4G/5G. Kenia da tabletas a inspectores en campo. UK migra gradualmente. Guatemala tiene 39% de brecha digital.",facts:[["España","Postal como fallback ante phishing y sin cobertura"],["Kenia","1,500 tabletas para inspectores"],["UK","Migración gradual papel → digital"],["Guatemala","39% brecha digital, <22% acceso rural"]],source:"reto5-multas-transito.md §7 · §8.2"},
+leccion4:{chip:"Lección",title:"Evidencia = confianza",body:"India usa GPS + timestamp en cada multa para eliminar 'multas fantasmas'. Guatemala tiene este problema como queja #1. La evidencia geolocalizada es el primer paso hacia la confianza ciudadana.",facts:[["India","Payload con GPS + timestamp + ID único"],["Guatemala","'Multas fantasmas' es la queja #1 del ciudadano"],["Impacto","Reduce impugnaciones infundadas y aumenta cumplimiento"],["Oportunidad","Iniciativa 6626 puede催化 este cambio"]],source:"reto5-multas-transito.md §5.1 · §7.1"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

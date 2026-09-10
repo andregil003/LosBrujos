@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D9 · Del problema a la solución — el puente que construimos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Del problema a la solución</h1>
+    <div class="sub">el ciudadano sufre 4 problemas · nuestro prototipo los resuelve · el Decreto 33-2024 crea la ventana — toca cada cuadro</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+  </defs>
+
+  <!-- COLUMNAS -->
+  <text x="175" y="34" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#DC2626">EL CIUDADANO SUFRE</text>
+  <text x="600" y="34" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#D97706">EL PROTOTIPO RESUELVE</text>
+  <text x="1025" y="34" text-anchor="middle" font-size="12" font-weight="600" letter-spacing="1.5" fill="#059669">RESULTADO</text>
+
+  <!-- PROBLEMA 1: Multas fantasmas -->
+  <g class="node" data-key="p1" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="40" y="60" width="270" height="110" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="175" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">Multas Fantasmas</text>
+    <text x="175" y="108" text-anchor="middle" font-size="11" fill="#6B7280">se enteran al renovar licencia</text>
+    <text x="175" y="124" text-anchor="middle" font-size="11" fill="#6B7280">sin notificación previa</text>
+    <text x="175" y="140" text-anchor="middle" font-size="11" fill="#6B7280">queja #1 del ciudadano</text>
+    <text x="294" y="76" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- SOLUCIÓN 1 -->
+  <g class="node" data-key="s1" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="440" y="60" width="320" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="600" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Consulta unificada</text>
+    <text x="600" y="108" text-anchor="middle" font-size="11" fill="#6B7280">placa → multas de PNC + EMETRA + munis</text>
+    <text x="600" y="124" text-anchor="middle" font-size="11" fill="#6B7280">detecta multas sin notificación formal</text>
+    <text x="600" y="140" text-anchor="middle" font-size="11" fill="#6B7280">un solo lugar, sin navegar portales</text>
+    <text x="744" y="76" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- RESULTADO 1 -->
+  <g class="node" data-key="r1" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="880" y="60" width="280" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Ciudadano informado</text>
+    <text x="1020" y="108" text-anchor="middle" font-size="11" fill="#6B7280">sabe qué tiene pendiente</text>
+    <text x="1020" y="124" text-anchor="middle" font-size="11" fill="#6B7280">detecta multas que no le notificaron</text>
+    <text x="1020" y="140" text-anchor="middle" font-size="11" fill="#6B7280">puede actuar antes de que sea tarde</text>
+    <text x="1144" y="76" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- PROBLEMA 2 -->
+  <g class="node" data-key="p2" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="40" y="190" width="270" height="110" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="175" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">No entiendo qué cobran</text>
+    <text x="175" y="238" text-anchor="middle" font-size="11" fill="#6B7280">jerga legal sin traducir</text>
+    <text x="175" y="254" text-anchor="middle" font-size="11" fill="#6B7280">SAT muestra "null"</text>
+    <text x="175" y="270" text-anchor="middle" font-size="11" fill="#6B7280">sin explicación de infracción</text>
+    <text x="294" y="206" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- SOLUCIÓN 2 -->
+  <g class="node" data-key="s2" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="440" y="190" width="320" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="600" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Lenguaje claro</text>
+    <text x="600" y="238" text-anchor="middle" font-size="11" fill="#6B7280">traduce artículos del reglamento</text>
+    <text x="600" y="254" text-anchor="middle" font-size="11" fill="#6B7280">glosario legal → explicación simple</text>
+    <text x="600" y="270" text-anchor="middle" font-size="11" fill="#6B7280">4 idiomas: es · k'iche' · q'eqchi' · garífuna</text>
+    <text x="744" y="206" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- RESULTADO 2 -->
+  <g class="node" data-key="r2" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="880" y="190" width="280" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Entiende su multa</text>
+    <text x="1020" y="238" text-anchor="middle" font-size="11" fill="#6B7280">sabe qué hizo mal</text>
+    <text x="1020" y="254" text-anchor="middle" font-size="11" fill="#6B7280">sabe cuánto debe</text>
+    <text x="1020" y="270" text-anchor="middle" font-size="11" fill="#6B7280">en su propio idioma</text>
+    <text x="1144" y="206" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- PROBLEMA 3 -->
+  <g class="node" data-key="p3" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="40" y="320" width="270" height="110" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="175" y="348" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">No sé si puedo pelear</text>
+    <text x="175" y="368" text-anchor="middle" font-size="11" fill="#6B7280">derecho a impugnar existe</text>
+    <text x="175" y="384" text-anchor="middle" font-size="11" fill="#6B7280">pero nadie lo explica</text>
+    <text x="175" y="400" text-anchor="middle" font-size="11" fill="#6B7280">15 días y se pierde</text>
+    <text x="294" y="336" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- SOLUCIÓN 3 -->
+  <g class="node" data-key="s3" tabindex="0" role="button" style="animation-delay:.31s">
+    <rect x="440" y="320" width="320" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="600" y="348" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Genera recurso de impugnación</text>
+    <text x="600" y="368" text-anchor="middle" font-size="11" fill="#6B7280">borrador PDF del recurso</text>
+    <text x="600" y="384" text-anchor="middle" font-size="11" fill="#6B7280">checklist de documentos</text>
+    <text x="600" y="400" text-anchor="middle" font-size="11" fill="#6B7280">plazo de 15 días visible</text>
+    <text x="744" y="336" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- RESULTADO 3 -->
+  <g class="node" data-key="r3" tabindex="0" role="button" style="animation-delay:.35s">
+    <rect x="880" y="320" width="280" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="348" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Ejerce su derecho</text>
+    <text x="1020" y="368" text-anchor="middle" font-size="11" fill="#6B7280">imprime o envía el recurso</text>
+    <text x="1020" y="384" text-anchor="middle" font-size="11" fill="#6B7280">ahorra Q300+ si impugna</text>
+    <text x="1020" y="400" text-anchor="middle" font-size="11" fill="#6B7280">cumple el plazo de 15 días</text>
+    <text x="1144" y="336" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- PROBLEMA 4 -->
+  <g class="node" data-key="p4" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="40" y="450" width="270" height="110" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="175" y="478" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">Proceso fragmentado</text>
+    <text x="175" y="498" text-anchor="middle" font-size="11" fill="#6B7280">2+ portales de consulta</text>
+    <text x="175" y="514" text-anchor="middle" font-size="11" fill="#6B7280">bancos distintos por entidad</text>
+    <text x="175" y="530" text-anchor="middle" font-size="11" fill="#6B7280">cero unificación</text>
+    <text x="294" y="466" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- SOLUCIÓN 4 -->
+  <g class="node" data-key="s4" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="440" y="450" width="320" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="600" y="478" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Todo en un lugar</text>
+    <text x="600" y="498" text-anchor="middle" font-size="11" fill="#6B7280">una app, todas las entidades</text>
+    <text x="600" y="514" text-anchor="middle" font-size="11" fill="#6B7280">OCR: foto de boleta → datos</text>
+    <text x="600" y="530" text-anchor="middle" font-size="11" fill="#6B7280">offline-first · funciona sin internet</text>
+    <text x="744" y="466" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- RESULTADO 4 -->
+  <g class="node" data-key="r4" tabindex="0" role="button" style="animation-delay:.47s">
+    <rect x="880" y="450" width="280" height="110" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="478" text-anchor="middle" font-size="14" font-weight="700" fill="#047857" class="node-label">Experiencia unificada</text>
+    <text x="1020" y="498" text-anchor="middle" font-size="11" fill="#6B7280">consulta + acción en un paso</text>
+    <text x="1020" y="514" text-anchor="middle" font-size="11" fill="#6B7280">sin navegar portales</text>
+    <text x="1020" y="530" text-anchor="middle" font-size="11" fill="#6B7280">funciona en zonas rurales</text>
+    <text x="1144" y="466" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- FLECHAS PROBLEMA → SOLUCIÓN -->
+  <g fill="none" stroke="#DC2626" stroke-width="1.5" marker-end="url(#arr)">
+    <path d="M310,115 C370,115 380,115 440,115" class="arrow"/>
+    <path d="M310,245 C370,245 380,245 440,245" class="arrow"/>
+    <path d="M310,375 C370,375 380,375 440,375" class="arrow"/>
+    <path d="M310,505 C370,505 380,505 440,505" class="arrow"/>
+  </g>
+
+  <!-- FLECHAS SOLUCIÓN → RESULTADO -->
+  <g fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)">
+    <path d="M760,115 C820,115 830,115 880,115" class="arrow"/>
+    <path d="M760,245 C820,245 830,245 880,245" class="arrow"/>
+    <path d="M760,375 C820,375 830,375 880,375" class="arrow"/>
+    <path d="M760,505 C820,505 830,505 880,505" class="arrow"/>
+  </g>
+
+  <!-- BANNER: Decreto 33-2024 -->
+  <g class="node" data-key="decreto" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="40" y="600" width="1120" height="70" rx="8" fill="#111111"/>
+    <text x="600" y="628" text-anchor="middle" font-size="15" font-weight="700" fill="#FBBF24">Decreto 33-2024 crea la ventana perfecta</text>
+    <text x="600" y="650" text-anchor="middle" font-size="12" fill="#D1D5DB">la ley ya exige notificación + explicación + plazos · pero no hay herramienta que facilite esto · el prototipo DEMUESTRA la interoperabilidad</text>
+    <text x="1144" y="616" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <!-- NOTAS -->
+  <g font-size="11" fill="#9CA3AF">
+    <text x="40" y="710">el prototipo NO es asesoría legal · genera borradores · el usuario decide qué hacer · Cumple Ley 89-2005 (datos personales locales)</text>
+    <text x="40" y="728">fases: V1 (consulta + lenguaje claro) → V2 (impugnación + OCR) → V3 (ntfy + alertas de plazos)</text>
+    <text x="40" y="746">fuente: reto5-multas-transito.md §5 · §6 · §10 · §14</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> El problema</div>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> La solución</div>
+  <div class="legend"><span class="dot" style="background:#111111"></span> Decreto 33-2024</div>
+  <div class="legend">💡 Toca cada cuadro</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+p1:{chip:"Problema",title:"Multas Fantasmas",body:"El problema #1 documentado: el ciudadano se entera de una multa que nunca le fue notificada. Ocurre cuando quiere renovar su licencia o vender su vehículo. El Decreto 33-2024 exige notificación, pero no hay herramienta que verifique si se cumplió.",facts:[["Síntoma","Se entera al renovar licencia"],["Causa","Sin notificación previa"],["Impacto","Pérdida de plazos, pago innecesario"],["Decreto","Art. 2.1 — notificación obligatoria antes del cobro"]],source:"reto5-multas-transito.md §5.1 · §2.1"},
+s1:{chip:"Solución",title:"Consulta Unificada",body:"El prototipo consulta multas de PNC, EMETRA, EMIXTRA y municipalidades en un solo lugar. Con la placa, detecta multas pendientes y alerta si no tienen notificación formal.",facts:[["Entrada","Placa o foto de boleta (OCR)"],["Fuentes","SAT + EMETRA + PNC + municipalidades"],["Diferencia","Un solo lugar vs 2+ portales"],["Detecta","Multas sin notificación formal"]],source:"reto5-multas-transito.md §6.2 · §15.2"},
+r1:{chip:"Resultado",title:"Ciudadano Informado",body:"El ciudadano sabe exactamente qué tiene pendiente, cuánto debe, y si alguna multa no le fue notificada correctamente. Puede actuar antes de que sea tarde.",facts:[["Antes","Se enteraba al renovar licencia"],["Ahora","Consulta proactivamente"],["Acción","Decide pagar o impugnar"],["Plazo","15 días para impugnar, 120 para prescribir"]],source:"reto5-multas-transito.md §6.2"},
+p2:{chip:"Problema",title:"No Entiendo Qué Cobran",body:"El ciudadano recibe una boleta con jerga legal que no entiende. El Portal SAT muestra 'null' en nombres de entidades y no explica qué significa cada infracción.",facts:[["SAT","Muestra 'null' en nombres de entidades"],["Jerga","Artículos del reglamento sin traducir"],["Sin explicación","El ciudadano no sabe qué le cobran ni por qué"],["Dato","No hay app oficial actualizada"]],source:"reto5-multas-transito.md §5.2 · §4.1"},
+s2:{chip:"Solución",title:"Lenguaje Claro",body:"El prototipo traduce los artículos del reglamento a explicaciones simples. Un glosario legal mapea cada artículo a lenguaje que cualquier persona entiende, en 4 idiomas.",facts:[["Glosario","Art. 90 → 'no respetaste el alto'"],["4 idiomas","Español · k'iche' · q'eqchi' · garífuna"],["Audio","Grabaciones para quienes hablan pero no leen"],["Base","Decreto 19-2003 Art. 9 — derecho a información en idiomas mayas"]],source:"reto5-multas-transito.md §15.3 · §9.3"},
+r2:{chip:"Resultado",title:"Entiende Su Multa",body:"El ciudadano sabe qué hizo mal, cuánto debe, y puede tomar una decisión informada. En su propio idioma, con explicaciones simples.",facts:[["Antes","Jerga legal incomprensible"],["Ahora","Explicación en lenguaje claro"],["Idioma","En su lengua materna"],["Decisión","Informada, no por miedo"]],source:"reto5-multas-transito.md §6.2"},
+p3:{chip:"Problema",title:"No Sé Si Puedo Pelear",body:"El Decreto 33-2024 garantiza el derecho a impugnar en 15 días, pero la mayoría de ciudadanos no sabe que este derecho existe ni cómo ejercerlo.",facts:[["Derecho","Impugnar en 15 días (Decreto 33-2024)"],["Realidad","La mayoría no sabe que puede pelear"],["Consecuencia","Muchos pagan multas que podrían impugnar"],["Plazo","Se pierde en 15 días sin action"]],source:"reto5-multas-transito.md §5.3 · §2.2"},
+s3:{chip:"Solución",title:"Genera Recurso de Impugnación",body:"El prototipo genera un borrador PDF del recurso de impugnación con los datos del ciudadano y la multa. Incluye checklist de documentos y countdown del plazo.",facts:[["Formato","PDF generado en el dispositivo (jsPDF)"],["Contenido","Datos del ciudadano + multa + argumento"],["Checklist","Documentos necesarios"],["Plazo","Countdown visible de los 15 días"]],source:"reto5-multas-transito.md §14.3 · §6.2"},
+r3:{chip:"Resultado",title:"Ejerce Su Derecho",body:"El ciudadano imprime o envía el recurso de impugnación. Si la multa era injusta, puede ahorrar Q300+ y cumple el plazo de 15 días.",facts:[["Acción","Imprime o envía el recurso"],["Ahorro","Q300+ si impugna exitosamente"],["Plazo","Cumple los 15 días"],["Disclaimer","'Este es un borrador. Consulte con un abogado'"]],source:"reto5-multas-transito.md §14.3"},
+p4:{chip:"Problema",title:"Proceso Fragmentado",body:"El ciudadano debe navegar 2+ portales de consulta y pagar en bancos distintos. Cada entidad tiene su propio sistema o ninguno.",facts:[["Portales","SAT + transito.gob.gt + muniguate + portales municipales"],["Bancos","Bancos del sistema + Banrural (EMETRA) + BI (Mixco)"],["Sin unificación","Cada entidad opera por separado"],["Dato","11+ entidades que multan"]],source:"reto5-multas-transito.md §5.4 · §1.1"},
+s4:{chip:"Solución",title:"Todo en Un Lugar",body:"Una sola app consulta todas las entidades. OCR extrae datos de la boleta. Funciona offline-first con Service Worker para zonas sin internet.",facts:[["Consulta","Todas las entidades en un solo lugar"],["OCR","Foto de boleta → datos automáticos"],["Offline","Service Worker + IndexedDB"],["Accesible","4 idiomas + audio + sin necesidad de NIT"]],source:"reto5-multas-transito.md §10 · §15.1"},
+r4:{chip:"Resultado",title:"Experiencia Unificada",body:"Consulta + acción en un solo paso. Sin navegar portales. Funciona en zonas rurales. El ciudadano resuelve todo desde su celular.",facts:[["Antes","2+ portales, bancos distintos"],["Ahora","Un app, todo resuelto"],["Rural","Funciona offline"],["Inclusión","4 idiomas + audio + sin NIT"]],source:"reto5-multas-transito.md §6.2"},
+decreto:{chip:"Oportunidad",title:"Decreto 33-2024 — la ventana perfecta",body:"El Decreto 33-2024 crea una ventana única: la ley ya exige notificación + explicación + plazos, pero no hay herramienta que facilite esto. El prototipo demuestra que la interoperabilidad propuesta por la Iniciativa 6626 es viable y necesaria.",facts:[["Ley","Decreto 33-2024 — reformas a Ley de Tránsito"],["Exige","Notificación + explicación + plazos"],["No hay","Herramienta que facilite el cumplimiento"],["Iniciativa","6626 — Ley de Interoperabilidad del Gobierno Digital"],["Dato","El prototipo es un ejemplo vivo de interoperabilidad"]],source:"reto5-multas-transito.md §2 · §9.2 · §13.2"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

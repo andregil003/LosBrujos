@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D8 · Guatemala en números — el contexto que importa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Guatemala en números</h1>
+    <div class="sub">los datos que sustentan la urgencia — parque vehicular, brecha digital y acumulación de multas — toca cada stat</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- FILA 1: Parque vehicular -->
+  <text x="40" y="34" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">PARQUE VEHICULAR</text>
+
+  <g class="node" data-key="vehiculos" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="40" y="52" width="260" height="130" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="170" y="94" text-anchor="middle" font-size="38" font-weight="700" fill="#1D4ED8">6.3M</text>
+    <text x="170" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">vehículos registrados</text>
+    <text x="170" y="140" text-anchor="middle" font-size="11" fill="#6B7280">6.7M estimados para 2026</text>
+    <text x="170" y="156" text-anchor="middle" font-size="10" fill="#9CA3AF">Prensa Libre 2025</text>
+    <text x="284" y="68" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="motos" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="320" y="52" width="260" height="130" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="450" y="94" text-anchor="middle" font-size="38" font-weight="700" fill="#B45309">53%</text>
+    <text x="450" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">son motocicletas</text>
+    <text x="450" y="140" text-anchor="middle" font-size="11" fill="#6B7280">el usuario más vulnerable</text>
+    <text x="450" y="156" text-anchor="middle" font-size="10" fill="#9CA3AF">SAT — Parque vehicular 2025</text>
+    <text x="564" y="68" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="impuesto" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="600" y="52" width="260" height="130" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="730" y="94" text-anchor="middle" font-size="38" font-weight="700" fill="#B91C1C">59.6%</text>
+    <text x="730" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">NO pagan impuesto</text>
+    <text x="730" y="140" text-anchor="middle" font-size="11" fill="#6B7280">de circulación</text>
+    <text x="730" y="156" text-anchor="middle" font-size="10" fill="#9CA3AF">Prensa Libre 2025</text>
+    <text x="844" y="68" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="aumento" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="880" y="52" width="280" height="130" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="1020" y="94" text-anchor="middle" font-size="38" font-weight="700" fill="#B91C1C">+38%</text>
+    <text x="1020" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">aumento en multas</text>
+    <text x="1020" y="140" text-anchor="middle" font-size="11" fill="#6B7280">2026 vs 2025</text>
+    <text x="1020" y="156" text-anchor="middle" font-size="10" fill="#9CA3AF">Prensa Libre 2026</text>
+    <text x="1144" y="68" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- FILA 2: Brecha digital -->
+  <text x="40" y="220" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">BRECHA DIGITAL — EL DESAFÍO REAL</text>
+
+  <g class="node" data-key="brecha" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="40" y="238" width="260" height="130" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="170" y="280" text-anchor="middle" font-size="38" font-weight="700" fill="#B91C1C">39%</text>
+    <text x="170" y="304" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">brecha digital nacional</text>
+    <text x="170" y="326" text-anchor="middle" font-size="11" fill="#6B7280">sin acceso confiable a internet</text>
+    <text x="170" y="342" text-anchor="middle" font-size="10" fill="#9CA3AF">Prensa Libre</text>
+    <text x="284" y="254" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="rural" tabindex="0" role="button" style="animation-delay:.23s">
+    <rect x="320" y="238" width="260" height="130" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="450" y="280" text-anchor="middle" font-size="38" font-weight="700" fill="#B91C1C">&lt;22%</text>
+    <text x="450" y="304" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">acceso internet rural</text>
+    <text x="450" y="326" text-anchor="middle" font-size="11" fill="#6B7280">comunidades rurales</text>
+    <text x="450" y="342" text-anchor="middle" font-size="10" fill="#9CA3AF">Prensa Libre</text>
+    <text x="564" y="254" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="4g" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="600" y="238" width="260" height="130" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="730" y="280" text-anchor="middle" font-size="38" font-weight="700" fill="#B91C1C">70%+</text>
+    <text x="730" y="304" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">sin cobertura 4G/5G</text>
+    <text x="730" y="326" text-anchor="middle" font-size="11" fill="#6B7280">fuera de la capital</text>
+    <text x="730" y="342" text-anchor="middle" font-size="10" fill="#9CA3AF">estimación rural</text>
+    <text x="844" y="254" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="genero" tabindex="0" role="button" style="animation-delay:.31s">
+    <rect x="880" y="238" width="280" height="130" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="1020" y="280" text-anchor="middle" font-size="38" font-weight="700" fill="#B45309">45%</text>
+    <text x="1020" y="304" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">brecha digital mujeres</text>
+    <text x="1020" y="326" text-anchor="middle" font-size="11" fill="#6B7280">vs hombres</text>
+    <text x="1020" y="342" text-anchor="middle" font-size="10" fill="#9CA3AF">PNUD 2025</text>
+    <text x="1144" y="254" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- FILA 3: Dolor del ciudadano -->
+  <text x="40" y="418" font-size="12" font-weight="600" letter-spacing="1.5" fill="#9CA3AF">EL DOLOR DEL CIUDADANO</text>
+
+  <g class="node" data-key="fantasmas" tabindex="0" role="button" style="animation-delay:.35s">
+    <rect x="40" y="436" width="220" height="120" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="150" y="466" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">Multas Fantasmas</text>
+    <text x="150" y="488" text-anchor="middle" font-size="11" fill="#6B7280">queja #1</text>
+    <text x="150" y="504" text-anchor="middle" font-size="11" fill="#6B7280">sin notificación previa</text>
+    <text x="150" y="520" text-anchor="middle" font-size="11" fill="#6B7280">se enteran al renovar</text>
+    <text x="244" y="452" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="entender" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="280" y="436" width="220" height="120" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="390" y="466" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">No entiendo qué me cobran</text>
+    <text x="390" y="488" text-anchor="middle" font-size="11" fill="#6B7280">jerga legal sin traducir</text>
+    <text x="390" y="504" text-anchor="middle" font-size="11" fill="#6B7280">SAT muestra "null"</text>
+    <text x="390" y="520" text-anchor="middle" font-size="11" fill="#6B7280">sin explicación de infracción</text>
+    <text x="484" y="452" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="pelear" tabindex="0" role="button" style="animation-delay:.43s">
+    <rect x="520" y="436" width="220" height="120" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="630" y="466" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">No sé si puedo pelear</text>
+    <text x="630" y="488" text-anchor="middle" font-size="11" fill="#6B7280">derecho a impugnar existe</text>
+    <text x="630" y="504" text-anchor="middle" font-size="11" fill="#6B7280">pero nadie lo explica</text>
+    <text x="630" y="520" text-anchor="middle" font-size="11" fill="#6B7280">15 días y se pierde</text>
+    <text x="724" y="452" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="fragmentado" tabindex="0" role="button" style="animation-delay:.47s">
+    <rect x="760" y="436" width="220" height="120" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="870" y="466" text-anchor="middle" font-size="14" font-weight="700" fill="#DC2626" class="node-label">Proceso fragmentado</text>
+    <text x="870" y="488" text-anchor="middle" font-size="11" fill="#6B7280">2+ portales</text>
+    <text x="870" y="504" text-anchor="middle" font-size="11" fill="#6B7280">bancos distintos</text>
+    <text x="870" y="520" text-anchor="middle" font-size="11" fill="#6B7280">cero unificación</text>
+    <text x="964" y="452" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="motociclistas" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="1000" y="436" width="160" height="120" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="1080" y="466" text-anchor="middle" font-size="14" font-weight="700" fill="#B45309" class="node-label">Motos 53%</text>
+    <text x="1080" y="488" text-anchor="middle" font-size="11" fill="#6B7280">los más multados</text>
+    <text x="1080" y="504" text-anchor="middle" font-size="11" fill="#6B7280">ingresos bajos</text>
+    <text x="1080" y="520" text-anchor="middle" font-size="11" fill="#6B7280">usan moto para trabajar</text>
+    <text x="1144" y="452" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- BANNER: implicación -->
+  <g class="node" data-key="implicacion" tabindex="0" role="button" style="animation-delay:.55s">
+    <rect x="40" y="590" width="1120" height="70" rx="8" fill="#111111"/>
+    <text x="600" y="618" text-anchor="middle" font-size="15" font-weight="700" fill="#FBBF24">Cualquier solución digital DEBE funcionar offline-first y tener alternativas no-digitales</text>
+    <text x="600" y="640" text-anchor="middle" font-size="12" fill="#D1D5DB">no se puede asumir conectividad permanente · 39% sin internet · &lt;22% en zonas rurales</text>
+    <text x="1144" y="606" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <!-- NOTAS -->
+  <g font-size="11" fill="#9CA3AF">
+    <text x="40" y="700">las multas desproporcionales para motociclistas afectan a trabajadores que usan su vehículo para subsistir · impugnación = Q300 ahorrado</text>
+    <text x="40" y="718">descuentos de 50-60% existen (COM-40-2025 · COM-15-2026) pero son poco conocidos · curso vial = condonación</text>
+    <text x="40" y="736">fuente: reto5-multas-transito.md §5 · §6 · §8</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Parque vehicular</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Brecha digital / problema</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> Alerta / vulnerabilidad</div>
+  <div class="legend"><span class="dot" style="background:#111111"></span> Implicación</div>
+  <div class="legend">💡 Toca cada stat</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+vehiculos:{chip:"Parque vehicular",title:"6,300,000+ vehículos",body:"Guatemala tiene más de 6.3 millones de vehículos registrados, con una proyección de 6.7 millones para 2026. El sistema de multas debe escalar para manejar esta volumen.",facts:[["Registrados","6,300,000+ (2025)"],["Proyección","6,700,000+ (2026)"],["Fuente","Prensa Libre"],["Impacto","Cada vehículo puede generar múltiples multas de diferentes entidades"]],source:"reto5-multas-transito.md §8.1"},
+motos:{chip:"Parque vehicular",title:"53% motocicletas",body:"Más de la mitad del parque vehicular son motocicletas. Los motociclistas son el grupo más multado y el más vulnerable económicamente.",facts:[["Porcentaje","53% del parque vehicular"],["Multas","53% de las multas son a motociclistas"],["Perfil","Ingresos bajos-medios, usan moto para trabajar"],["Impacto","Una multa de Q300 puede ser significativa para un motociclista"]],source:"reto5-multas-transito.md §8.1 · §8.3"},
+impuesto:{chip:"Dato crítico",title:"59.6% no pagan impuesto",body:"Casi el 60% del parque vehicular no ha pagado el impuesto de circulación. Esto indica un sistema de cumplimiento débil y una oportunidad para mejorar la recaudación.",facts:[["Porcentaje","59.56% sin pagar"],["Año","2025"],["Fuente","Prensa Libre"],["Oportunidad","Si el sistema fuera más claro y accesible, más ciudadanos cumplirían"]],source:"reto5-multas-transito.md §8.1"},
+aumento:{chip:"Tendencia",title:"+38% aumento en multas",body:"Las multas aumentaron un 38% de 2025 a 2026. Esto puede deberse a más fiscalización, más semáforos inteligentes o más infracciones reales.",facts:[["Aumento","38% (2026 vs 2025)"],["Posibles causas","Más fiscalización, semáforos inteligentes (Decreto 33-2024)"],["Implicación","El sistema actual no escala para manejar este volumen creciente"],["Oportunidad","Un prototipo digital puede absorber el aumento sin colapsar"]],source:"reto5-multas-transito.md §8.1"},
+brecha:{chip:"Brecha digital",title:"39% sin internet confiable",body:"Casi 4 de cada 10 guatemaltecos no tienen acceso confiable a internet. Esto hace que cualquier solución digital deba funcionar offline-first.",facts:[["Nacional","~39% sin internet confiable"],["Rural","<22% con acceso"],["Fuente","Prensa Libre"],["Implicación","Offline-first no es opcional, es obligatorio"]],source:"reto5-multas-transito.md §8.2"},
+rural:{chip:"Brecha digital",title:"<22% acceso internet rural",body:"En comunidades rurales, menos del 22% tiene acceso a internet. Las soluciones digitales que dependen de conectividad permanente excluyen a la mayoría rural.",facts:[["Rural","<22% con acceso"],["Fuente","Prensa Libre"],["Alternativas","SMS, centros de atención presenciales, agentes comunitarios"],["Dato","70%+ de zonas sin cobertura 4G/5G fuera de la capital"]],source:"reto5-multas-transito.md §8.2"},
+"4g":{chip:"Brecha digital",title:"70%+ sin cobertura 4G/5G",body:"Fuera de la Ciudad de Guatemala, más del 70% de las zonas no tienen cobertura 4G/5G. La conectividad es un lujo en zonas rurales.",facts:[["Cobertura","70%+ sin 4G/5G fuera de la capital"],["Fuente","Estimación basada en EE.UU./Canadá rural"],["Implicación","La app debe funcionar con datos mínimos o sin conexión"],["Solución","Service Worker + IndexedDB para offline-first"]],source:"reto5-multas-transito.md §8.2"},
+genero:{chip:"Brecha digital · género",title:"45% brecha mujeres vs hombres",body:"Existe una brecha del 45% en conocimiento digital entre mujeres y hombres. Las soluciones deben ser accesibles para todos los niveles de alfabetización digital.",facts:[["Brecha","45% mujeres vs hombres"],["Fuente","PNUD 2025"],["Implicación","Interfaz simple, audio en idiomas mayas, guías paso a paso"],["Inclusión","4 idiomas: español, k'iche', q'eqchi', garífuna"]],source:"reto5-multas-transito.md §8.2 · §9.1"},
+fantasmas:{chip:"Dolor · queja #1",title:"Multas Fantasmas",body:"El problema #1 documentado: el ciudadano se entera de una multa que nunca le fue notificada. Ocurre cuando quiere renovar su licencia o vender su vehículo.",facts:[["Síntoma","Se entera al renovar licencia"],["Causa","Sin notificación previa (Decreto 33-2024 la exige)"],["Impacto","Pérdida de plazos, pago innecesario"],["Solución","El prototipo detecta multas sin notificación formal"]],source:"reto5-multas-transito.md §5.1"},
+entender:{chip:"Dolor",title:"No entiendo qué me cobran",body:"El ciudadano recibe una boleta con jerga legal que no entiende. El Portal SAT muestra 'null' en nombres de entidades y no explica qué significa cada infracción.",facts:[["SAT","Muestra 'null' en nombres de entidades"],["Jerga","Artículos del reglamento sin traducir"],["Dato","El ciudadano no sabe qué le cobran ni por qué"],["Solución","El prototipo traduce a lenguaje claro"]],source:"reto5-multas-transito.md §5.2 · §4.1"},
+pelear:{chip:"Dolor",title:"No sé si puedo pelear",body:"El Decreto 33-2024 garantiza el derecho a impugnar en 15 días, pero la mayoría de ciudadanos no sabe que este derecho existe ni cómo ejercerlo.",facts:[["Derecho","Impugnar en 15 días (Decreto 33-2024)"],["Realidad","La mayoría no sabe que puede pelear"],["Consecuencia","Muchos pagan multas que podrían impugnar"],["Solución","El prototipo genera borrador del recurso"]],source:"reto5-multas-transito.md §5.3 · §2.2"},
+fragmentado:{chip:"Dolor",title:"Proceso fragmentado y confuso",body:"El ciudadano debe navegar 2+ portales de consulta y pagar en bancos distintos. Cada entidad tiene su propio sistema o ninguno.",facts:[["Portales","SAT + transito.gob.gt + muniguate + portales municipales"],["Bancos","Bancos del sistema (PNC) + Banrural (EMETRA) + BI (Mixco)"],["Sin unificación","Cada entidad opera por separado"],["Solución","El prototipo consulta todo en un solo lugar"]],source:"reto5-multas-transito.md §5.4 · §1.1"},
+motociclistas:{chip:"Vulnerabilidad",title:"Motociclistas — los más afectados",body:"El 53% de las multas son a motociclistas que usan su vehículo para trabajar. Multas desproporcionales afectan directamente su sustento.",facts:[["Perfil","Ingresos bajos-medios"],["Uso","Moto como herramienta de trabajo"],["Descuento","50-60% con curso vial (poco conocido)"],["Ahorro","Q300 → Q150 = significativo"]],source:"reto5-multas-transito.md §5.5 · §8.3"},
+implicacion:{chip:"Implicación",title:"Offline-first es obligatorio",body:"Con 39% de brecha digital, <22% de acceso rural y 70%+ sin 4G/5G fuera de la capital, cualquier solución digital que dependa de conectividad permanente excluye a millones de guatemaltecos.",facts:[["Nacional","39% sin internet"],["Rural","<22% acceso"],["4G/5G","70%+ sin cobertura fuera de capital"],["Solución","PWA offline-first + alternativas no-digitales"]],source:"reto5-multas-transito.md §8.2"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>
