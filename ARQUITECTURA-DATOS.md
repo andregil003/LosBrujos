@@ -32,6 +32,63 @@
 
 ---
 
+## 2.5 ESTRUCTURA DE CARPETAS Y ARCHIVOS (qué creamos)
+
+Esta es la estructura completa del repo de código `reto-5-brujos`. **Cada archivo de la lista hay que crearlo** (los que ya existen, mantenerlos así).
+
+```
+reto-5-brujos/
+├── index.html                    Entry point (PWA meta tags)
+├── vite.config.js                Vite + React + Tailwind + PWA plugin
+├── package.json                  Dependencias
+├── _headers                      Cache control para Cloudflare
+├── public/
+│   ├── infracciones.json         Catálogo de 15+ infracciones (Diego/Lemus)
+│   ├── entidades.json            11 entidades emisoras (Diego)
+│   ├── favicon.svg               Icono de la app
+│   ├── icon-192.png              PWA icon 192x192
+│   ├── icon-512.png              PWA icon 512x512
+│   └── robots.txt
+├── data/
+│   └── plantilla-impugnacion.md  Plantilla de impugnación (Lemus)
+└── src/
+    ├── main.jsx                  Bootstrap de React
+    ├── App.jsx                   Router principal (vistas)
+    ├── index.css                 Tailwind imports + tema oscuro
+    ├── lib/
+    │   ├── constantes.js         Plazos legales: 15/60/120 días (Lemus)
+    │   ├── core.js               Lógica pura: fechas, prescripción, semáforo, validación (Lemus)
+    │   ├── data.js               Carga de infracciones.json + entidades (Lemus)
+    │   ├── utils.js              cn() helper para shadcn (clsx + tailwind-merge)
+    │   └── i18n/
+    │       ├── es.json           Traducciones español (Uriel)
+    │       ├── kiche.json        Traducciones K'iche' (Uriel)
+    │       └── kawchiquel.json   Traducciones Kawchiquel (Uriel)
+    ├── hooks/
+    │   └── useLocalStorage.js    Persistencia local (placas guardadas)
+    ├── components/
+    │   ├── ui/                   Componentes shadcn (Button, Card, Select, Tabs, Tooltip…)
+    │   └── IdiomaSelector.jsx    Selector ES/K'iche'/Kawchiquel + tamaño de letra (Kevin)
+    └── screens/
+        ├── Home.jsx              P0: Landing "¿Te llegó una multa?" + QR/URL (Kevin)
+        ├── Placas.jsx            P0.5: Selección de placa guardada (localStorage) (Kevin)
+        ├── Municipios.jsx        Vista de municipalidades: gris=sin multas, color=con multas (Kevin)
+        ├── Form.jsx              P1: Formulario guiado de la boleta (Kevin)
+        ├── Explicador.jsx        P2: Traducción de la multa + botones "?" (Kevin)
+        ├── Semaforo.jsx          P3: Semáforo de legalidad (verde/amarillo/rojo) (Kevin)
+        ├── QueHago.jsx           P3.5: Oposición (15 días) vs prescripción (120 días) (Kevin)
+        └── Accion.jsx            P4: PDF / pago con descuento (Kevin)
+```
+
+**Notas:**
+- `components/ui/` se genera con el CLI de shadcn (`npx shadcn@latest init` + `add`). No lo crees a mano.
+- `screens/` = una pantalla por archivo, en PascalCase.
+- `lib/` = lógica pura, sin JSX. `core.js` y `constantes.js` no importan React.
+- `i18n/` = solo JSON, las mismas claves en los 3 archivos.
+- El backend demo (Google Sheets + Apps Script) vive FUERA de este repo — es un script aparte que Lemus conecta.
+
+---
+
 ## 3. REGLAS DE NOMBRES (camelCase y amigos)
 
 | Qué es | Convención | Ejemplo |

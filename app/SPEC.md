@@ -40,20 +40,28 @@ reto-5-brujos/
 │   ├── App.jsx               Router principal (vistas)
 │   ├── index.css             Tailwind imports + tema oscuro
 │   ├── lib/
-│   │   └── utils.js          cn() helper para shadcn (clsx + tailwind-merge)
-│   ├── components/ui/        Componentes shadcn (Button, Card, Select, etc.)
-│   ├── screens/
-│   │   ├── Home.jsx          P0: Landing "¿Te llegó una multa?"
-│   │   ├── Form.jsx          P1: Formulario guiado de la boleta
-│   │   ├── Explicador.jsx    P2: Traducción de la multa
-│   │   ├── Semaforo.jsx      P3: Semáforo de legalidad
-│   │   └── Accion.jsx        P4: PDF / pago con descuento
-│   ├── lib/
+│   │   ├── constantes.js     Plazos legales: 15/60/120 días (Lemus)
 │   │   ├── core.js           Lógica pura: fechas, prescripción, semáforo, validación
-│   │   ├── i18n.js           Diccionarios: es + k'iche' + kawchiquel (Uriel)
-│   │   └── data.js           Carga de infracciones.json + entidades
+│   │   ├── data.js           Carga de infracciones.json + entidades
+│   │   ├── utils.js          cn() helper para shadcn (clsx + tailwind-merge)
+│   │   └── i18n/
+│   │       ├── es.json       Traducciones español (Uriel)
+│   │       ├── kiche.json    Traducciones K'iche' (Uriel)
+│   │       └── kawchiquel.json Traducciones Kawchiquel (Uriel)
+│   ├── components/
+│   │   ├── ui/               Componentes shadcn (Button, Card, Select, etc.)
+│   │   └── IdiomaSelector.jsx Selector ES/K'iche'/Kawchiquel + tamaño de letra
+│   ├── screens/
+│   │   ├── Home.jsx          P0: Landing "¿Te llegó una multa?" + QR/URL
+│   │   ├── Placas.jsx        P0.5: Selección de placa guardada (localStorage)
+│   │   ├── Municipios.jsx    Vista de municipalidades: gris=sin multas, color=con multas
+│   │   ├── Form.jsx          P1: Formulario guiado de la boleta
+│   │   ├── Explicador.jsx    P2: Traducción de la multa + botones "?"
+│   │   ├── Semaforo.jsx      P3: Semáforo de legalidad
+│   │   ├── QueHago.jsx       P3.5: Oposición (15 días) vs prescripción (120 días)
+│   │   └── Accion.jsx        P4: PDF / pago con descuento
 │   └── hooks/
-│       └── useLocalStorage.js Hook para persistencia local
+│       └── useLocalStorage.js Hook para persistencia local (placas guardadas)
 ├── public/
 │   ├── infracciones.json     Catálogo de 15+ infracciones
 │   ├── entidades.json        11 entidades emisoras
@@ -61,6 +69,8 @@ reto-5-brujos/
 │   ├── icon-192.png          PWA icon 192x192
 │   ├── icon-512.png          PWA icon 512x512
 │   └── robots.txt
+├── data/
+│   └── plantilla-impugnacion.md Plantilla de impugnación
 ├── _headers                  Cache control para Cloudflare
 └── package.json              Dependencias
 ```
