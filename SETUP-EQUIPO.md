@@ -31,6 +31,8 @@ Tenemos **2 repos**. Esto es importante:
 **REGLA:** La info de investigación se queda en `LosBrujos`. El código de la app va en `reto-5-brujos`.
 
 > **📐 ANTES de escribir código, leé [ARQUITECTURA-DATOS.md](ARQUITECTURA-DATOS.md)** — ahí están las reglas de variables (camelCase), dónde vive cada dato (una sola fuente de verdad), los formatos JSON y el flujo de Git con ramas.
+>
+> **✅ Para saber cómo vamos, mirá [ENTREGABLES.md](ENTREGABLES.md)** — el checklist maestro. Cuando termines algo, marcá tu casilla `[x]`, actualizá el contador y avisá por ntfy.
 
 ---
 
