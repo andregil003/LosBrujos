@@ -20,12 +20,27 @@ Diagramas interactivos (click en cada cuadro para ver el detalle) desplegados en
 | D10 | Ecosistema de multas en Guatemala (lo que ya existe) | [Abrir](https://andregil003.github.io/LosBrujos/D10-ecosistema-multas-guatemala.html) |
 | D11 | Priorización de deliverables (P0 · P1 · P2) | [Abrir](https://andregil003.github.io/LosBrujos/D11-priorizacion-deliverables.html) |
 | D12 | Stack técnico del prototipo (Vite + Vanilla + Cloudflare) | [Abrir](https://andregil003.github.io/LosBrujos/D12-stack-tecnico.html) |
+| **D13** | **Plan de Trabajo · 5 Roles · Cronograma** | [**Abrir**](https://andregil003.github.io/LosBrujos/D13-plan-de-trabajo.html) |
 
 > 💡 Cada diagrama tiene botón **Exportar PNG** y es responsive (móvil incluido).
 
+## 📋 Plan de Trabajo
+
+El documento **[`PLAN-DE-TRABAJO.md`](PLAN-DE-TRABAJO.md)** contiene todo lo que el equipo necesita saber:
+- Qué es MultaClara (resumen para todos)
+- Qué ya tenemos hecho y qué falta
+- Los deliverables P0/P1/P2 explicados
+- Los 5 roles del equipo con responsabilidades claras
+- Matriz de quién hace qué
+- Cronograma día por día
+- Frases clave para el pitch
+- Estadísticas para memorizar
+- Checklist pre-pitch
+
 ## 📁 Estructura
 
-- `diagramas/` — los 12 diagramas HTML interactivos (fuente de GitHub Pages)
+- `diagramas/` — los 13 diagramas HTML interactivos (fuente de GitHub Pages)
+- `PLAN-DE-TRABAJO.md` — guía completa del equipo: roles, deliverables, cronograma, matriz de responsabilidades
 - `PLAN-ESTRATEGICO.md` — plan de deliverables priorizados (P0/P1/P2) + mapa del ecosistema
 - `reto5-multas-transito.md` — investigación principal del Reto 05
 - `analisis-retos.md` — comparativa de los retos del hackathon

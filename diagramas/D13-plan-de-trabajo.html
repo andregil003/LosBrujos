@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D13 - Plan de Trabajo - LosBrujos - HACKCREA 2026</title>
+<style>
+:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1a1a24;--border:#2a2a3a;--text:#e8e8f0;--dim:#8888a0;--accent:#6c5ce7;--green:#00b894;--yellow:#fdcb6e;--red:#e17055;--blue:#74b9ff;--pink:#fd79a8;--r:12px;--sh:0 4px 24px rgba(0,0,0,.4)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px;line-height:1.6}
+.hdr{text-align:center;margin-bottom:32px;padding:32px 24px;background:linear-gradient(135deg,rgba(108,92,231,.15),rgba(0,184,148,.1));border-radius:var(--r);border:1px solid var(--border)}
+.hdr h1{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#6c5ce7,#00b894);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hdr p{color:var(--dim);font-size:1rem;max-width:600px;margin:0 auto}
+.tabs{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
+.tab{padding:10px 20px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--dim);cursor:pointer;font-size:.9rem;font-weight:600;transition:.2s}
+.tab:hover{border-color:var(--accent);color:var(--text)}
+.tab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pnl{display:none}.pnl.on{display:block}
+/* Flow */
+.flow{display:flex;flex-direction:column;gap:0;max-width:900px;margin:0 auto;position:relative}
+.flow::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--green),var(--yellow));border-radius:2px}
+.fs{display:flex;align-items:flex-start;gap:20px;padding:16px 0;position:relative}
+.dot{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;z-index:1;border:3px solid var(--bg)}
+.fc{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:.3s}
+.fc:hover{border-color:var(--accent);box-shadow:var(--sh)}
+.fc h3{font-size:1.1rem;margin-bottom:8px}
+.fc p{color:var(--dim);font-size:.9rem}
+.fc ul{margin-top:8px;padding-left:18px;color:var(--dim);font-size:.85rem}
+.fc ul li{margin-bottom:4px}
+/* Roles grid */
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:1200px;margin:0 auto}
+.role{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:.3s;position:relative;overflow:hidden}
+.role:hover{border-color:var(--accent);box-shadow:var(--sh);transform:translateY(-2px)}
+.role::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.role.r1::before{background:linear-gradient(90deg,#6c5ce7,#a29bfe)}
+.role.r2::before{background:linear-gradient(90deg,#74b9ff,#0984e3)}
+.role.r3::before{background:linear-gradient(90deg,#00b894,#55efc4)}
+.role.r4::before{background:linear-gradient(90deg,#fdcb6e,#e17055)}
+.role.r5::before{background:linear-gradient(90deg,#fd79a8,#e84393)}
+.role .icon{font-size:2rem;margin-bottom:12px}
+.role h3{font-size:1.1rem;margin-bottom:4px}
+.role .sub{color:var(--dim);font-size:.8rem;margin-bottom:12px}
+.role ul{padding-left:18px;color:var(--dim);font-size:.85rem}
+.role ul li{margin-bottom:6px}
+.role .deps{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.8rem;color:var(--dim)}
+.role .deps strong{color:var(--text)}
+/* Deliverables */
+.del{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1200px;margin:0 auto}
+.del-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:.3s}
+.del-card:hover{border-color:var(--accent);box-shadow:var(--sh)}
+.del-card .num{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+.del-card h3{font-size:1rem;margin-bottom:6px}
+.del-card p{color:var(--dim);font-size:.85rem}
+.del-card .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600;margin-top:8px}
+.b-p0{background:rgba(225,112,85,.15);color:var(--red);border:1px solid rgba(225,112,85,.3)}
+.b-p1{background:rgba(253,203,110,.15);color:var(--yellow);border:1px solid rgba(253,203,110,.3)}
+.b-p2{background:rgba(0,184,148,.15);color:var(--green);border:1px solid rgba(0,184,148,.3)}
+.b-lo{background:rgba(116,185,255,.15);color:var(--blue);border:1px solid rgba(116,185,255,.3)}
+.b-md{background:rgba(253,203,110,.15);color:var(--yellow);border:1px solid rgba(253,203,110,.3)}
+.b-hi{background:rgba(225,112,85,.15);color:var(--red);border:1px solid rgba(225,112,85,.3)}
+/* Matrix */
+.mx{width:100%;border-collapse:collapse;max-width:1100px;margin:0 auto;font-size:.85rem}
+.mx th,.mx td{padding:10px 12px;border:1px solid var(--border);text-align:center}
+.mx th{background:var(--surface2);color:var(--text);font-weight:700;position:sticky;top:0}
+.mx td:first-child{text-align:left;font-weight:600;background:var(--surface)}
+.mx .lead{background:rgba(108,92,231,.15);color:var(--accent);font-weight:700}
+.mx .help{background:rgba(116,185,255,.08);color:var(--blue)}
+.mx .na{color:#444}
+/* Timeline */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1200px;margin:0 auto}
+.tl-day{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;position:relative;overflow:hidden}
+.tl-day::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.tl-day.d1::before{background:var(--accent)}
+.tl-day.d2::before{background:var(--green)}
+.tl-day.d3::before{background:var(--yellow)}
+.tl-day.d4::before{background:var(--pink)}
+.tl-day h3{font-size:1rem;margin-bottom:4px}
+.tl-day .when{color:var(--dim);font-size:.8rem;margin-bottom:12px}
+.tl-day ul{padding-left:16px;color:var(--dim);font-size:.85rem}
+.tl-day ul li{margin-bottom:6px}
+.tl-day ul li strong{color:var(--text)}
+/* Responsive */
+@media(max-width:768px){
+  .tl{grid-template-columns:1fr}
+  .roles{grid-template-columns:1fr}
+  .del{grid-template-columns:1fr}
+  .flow::before{left:18px}
+  .dot{width:38px;height:38px;font-size:.85rem}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>D13 - Plan de Trabajo - LosBrujos</h1>
+  <p>HACKCREA 2026 - Reto 05: Multas de transito que educan, no que castigan<br>
+  <strong>MultaClara</strong> - "De multa a educacion"</p>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab on" data-p="p1">Flujo del Usuario</div>
+  <div class="tab" data-p="p2">5 Roles del Equipo</div>
+  <div class="tab" data-p="p3">Deliverables</div>
+  <div class="tab" data-p="p4">Matriz de Responsabilidades</div>
+  <div class="tab" data-p="p5">Cronograma (4 dias)</div>
+</div>
+
+<!-- PANEL 1: Flujo -->
+<div class="pnl on" id="p1">
+<div class="flow">
+  <div class="fs">
+    <div class="dot" style="background:var(--accent);color:#fff">1</div>
+    <div class="fc">
+      <h3>Llega a la app</h3>
+      <p>El usuario ve: "Te llego una multa? Te la explicamos"</p>
+      <ul>
+        <li>"Tengo la boleta en la mano" -&gt; formulario manual</li>
+        <li>"Escanear mi boleta" (V2, OCR) -&gt; foto</li>
+        <li>"Solo quiero entender una infraccion" -&gt; buscador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fs">
+    <div class="dot" style="background:var(--accent);color:#fff">2</div>
+    <div class="fc">
+      <h3>Ingresa datos de la multa</h3>
+      <p>Formulario guiado con validacion estricta</p>
+      <ul>
+        <li>Tipo de papel (boleta, requerimiento, citacion)</li>
+        <li>Fecha de la infraccion (CRITICO para plazos)</li>
+        <li>Entidad que multa (PNC, EMETRA, etc.)</li>
+        <li>Que infraccion le cobran</li>
+        <li>"Vos manejabas el vehiculo?" (si/no)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fs">
+    <div class="dot" style="background:var(--green);color:#fff">3</div>
+    <div class="fc">
+      <h3>Ve la explicacion de su multa</h3>
+      <p>EL CORAZON: traduce jerga legal a lenguaje claro</p>
+      <ul>
+        <li>Que hizo mal (en palabras de la calle)</li>
+        <li>Cuanto cuesta + cuanto ahorraria con descuento</li>
+        <li>Por que es peligroso (capsula de prevencion)</li>
+        <li>Glosario expandible de terminos legales</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fs">
+    <div class="dot" style="background:var(--yellow);color:#000">4</div>
+    <div class="fc">
+      <h3>Semaforo de legalidad</h3>
+      <p>Dice si la multa es valida o si se puede pelear</p>
+      <ul>
+        <li style="color:var(--green)"><strong style="color:var(--green)">VERDE:</strong> Notificacion OK, dentro de plazos -&gt; guia de pago</li>
+        <li style="color:var(--yellow)"><strong style="color:var(--yellow)">AMARILLO:</strong> Datos incompletos -&gt; sugiere revisar</li>
+        <li style="color:var(--red)"><strong style="color:var(--red)">ROJO:</strong> Prescripcion o vicio grave -&gt; sugiere impugnar</li>
+        <li>Checklist de 6 requisitos (Decreto 33-2024)</li>
+        <li>Barras de plazo: "12 de 15 dias para impugnar"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fs">
+    <div class="dot" style="background:var(--green);color:#fff">5</div>
+    <div class="fc">
+      <h3>Toma accion</h3>
+      <p>Segun el semaforo, dos caminos</p>
+      <ul>
+        <li><strong>Si rojo/amarillo:</strong> Genera borrador de impugnacion (PDF) con disclaimer obligatorio</li>
+        <li><strong>Si verde:</strong> Ve como pagar con descuento (curso vial, condonacion)</li>
+        <li><strong>En cualquier caso:</strong> Donde ir, documentos, horarios</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PANEL 2: Roles -->
+<div class="pnl" id="p2">
+<div class="roles">
+  <div class="role r1">
+    <div class="icon">&#9881;</div>
+    <h3>ROL 1: Arquitecto</h3>
+    <div class="sub">Desarrollador Principal</div>
+    <ul>
+      <li>Crea la estructura del proyecto (Vite, carpetas)</li>
+      <li>Configura Service Worker + manifest (PWA)</li>
+      <li>Escribe la logica core: prescripcion, semaforo, validacion</li>
+      <li>Despliega a Cloudflare Pages</li>
+      <li>Decisiones tecnicas (que libreria, como organizar)</li>
+    </ul>
+    <div class="deps"><strong>Depende de:</strong> Nadie (arranca primero)</div>
+  </div>
+  <div class="role r2">
+    <div class="icon">&#9998;</div>
+    <h3>ROL 2: Frontend</h3>
+    <div class="sub">Constructor de Interfaces</div>
+    <ul>
+      <li>Construye las pantallas: inicio, formulario, explicador, semaforo, PDF</li>
+      <li>Escribe el HTML de cada vista</li>
+      <li>Aplica CSS (tema oscuro, responsive, tarjetas)</li>
+      <li>Implementa animaciones y transiciones</li>
+      <li>Asegura que todo se vea bien en celular</li>
+    </ul>
+    <div class="deps"><strong>Depende de:</strong> Arquitecto (estructura base, Dia 1)</div>
+  </div>
+  <div class="role r3">
+    <div class="icon">&#9889;</div>
+    <h3>ROL 3: Logica de Negocio</h3>
+    <div class="sub">Motor de la App</div>
+    <ul>
+      <li>Conecta formulario -&gt; explicador -&gt; semaforo -&gt; PDF</li>
+      <li>Implementa la logica del semaforo (verde/amarillo/rojo)</li>
+      <li>Maneja el catalogo de infracciones (JSON)</li>
+      <li>Implementa "Vos manejabas?" y guia especial</li>
+      <li>Maneja localStorage para historial</li>
+    </ul>
+    <div class="deps"><strong>Depende de:</strong> Arquitecto (core.js + data.js, Dia 1-2)</div>
+  </div>
+  <div class="role r4">
+    <div class="icon">&#128218;</div>
+    <h3>ROL 4: Investigador</h3>
+    <div class="sub">Contenido y Datos</div>
+    <ul>
+      <li>Crea entidades.json (11 entidades, jurisdicciones)</li>
+      <li>Escribe copy en lenguaje claro para 15 infracciones</li>
+      <li>Prepara traducciones a Kiche e Ingles</li>
+      <li>Crea guia de estafas (notificacion real vs SMS falso)</li>
+      <li>Prepara guion del pitch de 5 minutos</li>
+    </ul>
+    <div class="deps"><strong>Depende de:</strong> Nadie (arranca desde Dia 1)</div>
+  </div>
+  <div class="role r5">
+    <div class="icon">&#127912;</div>
+    <h3>ROL 5: Disenador / QA / Pitch</h3>
+    <div class="sub">Visual + Presentacion</div>
+    <ul>
+      <li>Define paleta de colores, tipografia, espaciados</li>
+      <li>Disena componentes: tarjetas, botones, iconos SVG</li>
+      <li>Revisa que todo se vea bien (QA visual)</li>
+      <li>Testea en diferentes pantallas (celular, tablet, desktop)</li>
+      <li>Prepara slides + ensayo de pitch</li>
+    </ul>
+    <div class="deps"><strong>Depende de:</strong> Arquitecto (base visual, Dia 1)</div>
+  </div>
+</div>
+</div>
+
+<!-- PANEL 3: Deliverables -->
+<div class="pnl" id="p3">
+<div class="del">
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-1</div><h3>Estructura Vite + routing SPA</h3><p>Scaffold con npm create vite, estructura de carpetas, routing con hash.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-2</div><h3>Pantalla de inicio (landing)</h3><p>"Te llego una multa?" + 3 botones de entrada: manual, OCR, buscador.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-3</div><h3>Formulario de boleta</h3><p>Selector tipo papel, fecha, entidad, infraccion. Validacion estricta. Pregunta "Vos manejabas?"</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-4</div><h3>Explicador de multa</h3><p>Lenguaje claro + montos + descuentos + prevencion. EL CORAZON del reto.</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-5</div><h3>Semaforo de legalidad</h3><p>Verde/Amarillo/Rojo con iconografia + checklist Decreto 33-2024 + barras de plazo.</p><span class="badge b-hi">Alta</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-6</div><h3>Generador PDF impugnacion</h3><p>jsPDF + checkbox obligatorio + plantilla condicional. Borrador listo para presentar.</p><span class="badge b-md">Media</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-7</div><h3>PWA instalable</h3><p>manifest.json + sw.js + icons. Offline-first. Que funcione sin internet.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--red)">P0-8</div><h3>Datos: entidades.json</h3><p>Catalogo de 11 entidades + jurisdiccion + contacto + horario.</p><span class="badge b-lo">Baja</span> <span class="badge b-p0">P0 - Imprescindible</span></div>
+  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-1</div><h3>i18n: Kiche + Ingles</h3><p>UI + glosario. Kiche = 1.27M hablantes. Ingles = turistas/expats.</p><span class="badge b-md">Media</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
+  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-2</div><h3>Buscador de infracciones</h3><p>"semaforo", "casco", "placa" -&gt; filtra el catalogo.</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
+  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-3</div><h3>Historial de consultas</h3><p>localStorage, "Tus ultimas consultas".</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
+  <div class="del-card"><div class="num" style="color:var(--yellow)">P1-4</div><h3>Guia de estafas</h3><p>Notificacion real vs SMS falso. Contenido editorial.</p><span class="badge b-lo">Baja</span> <span class="badge b-p1">P1 - Valor Anadido</span></div>
+  <div class="del-card"><div class="num" style="color:var(--green)">P2-1</div><h3>OCR de boletas (Tesseract.js)</h3><p>Fotografiar boleta -&gt; autocompleta datos. 3-4 boletas mock.</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
+  <div class="del-card"><div class="num" style="color:var(--green)">P2-2</div><h3>Alertas push de plazos</h3><p>Notificacion "queda 1 dia para impugnar".</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
+  <div class="del-card"><div class="num" style="color:var(--green)">P2-3</div><h3>Dashboard de flota B2B</h3><p>Para empresas de transporte. Solo pitch.</p><span class="badge b-hi">Alta</span> <span class="badge b-p2">P2 - Roadmap</span></div>
+</div>
+</div>
+
+<!-- PANEL 4: Matriz -->
+<div class="pnl" id="p4">
+<div style="overflow-x:auto">
+<table class="mx">
+<thead><tr><th>Tarea</th><th>Arquitecto</th><th>Frontend</th><th>Logica</th><th>Investigador</th><th>Disenador/QA</th></tr></thead>
+<tbody>
+<tr><td>Setup proyecto Vite</td><td class="lead">LIDER</td><td class="help">Ayuda</td><td class="na">-</td><td class="na">-</td><td class="na">-</td></tr>
+<tr><td>Service Worker / PWA</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="help">Verifica</td></tr>
+<tr><td>CSS / Estilos base</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td></tr>
+<tr><td>Pantalla inicio</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="help">Disena</td></tr>
+<tr><td>Formulario boleta</td><td class="na">-</td><td class="lead">LIDER</td><td class="help">Conecta</td><td class="na">-</td><td class="help">Revisa</td></tr>
+<tr><td>Explicador multa</td><td class="na">-</td><td class="lead">LIDER</td><td class="lead">LIDER</td><td class="help">Copy</td><td class="help">Disena</td></tr>
+<tr><td>Semaforo legalidad</td><td class="help">Ayuda</td><td class="help">UI</td><td class="lead">LIDER</td><td class="na">-</td><td class="help">Iconos</td></tr>
+<tr><td>Generador PDF</td><td class="na">-</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="help">Verifica</td></tr>
+<tr><td>entidades.json</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td></tr>
+<tr><td>i18n (traducciones)</td><td class="na">-</td><td class="help">Conecta</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td></tr>
+<tr><td>Guia estafas</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="help">Disena</td></tr>
+<tr><td>Buscador infracciones</td><td class="na">-</td><td class="help">Ayuda</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td></tr>
+<tr><td>Historial localStorage</td><td class="na">-</td><td class="na">-</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td></tr>
+<tr><td>Deploy Cloudflare</td><td class="lead">LIDER</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="help">Verifica</td></tr>
+<tr><td>Pitch / Slides</td><td class="na">-</td><td class="na">-</td><td class="na">-</td><td class="help">Ayuda</td><td class="lead">LIDER</td></tr>
+<tr><td>QA / Tests manuales</td><td class="help">Verifica</td><td class="help">Revisa</td><td class="help">Revisa</td><td class="na">-</td><td class="lead">LIDER</td></tr>
+</tbody>
+</table>
+</div>
+<p style="text-align:center;color:var(--dim);margin-top:16px;font-size:.85rem">
+  <span style="display:inline-block;width:14px;height:14px;background:rgba(108,92,231,.3);border-radius:3px;vertical-align:middle;margin-right:4px"></span> LIDER = Responsable principal
+  &nbsp;&nbsp;
+  <span style="display:inline-block;width:14px;height:14px;background:rgba(116,185,255,.15);border-radius:3px;vertical-align:middle;margin-right:4px"></span> Ayuda = Apoyo
+</p>
+</div>
+
+<!-- PANEL 5: Cronograma -->
+<div class="pnl" id="p5">
+<div class="tl">
+  <div class="tl-day d1">
+    <h3>Dia 1 - Cimientos</h3>
+    <div class="when">Mañana + Tarde</div>
+    <ul>
+      <li><strong>Arquitecto:</strong> Setup Vite + estructura + Service Worker</li>
+      <li><strong>Frontend:</strong> CSS base + paleta de colores</li>
+      <li><strong>Investigador:</strong> entidades.json (11 entidades)</li>
+      <li><strong>Disenador:</strong> Paleta + tipografia + componentes SVG</li>
+      <li><strong>Logica:</strong> Ayuda con setup y datos</li>
+    </ul>
+  </div>
+  <div class="tl-day d2">
+    <h3>Dia 2 - Core</h3>
+    <div class="when">Mañana + Tarde</div>
+    <ul>
+      <li><strong>Arquitecto:</strong> Logica core + carga de datos</li>
+      <li><strong>Frontend:</strong> Formulario + Explicador</li>
+      <li><strong>Logica:</strong> Conectar formulario + explicador + semaforo</li>
+      <li><strong>Investigador:</strong> i18n estructura + copy infracciones</li>
+      <li><strong>Disenador:</strong> Revisar UI + iconos semaforo</li>
+    </ul>
+  </div>
+  <div class="tl-day d3">
+    <h3>Dia 3 - Diferenciadores</h3>
+    <div class="when">Mañana + Tarde</div>
+    <ul>
+      <li><strong>Arquitecto:</strong> Deploy a Cloudflare Pages</li>
+      <li><strong>Frontend:</strong> Semaforo UI + barras de plazo</li>
+      <li><strong>Logica:</strong> Generador PDF + checklist</li>
+      <li><strong>Investigador:</strong> Kiche (UI + frases clave)</li>
+      <li><strong>Disenador:</strong> Tests manuales + fix bugs</li>
+    </ul>
+  </div>
+  <div class="tl-day d4">
+    <h3>Dia 4 - Pitch + Pulido</h3>
+    <div class="when">Mañana + Tarde</div>
+    <ul>
+      <li><strong>Arquitecto:</strong> Deploy final + verificacion</li>
+      <li><strong>Frontend:</strong> Responsive final + pulido</li>
+      <li><strong>Logica:</strong> Historial localStorage + guia estafas</li>
+      <li><strong>Investigador:</strong> Guion pitch +Ayuda con contenido</li>
+      <li><strong>Disenador:</strong> Slides + ensayo pitch + QA final</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pnl').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById(t.dataset.p).classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
