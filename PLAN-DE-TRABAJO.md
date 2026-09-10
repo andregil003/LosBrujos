@@ -56,36 +56,36 @@ Están organizados por prioridad. Los P0 son IMPRESCINDIBLES (sin esto no hay de
 | # | Qué es | Para qué sirve | Complejidad |
 |---|--------|----------------|-------------|
 | **P0-1** | Estructura del proyecto con Vite | Crear la base: carpetas, archivos, configuración para que todo funcione | Baja |
-| **P0-2** | Pantalla de inicio (landing) | Lo primero que ve el usuario: "¿Te llegó una multa?" con 3 opciones para empezar | Baja |
-| **P0-3** | Formulario de la boleta | Donde el usuario ingresa los datos de su multa: fecha, entidad, qué infracción, si manejaba | Media |
-| **P0-4** | Explicador de multa | EL CORAZÓN: traduce la multa a lenguaje claro, muestra montos, descuentos, prevención | Media |
-| **P0-5** | Semáforo de legalidad | Dice si la multa es válida (verde/amarillo/rojo) con checklist de Decreto 33-2024 | Alta |
-| **P0-6** | Generador de PDF de impugnación | Crea un borrador listo para presentar, con checkbox obligatorio de disclaimer | Media |
+| **P0-2** | Pantalla de entrada (QR/URL + placa + idioma) | Lo primero que ve el usuario: escanea QR, ingresa placa, elige idioma (ES/K'iche'/Kawchiquel) y tamaño de letra | Baja |
+| **P0-2b** | Selección de placa | Múltiples placas en localStorage, sin cuentas. Para gente con varios vehículos | Baja |
+| **P0-2c** | Vista de municipalidades | Gris=sin multas, color=con multas, número en esquina superior derecha | Media |
+| **P0-3** | Formulario de la boleta | Donde el usuario ingresa los datos de su multa: fecha, entidad, qué infracción, si es propietario, si manejaba | Media |
+| **P0-4** | Explicador de multa | EL CORAZÓN: traduce la multa a lenguaje claro, muestra montos, descuentos, prevención, botones "?" info | Media |
+| **P0-5** | Semáforo de legalidad | Dice si la multa es válida (verde/amarillo/rojo) con checklist de Decreto 33-2024. **La gente no sabe que puede apelar** | Alta |
+| **P0-5b** | ¿Qué hago? | 3 opciones: pagar / oposición / prescripción | Media |
+| **P0-6** | Generador de PDF de impugnación | Crea un borrador listo para presentar (oposición o prescripción), con checkbox obligatorio de disclaimer | Media |
 | **P0-7** | PWA instalable | Que se pueda instalar como app en el celular y funcione offline | Baja |
 | **P0-8** | Catálogo de entidades | JSON con las 11 entidades que multan, sus jurisdicciones y contactos | Baja |
+| **P0-9** | Backend demo: Google Sheets + Apps Script | Datos ficticios para demo. Sheets como BD + Apps Script como API | Media |
 
-**Resultado P0:** App completa que explica una multa, dice si es impugnable, y genera el PDF. **Esto es el 80% del pitch.**
+**Resultado P0:** App completa que explica una multa, dice si es impugnable, genera el PDF, y muestra las municipalidades con multas. **Esto es el 80% del pitch.**
 
 ### P1 — VALOR AÑADIDO (Si sobra tiempo)
 
 | # | Qué es | Para qué sirve | Complejidad |
 |---|--------|----------------|-------------|
-| **P1-1** | Traducción a K'iche' + Inglés | Inclusión lingüística: 1.27M de k'iche'hablantes + turistas | Media |
+| **P1-1** | Traducción a K'iche' + Kawchiquel | Inclusión lingüística: hablantes de idiomas mayas que no entienden la boleta | Media |
 | **P1-2** | Buscador de infracciones | El usuario escribe "semáforo" y le aparece la infracción | Baja |
-| **P1-3** | Historial de consultas | Guarda las últimas consultas para no tener que repetir | Baja |
-| **P1-4** | Guía de estafas | Cómo identificar multas falsas (problema real en Guatemala) | Baja |
-| **P1-5** | Audio de frases clave | Para personas que hablan pero no leen su idioma | Media |
-| **P1-6** | Guía "¿Dónde impugnar?" | Dirección, horario y documentos según la entidad | Baja |
+| **P1-3** | Guía de estafas | Cómo identificar multas falsas (problema real en Guatemala) | Baja |
+| **P1-4** | Escenario 120 días vencidos | Qué hacer cuando ya prescribió. Guía con abogado o presentación directa | Baja |
 
 ### P2 — ESCALA / ROADMAP (Post-hackathon)
 
 | # | Qué es | Para qué sirve |
 |---|--------|----------------|
 | **P2-1** | OCR de boletas | Fotografiar la boleta y que la app lea los datos sola |
-| **P2-2** | Cálculo automático de prescripción | Que calcule solo si la multa ya prescribió |
-| **P2-3** | Alertas push de plazos | Notificación "queda 1 día para impugnar" |
-| **P2-4** | Dashboard de flota B2B | Para empresas de transporte que tienen muchos vehículos |
-| **P2-5** | Temas CSS (oscuro/claro) | Que el usuario pueda elegir el tema |
+| **P2-2** | Dashboard de flota B2B | Para empresas de transporte que tienen muchos vehículos |
+| **P2-3** | Temas CSS (oscuro/claro) | Que el usuario pueda elegir el tema |
 
 ---
 
@@ -94,36 +94,41 @@ Están organizados por prioridad. Los P0 son IMPRESCINDIBLES (sin esto no hay de
 Así es como el usuario va a usar MultaClara:
 
 ```
-PASO 1: El usuario llega a la app
-   │
-   ├─ "Tengo la boleta en la mano" → va al formulario
-   ├─ "Escanear mi boleta" (V2, OCR) → foto de la boleta
-   └─ "Solo quiero entender una infracción" → buscador
+PASO 1: El usuario llega a la app (QR o URL)
    │
    ▼
-PASO 2: Ingresa los datos de su multa
-   • Tipo de papel (boleta, requerimiento, citación)
-   • Fecha de la infracción (CRÍTICO para plazos)
-   • Entidad que multó (PNC, EMETRA, etc.)
-   • Qué infracción le cobran
-   • "¿Vos manejabas el vehículo?" (sí/no)
+PASO 2: Elige idioma (Español / K'iche' / Kawchiquel) + tamaño de letra
    │
    ▼
-PASO 3: Ve la explicación de su multa
-   • Qué hizo mal (en lenguaje claro)
+PASO 3: Selecciona su placa (guardada en localStorage) o ingresa una nueva
+   │
+   ▼
+PASO 4: Ve la vista de municipalidades
+   • Gris = sin multas
+   • Color = con multas (número en la esquina superior derecha)
+   │
+   ▼
+PASO 5: Elige una multa y ve la explicación
+   • Qué hizo mal (en lenguaje claro, con botones "?" para info)
    • Cuánto cuesta + cuánto ahorraría con descuento
    • Por qué es peligroso (cápsula de prevención)
    │
    ▼
-PASO 4: Ve el semáforo de legalidad
+PASO 6: Ve el semáforo de legalidad
    • 🟢 Verde: "Tu multa parece válida" → guía de pago con descuento
    • 🟡 Amarillo: "Revisá estos puntos" → sugiere verificar
    • 🔴 Rojo: "Podrías impugnar" → checklist + generador de PDF
    │
    ▼
-PASO 5: Toma acción
-   • Si rojo/amarillo: genera borrador de impugnación (PDF)
-   • Si verde: ve cómo pagar con descuento
+PASO 7: ¿Qué hago?
+   • Opción A: Pagar con descuento
+   • Opción B: Desacuerdo por Oposición (form digital)
+   • Opción C: Desacuerdo por Prescripción (>120 días)
+   │
+   ▼
+PASO 8: Toma acción
+   • Genera borrador de impugnación (PDF) o solicitud de prescripción
+   • O ve cómo pagar con descuento
    • En cualquier caso: ve dónde ir, qué documentos llevar
 ```
 
@@ -138,6 +143,7 @@ PASO 5: Toma acción
 | **shadcn/ui** | Componentes UI | Button, Card, Select, Input, Checkbox — listos y profesionales |
 | **Tailwind CSS** | Estilos | Responsive, dark mode, contraste alto en minutos |
 | **JSON** | Datos de infracciones y entidades | Simple, sin backend |
+| **Google Sheets + Apps Script** | Backend demo | Datos ficticios para demo. Sheets como BD + Apps Script como API |
 | **jsPDF** | Generar PDFs de impugnación | Funciona en el navegador |
 | **Service Worker** | Modo offline (PWA) | Que funcione sin internet |
 | **Cloudflare Pages** | Desplegar la app | Gratis, rápido, CDN global |
@@ -157,25 +163,26 @@ PASO 5: Toma acción
 | 9:00 | Paleta de colores, tipografía, componentes SVG (semáforo, check, warning) | **Diseñador** | |
 | 9:00 | Crear `entidades.json` (11 entidades, jurisdicciones, contactos, horarios) | **Investigador** | |
 | 9:30 | Service Worker + manifest.json (PWA instalable + offline) | **Arquitecto** | |
-| 10:00 | Pantalla de inicio — landing "¿Te llegó una multa?" + 3 caminos | **Frontend** | |
+| 10:00 | Pantalla de entrada — QR/URL + placa + idioma (ES/K'iche'/Kawchiquel) + tamaño letra | **Frontend** | |
 | 10:00 | Empezar copy de las 15 infracciones en lenguaje claro | **Investigador** | |
 | 10:30 | Lógica core: cálculo de prescripción (120 días), validación de fechas | **Lógica** | |
-| 11:00 | Formulario de boleta (P1) con validación estricta + "¿Vos manejabas?" | **Frontend** | |
-| 11:00 | Conectar infracciones.json + carga de datos | **Lógica** | |
+| 11:00 | Selección de placa (localStorage, múltiples placas) | **Frontend** | |
+| 11:00 | Vista de municipalidades (gris=sin multas, color=con multas, números) | **Frontend + Lógica** | |
+| 11:30 | Formulario de boleta (P1) con validación estricta + "¿Sos propietario?" + "¿Vos manejabas?" | **Frontend** | |
 | 12:00 | Revisión rápida: ¿la app carga? ¿Tailwind se ve? ¿la PWA instala? | **Todos** | |
 
 ### TARDE (1:30 – 6:00) — CORE FUNCIONAL
 | Bloque | Tarea | Responsable | Estado |
 |--------|-------|-------------|--------|
-| 1:30 | Explicador de multa: lenguaje claro + montos + descuentos + prevención | **Frontend + Lógica** | |
+| 1:30 | Explicador de multa: lenguaje claro + montos + descuentos + prevención + botones "?" | **Frontend + Lógica** | |
 | 2:00 | Lógica del semáforo: leer datos → decidir verde/amarillo/rojo | **Lógica** | |
 | 2:30 | Semaforo UI: tarjeta gigante + iconografía + checklist Decreto 33-2024 | **Frontend + Diseñador** | |
+| 3:00 | ¿Qué hago? — 3 opciones: pagar / oposición / prescripción | **Frontend + Lógica** | |
 | 3:00 | Generador de PDF de impugnación (jsPDF + checkbox obligatorio + plantilla) | **Lógica** | |
-| 3:00 | Estructura i18n + traducciones a K'iche' (al menos UI + frases clave) | **Investigador** | |
-| 3:30 | Barras de plazo visual ("12 de 15 días para impugnar") | **Frontend** | |
-| 4:00 | Deploy a Cloudflare Pages (primera versión funcional) | **Arquitecto** | |
+| 3:30 | Estructura i18n + traducciones a K'iche' + Kawchiquel (al menos UI + frases clave) | **Investigador** | |
+| 4:00 | Backend demo: Google Sheets + Apps Script (datos ficticios) | **Arquitecto** | |
 | 4:00 | Guía de estafas (notificación real vs SMS falso) | **Investigador** | |
-| 4:30 | Historial de consultas (localStorage) | **Lógica** | |
+| 4:30 | Escenario 120 días vencidos (qué hacer cuando ya prescribió) | **Lógica** | |
 | 5:00 | QA visual: probar en celular, tablet, desktop. Lista de bugs | **Diseñador** | |
 | 5:30 | Fix de bugs + pulido visual + responsive final | **Frontend + Arquitecto** | |
 
@@ -204,15 +211,17 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 - Configura Vite + React + shadcn + Tailwind
 - Configura el Service Worker y el manifest.json (PWA)
 - Escribe la lógica core: cálculo de prescripción, semáforo, validación de fechas
+- Configura Google Sheets + Apps Script (backend demo con datos ficticios)
 - Despliega a Cloudflare Pages
 - Decide las decisiones técnicas (qué librería usar, cómo organizar el código)
 
-**Herramientas que usa:** Vite, React, shadcn/ui, Tailwind CSS, Service Worker, Cloudflare Pages
+**Herramientas que usa:** Vite, React, shadcn/ui, Tailwind CSS, Service Worker, Google Sheets + Apps Script, Cloudflare Pages
 
 **Entregables:**
 - Proyecto funcionando en `npm run dev`
 - Estructura de carpetas limpia
 - Service Worker activo (offline)
+- Backend demo conectado (Sheets + Apps Script)
 - App desplegada en Cloudflare Pages
 
 **Depende de:** Nadie (es el primero en empezar)
@@ -223,19 +232,24 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Quién lo lleva:** [Nombre del compañero]
 
 **Qué hace:**
-- Construye las pantallas: inicio, formulario, explicador, semáforo, PDF
-- Crea componentes React de cada vista (Home, Form, Explicador, Semaforo, Accion)
-- Usa componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs)
+- Construye las pantallas: entrada, selección de placa, municipalidades, formulario, explicador, semáforo, ¿qué hago?, PDF
+- Crea componentes React de cada vista (Home, Placas, Municipios, Form, Explicador, Semaforo, QueHago, Accion)
+- Usa componentes de shadcn (Button, Card, Select, Input, Checkbox, Tabs, Tooltip)
+- Implementa selector de idioma (ES/K'iche'/Kawchiquel) + tamaño de letra
+- Implementa botones "?" para info contextual
 - Aplica Tailwind para responsive y tema oscuro
 - Hace que todo se vea bien en celular y en desktop
 
 **Herramientas que usa:** React, shadcn/ui, Tailwind CSS, SVGs
 
 **Entregables:**
-- Pantalla de inicio con 3 botones
-- Formulario de boleta con validación visual
-- Tarjeta de explicador con montos y prevención
+- Pantalla de entrada con QR/URL + placa + idioma
+- Selección de placa (múltiples placas en localStorage)
+- Vista de municipalidades (gris=sin multas, color=con multas, números)
+- Formulario de boleta con validación visual + "¿Sos propietario?"
+- Tarjeta de explicador con montos, prevención y botones "?"
 - Tarjeta de semáforo con iconografía + barras de plazo
+- Pantalla "¿Qué hago?" con 3 opciones
 - Todo responsive (mobile-first)
 
 **Depende de:** El Arquitecto le entrega la estructura base (Día 1)
@@ -249,17 +263,20 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 - Conecta el formulario con el explicador (si el usuario pone fecha X y entidad Y, muestra Z)
 - Implementa la lógica del semáforo: lee los datos de la boleta y decide verde/amarillo/rojo
 - Maneja el catálogo de infracciones (lectura del JSON, búsqueda, filtrado)
-- Implementa el "¿Vos manejabas?" y la guía especial
-- Maneja localStorage para el historial
+- Implementa el "¿Sos propietario?" + "¿Vos manejabas?" y la guía especial
+- Maneja localStorage para las placas guardadas
+- Implementa la lógica de prescripción (120 días) y oposición (15 días)
+- Conecta con Google Sheets + Apps Script para datos demo
 
-**Herramientas que usa:** JavaScript, JSON, localStorage
+**Herramientas que usa:** JavaScript, JSON, localStorage, Apps Script
 
 **Entregables:**
 - Función de semáforo (verde/amarillo/rojo según datos)
-- Función de prescripción (120 días)
-- Conexión formulario → explicador → semáforo → PDF
+- Función de prescripción (120 días) y oposición (15 días)
+- Conexión formulario → explicador → semáforo → ¿qué hago? → PDF
 - Búsqueda de infracciones por palabra
-- Historial en localStorage
+- Placas guardadas en localStorage
+- Conexión con datos demo (Sheets + Apps Script)
 
 **Depende de:** El Arquitecto le entrega `core.js` y `data.js` (Día 1-2)
 
@@ -271,8 +288,9 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Qué hace:**
 - Crea `entidades.json` con las 11 entidades, jurisdicciones, contactos, horarios
 - Escribe el copy en lenguaje claro para las 15 infracciones
-- Prepara las traducciones a K'iche' e Inglés (UI + frases clave)
+- Prepara las traducciones a K'iche' y Kawchiquel (UI + frases clave)
 - Crea la guía de estafas (notificación real vs SMS falso)
+- Crea el escenario 120 días vencidos (qué hacer cuando ya prescribió)
 - Investigación adicional si el jurado pregunta por algo específico
 - Prepara el guion del pitch
 
@@ -281,8 +299,9 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 **Entregables:**
 - `data/entidades.json` (11 entidades completas)
 - Copy de las 15 infracciones en lenguaje claro
-- Archivos de i18n: español, K'iche', Inglés
+- Archivos de i18n: español, K'iche', Kawchiquel
 - Guía de estafas (contenido editorial)
+- Guía de prescripción (120 días vencidos)
 - Guion de pitch de 5 minutos
 
 **Depende de:** Nadie (puede empezar desde el Día 1)
@@ -321,16 +340,20 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 | Setup Vite + React + shadcn | **LÍDER** | Ayuda | — | — | — |
 | Service Worker / PWA | **LÍDER** | — | — | — | Verifica |
 | Tailwind / Estilos base | Ayuda | **LÍDER** | — | — | **LÍDER** |
-| Pantalla inicio | — | **LÍDER** | — | — | Diseña |
-| Formulario boleta | — | **LÍDER** | Conecta | — | Revisa |
-| Explicador multa | — | **LÍDER** | **LÍDER** | Copy | Diseña |
+| Pantalla entrada (QR/URL + placa + idioma) | — | **LÍDER** | — | — | Diseña |
+| Selección de placa (localStorage) | — | **LÍDER** | **LÍDER** | — | Revisa |
+| Vista de municipalidades | — | **LÍDER** | **LÍDER** | — | Diseña |
+| Formulario boleta (+ propietario) | — | **LÍDER** | Conecta | — | Revisa |
+| Explicador multa (+ botones "?") | — | **LÍDER** | **LÍDER** | Copy | Diseña |
 | Semáforo legalidad | Ayuda | UI | **LÍDER** | — | Iconos |
+| ¿Qué hago? (3 opciones) | — | **LÍDER** | **LÍDER** | — | Diseña |
 | Generador PDF | — | Ayuda | **LÍDER** | — | Verifica |
 | entidades.json | — | — | — | **LÍDER** | — |
-| i18n (traducciones) | — | Conecta | — | **LÍDER** | — |
+| i18n (K'iche' + Kawchiquel) | — | Conecta | — | **LÍDER** | — |
 | Guía estafas | — | — | — | **LÍDER** | Diseña |
+| Escenario 120 días | — | — | **LÍDER** | Ayuda | — |
+| Backend demo (Sheets + Apps Script) | **LÍDER** | — | Ayuda | — | — |
 | Buscador infracciones | — | Ayuda | **LÍDER** | — | — |
-| Historial localStorage | — | — | **LÍDER** | — | — |
 | Deploy Cloudflare | **LÍDER** | — | — | — | Verifica |
 | Pitch / Slides | — | — | — | Ayuda | **LÍDER** |
 | QA / Tests manuales | Verifica | Revisa | Revisa | — | **LÍDER** |
@@ -341,11 +364,11 @@ Cada persona tiene un rol claro. Nadie se pisa, todos saben qué hacer.
 
 | Qué busca el jurado | Cómo lo mostramos | Quién lo prepara |
 |---------------------|-------------------|------------------|
-| **UX excepcional** | Tema oscuro, responsive, lenguaje claro | Diseñador + Frontend |
-| **Tecnología aplicada** | PWA offline, PDF generation, i18n | Arquitecto + Lógica |
+| **UX excepcional** | Tema oscuro, responsive, lenguaje claro, botones "?" info | Diseñador + Frontend |
+| **Tecnología aplicada** | PWA offline, PDF generation, i18n, Google Sheets + Apps Script | Arquitecto + Lógica |
 | **Impacto medible** | 6.7M+ vehículos, 53% motos, 4,233 accidentes | Investigador |
-| **Inclusión** | K'iche' + Inglés, audio (V2) | Investigador |
-| **Viabilidad** | Open source, Cloudflare Pages gratis, sin backend | Arquitecto |
+| **Inclusión** | K'iche' + Kawchiquel, tamaño de letra accesible | Investigador |
+| **Viabilidad** | Open source, Cloudflare Pages gratis, Sheets como BD demo | Arquitecto |
 | **Cumplimiento legal** | Decreto 33-2024, Ley 19-2003, Ley 89-2005 | Investigador |
 | **Storytelling** | "De multa a educación" — narrativa clara | Líder de pitch |
 

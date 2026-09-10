@@ -3,7 +3,7 @@
 > **Equipo:** LosBrujos · HACKCREA 2026
 > **Narrativa:** "De multa a educación" — transformar el castigo en comprensión.
 > **Constraint del reto:** El prototipo NO es asesoría legal, NO presenta impugnaciones, NO garantiza resultados.
-> **Base técnica:** Vite + React + shadcn/ui + Tailwind CSS (PWA estática, sin backend, localStorage, i18n, Cloudflare Pages).
+> **Base técnica:** Vite + React + shadcn/ui + Tailwind CSS (PWA instalable, Google Sheets + Apps Script como backend demo, datos ficticios para demo, i18n, Cloudflare Pages).
 
 ---
 
@@ -20,9 +20,10 @@ El ciudadano recibe una boleta de tránsito y no entiende nada: ni qué hizo, ni
 | Principio | Aplicación |
 |---|---|
 | **Lenguaje claro** | Cero jerga legal sin traducción. Cada infracción tiene explicación en palabras de la calle + glosario |
-| **Accesibilidad universal** | Semáforo con iconografía (no solo color) para daltonismo; tipografía grande; contraste alto; audio (V2) |
-| **Offline-first** | PWA instalable, todo funciona sin internet (los datos viajan en JSON local) |
-| **Privacidad primero** | Todo queda en el dispositivo (localStorage). Cumple Ley 89-2005. Sin cuentas |
+| **Accesibilidad universal** | Semáforo con iconografía (no solo color) para daltonismo; tipografía grande; contraste alto; botones "?" para info contextual |
+| **Offline-first** | PWA instalable, funciona sin internet (datos en Google Sheets + cache local) |
+| **Privacidad primero** | Datos en localStorage del usuario + Google Sheets solo para demo. Sin cuentas de usuario |
+| **Notificación automática** | "Abrir la página = haber sido notificado" (cumple Decreto 33-2024: si buscaste tu placa, ya fuiste notificado) |
 | **No es asesoría legal** | Checkbox obligatorio antes de generar PDF + disclaimer visible en cada documento |
 | **Educación, no castigo** | Cada explicación incluye una cápsula de prevención (dato de seguridad vial) |
 
@@ -87,51 +88,99 @@ reto-5-brujos/
 ## 4. Flujo de usuario (macro)
 
 ```
-INICIO
+ENTRADA (QR o URL)
+  │  Escanea QR desde la boleta, o ingresa la URL directamente
+  │  (PWA accesible desde navegador — no es app descargable)
   │
-  ├─ Opción A: "Tengo la boleta en la mano" → ingreso manual (número, fecha, entidad)
-  ├─ Opción B: "Escanear boleta" (V2, OCR) → foto → autocompleta
-  └─ Opción C: "Solo quiero entender una infracción" → buscar por nombre (ej: "semáforo")
+  ▼
+SELECCIÓN DE PLACA
+  │  El usuario selecciona una placa de su lista (guardada en localStorage)
+  │  O ingresa una placa nueva
+  │  (Múltiples placas: para gente con varios vehículos)
+  │
+  ▼
+VISTA DE MUNICIPALIDADES
+  │  Mapa/lista de todas las municipalidades registradas
+  │  En gris donde NO hay multas → en color donde SÍ hay multas
+  │  Números en la esquina superior derecha como indicador visual
   │
   ▼
 EXPLICADOR
-  • Qué hiciste (lenguaje claro) + código normativo traducido
-  • Cuánto cuesta + cuánto pagarías con descuento/curso vial
-  • Cápsula de prevención (dato de seguridad vial)
+  │  Traduce lenguaje jurídico a lenguaje claro
+  │  Muestra: qué hiciste, cuánto cuesta, cómo ahorrar
+  │  Botones "?" cerca de cada texto para info adicional
   │
   ▼
 SEMÁFORO DE LEGALIDAD
-  • Verde: notificación OK, dentro de plazos → guía de pago/descuento
-  • Amarillo: algo no cuadra (datos, pruebas, competencia) → sugiere revisar
-  • Rojo: vicio grave o prescripción → sugiere impugnar
+  │  Verde: pagar con descuento
+  │  Amarillo: revisar datos, pedir notificación formal
+  │  Rojo: impugnar
   │
   ▼
-ACCIÓN
-  • Generar borrador de impugnación (PDF) — checkbox obligatorio
-  • Guía de pago con descuento (cuánto ahorras, dónde, cómo)
-  • Recursos: dónde ir, documentos, cursos viales
+¿QUÉ HAGO?
+  │  Opción A: Desacuerdo por Oposición (form digital)
+  │  Opción B: Desacuerdo por Prescripción (>120 días)
+  │
+  ▼
+APELACIÓN
+  • Formulario digital listo para descargar e imprimir
+  • O llevar a mano a ventanilla (escaneado y subido digital)
 ```
 
 ---
 
 ## 5. Pantallas detalladas
 
-### P0 — INICIO
+### P0 — ENTRADA (QR / URL)
 
-**Propósito:** El usuario llega con una boleta (o sin ella) y elige cómo empezar. Cero fricción.
+**Propósito:** Acceso rápido desde la boleta de tránsito. Sin app, sin cuenta, sin fricción.
 
 **Elementos:**
-- Hero: "¿Te llegó una multa? Te la explicamos" + subtítulo "Entendé qué te cobran, si es válida y qué podés hacer"
-- **Botón gigante #1:** "Ingresar datos de mi boleta" (manual) — el camino principal
-- **Botón #2:** "Escanear mi boleta" (V2, OCR) — marcado como "pronto" si no está en el build
-- **Botón #3 (texto):** "Solo quiero entender una infracción" → buscador del catálogo
-- Footer: disclaimer "Herramienta educativa. No es asesoría legal ni representa al gobierno"
+- Pantalla de bienvenida con logo + título "MultaClara"
+- **Campo de entrada:** número de placa (texto, formato GUATEMALA: 3 letras + 3-4 números)
+- **Botón:** "Buscar multas" → busca en localStorage/Google Sheets
+- **Si no hay multas registradas:** "No encontramos multas para esta placa. Podés registrar los datos de tu boleta para analizarla"
+- **Si hay multas:** Lista de multas encontradas con estado (verde/amarillo/rojo)
+- **Footer:** disclaimer "Herramienta educativa. No es asesoría legal"
 
-**Estados:**
-- Primera visita: sin historial → los 3 botones
-- Con historial (V2): "Tus últimas consultas" (recientes desde localStorage)
+**Idioma:** Selector visible al tope (Español / K'iche' / Kawchiquel)
+**Accesibilidad:** Control de tamaño de letra (A+, A-) + botones "?" para info contextual
 
-**Validaciones:** ninguna (es navegación).
+---
+
+### P0.5 — SELECCIÓN DE PLACA (nuevo)
+
+**Propósito:** La gente tiene varios vehículos. Guardar placas facilita la búsqueda.
+
+**Elementos:**
+- **Lista de placas guardadas** (localStorage)
+- **Botón:** "Agregar placa nueva"
+- **Cada placa muestra:** número de placa + cantidad de multas pendientes
+- **Si hay muchas placas:** scroll vertical, búsqueda por texto
+
+**Reglas:**
+- Las placas se guardan automáticamente al buscar
+- El usuario puede eliminar placas de la lista
+- No hay cuenta de usuario — todo en el dispositivo
+
+---
+
+### P0.6 — VISTA DE MUNICIPALIDADES (nuevo)
+
+**Propósito:** Ver todas las municipalidades registradas y dónde hay multas.
+
+**Elementos:**
+- **Lista/grid de municipalidades** (todas las que aparecen en el catálogo)
+- **Cada municipalidad muestra:**
+  - En gris: sin multas registradas
+  - En color: con multas pendientes
+  - **Número en la esquina superior derecha:** cantidad de multas pendientes
+- **Click en una municipalidad:** filtra las multas de esa entidad
+
+**Reglas:**
+- Las municipalidades vienen de `entidades.json`
+- El usuario puede buscar por nombre
+- Solo muestra municipalidades relevantes para las placas guardadas
 
 ---
 
@@ -139,21 +188,25 @@ ACCIÓN
 
 **Propósito:** Capturar los datos mínimos para explicar la multa. **La fecha es crítica**: la calculadora de prescripción (120 días) y el semáforo dependen de ella.
 
+**Flujo:** El usuario ya ingresó su placa en P0. Ahora ingresa los datos de la multa específica.
+
 **Elementos (formulario guiado):**
-1. **Tipo de papel** (selector de 3 chips): Boleta de tránsito / Requerimiento de pago / Citación
-2. **Número de boleta/remisión** (texto, opcional — para el PDF)
-3. **Entidad que multó** (select con las 11 entidades: PNC, EMETRA, EMIXTRA, PMT Villa Nueva, Mixco, Escuintla, Antigua, Jutiapa, Palencia, S.C. Pinula, S. Lucas, Amatitlán)
-4. **Fecha de la infracción** (input date) — **validación estricta**:
+1. **Número de placa** (ya capturado, editable)
+2. **¿Sos el propietario del vehículo?** (sí/no) — **PREGUNTA CLAVE**:
+   - **Sí** → continúa normal
+   - **No** → "¿Quién manejaba?" (si es familiar/conocido, coordinar con él. Si no sabés quién manejaba, la notificación debe cumplir el Decreto 33-2024)
+3. **Tipo de papel** (selector de 3 chips): Boleta de tránsito / Requerimiento de pago / Citación
+4. **Número de boleta/remisión** (texto, opcional — para el PDF)
+5. **Entidad que multó** (select con las 11 entidades: PNC, EMETRA, EMIXTRA, PMT Villa Nueva, Mixco, Escuintla, Antigua, Jutiapa, Palencia, S.C. Pinula, S. Lucas, Amatitlán)
+6. **Fecha de la infracción** (input date) — **validación estricta**:
    - Requerida. Si falta → error "Necesitamos la fecha para calcular tus plazos"
    - No puede ser futura → error "La fecha no puede ser en el futuro"
    - No puede ser anterior a 5 años → error "Esta multa es muy antigua; verificá si ya prescribió"
-5. **Fecha de notificación** (input date, opcional pero recomendada):
+7. **Fecha de notificación** (input date, opcional pero recomendada):
    - Si se ingresa y es posterior a infracción + 120 días → **alerta inmediata**: "⚠️ Esta multa podría haber prescrito"
    - Si no se ingresa → el semáforo usa el escenario "sin notificación confirmada"
-6. **¿Qué infracción te cobran?** (select del catálogo de 15, con búsqueda) — o "No sé / no dice" → muestra el catálogo completo para explorar
-7. **¿Vos manejabas el vehículo?** (sí/no) — **INSIGHT DE CAMPO**:
-   - **Sí** → continúa al explicador normal
-   - **No** → guía especial: "La multa es del conductor, no del dueño. Si el conductor es familiar/conocido, coordiná con él. Si no sabés quién manejaba, la notificación debe cumplir el Decreto 33-2024 — si no te notificaron correctamente, hay argumento para impugnar." + opción de generar borrador señalando que el notificado no era el conductor
+8. **¿Qué infracción te cobran?** (select del catálogo de 15, con búsqueda) — o "No sé / no dice" → muestra el catálogo completo para explorar
+9. **¿Vos manejabas el vehículo?** (sí/no) — **ya cubierto arriba**
 
 **Botón:** "Explicar mi multa" (deshabilitado hasta que fecha + infracción estén válidas)
 
@@ -161,10 +214,25 @@ ACCIÓN
 
 | Campo | Regla | Error |
 |---|---|---|
+| Placa | requerida, formato válido | "Ingresá el número de placa" |
+| ¿Sos el propietario? | requerida (sí/no) | "Necesitamos saber si sos el dueño del carro" |
 | Fecha infracción | requerida, ≤ hoy, ≥ hoy-5años | mensajes específicos |
 | Fecha notificación | opcional, ≥ fecha infracción | "La notificación no puede ser antes de la infracción" |
 | Infracción | requerida (select o búsqueda) | "Elegí qué infracción te cobran" |
 | ¿Vos manejabas? | requerida (sí/no) | "Necesitamos saber si eras vos quien manejaba" |
+
+**Reglas de negocio (localización):**
+- "Abrir la página = haber sido notificado" (Decreto 33-2024: si buscaste tu placa, ya fuiste notificado)
+- "No cuenta como notificado hasta que busque su placa o te paren"
+- "El año pasado salió una ley que dice que no te pueden cobrar hasta que te notifiquen"
+- "Si te paran, sí cuenta como notificado"
+- "Depende del poli si te explica cómo y cuándo pagar"
+- "La multa no tiene suficiente información, no es clara, ni hay educación para entender la multa"
+
+**Backend (demo):**
+- Google Sheets como base de datos (datos ficticios para demo)
+- Apps Script como API intermedia
+- Datos de ejemplo: municipalidades, multas ficticias, estados
 
 ---
 
@@ -181,6 +249,7 @@ ACCIÓN
   - Con condonación activa (si la entidad tiene, ej: MuniGuate 50-60%): Q200 / Q160
   - **Ahorro total** destacado: "Podés ahorrar hasta Q240"
 - **"¿Por qué es peligroso?"** — cápsula de prevención con dato real (ej: "El exceso de velocidad causa ~40% de los accidentes en Guatemala")
+- **Botones "?" contextuales:** cerca de cada texto (montos, plazos, términos legales) → abren tooltip/popover con explicación extra
 - **Glosario expandible:** "¿Qué significa 'Art. 90'?" → explica el código en lenguaje claro
 - **Botón:** "Revisar si mi multa es válida" → P3
 
@@ -227,11 +296,45 @@ ACCIÓN
 
 ---
 
-### P4 — ACCIÓN
+### P3.5 — ¿QUÉ HAGO? (nuevo)
 
-**Propósito:** Convertir la información en acción. Dos caminos según el semáforo.
+**Propósito:** La gente no sabe que se puede apelar. Esta pantalla clarifica las opciones y muestra que SÍ hay alternativas.
 
-#### Camino A: Impugnar (rojo/amarillo)
+**Elementos:**
+- **Título:** "¿Qué podés hacer?"
+- **Tarjeta 1: Pagar con descuento** (si semáforo verde)
+  - Monto con descuento aplicado
+  - Pasos para obtener descuento
+  - Botón "Ver opciones de pago"
+- **Tarjeta 2: Desacuerdo por Oposición** (si semáforo amarillo/rojo)
+  - "No estoy de acuerdo con la multa"
+  - Qué es: impugnar dentro de 15 días de notificación
+  - Requisitos: boleta, datos, pruebas
+  - Botón "Generar formulario de oposición"
+- **Tarjeta 3: Desacuerdo por Prescripción** (si aplica)
+  - "Ya pasaron 120 días y no me notificaron"
+  - Qué es: la multa prescribe si no te notificaron en 120 días
+  - Escenario: "pasaron 120 días, no sé nada sobre mi multa vencida"
+  - Botón "Generar solicitud de prescripción"
+- **Tarjeta 4: Información general** (siempre visible)
+  - "¿Qué es una notificación?"
+  - "¿Qué pasa si me paran?"
+  - "¿Necesito un abogado?"
+  - Link a guía de estafas
+
+**Reglas de negocio:**
+- "No cuenta como notificado hasta que busque su placa o te paren"
+- "Si te paran, sí cuenta como notificado"
+- "El año pasado salió una ley que dice que no te pueden cobrar hasta que te notifiquen"
+- "Depende del poli si te explica cómo y cuándo pagar"
+
+---
+
+### P4 — APELACIÓN
+
+**Propósito:** Generar el documento correcto según el camino elegido.
+
+#### Camino A: Oposición (form digital)
 
 **Elementos:**
 1. **Checkbox obligatorio** (bloquea el botón hasta marcarlo):
@@ -243,7 +346,16 @@ ACCIÓN
 6. **Guía de presentación:** "¿Dónde lo llevás?" — entidad, dirección, horario, documentos a acompañar (del catálogo de entidades)
 7. Disclaimer permanente: "Este borrador es orientativo. Consulte con un abogado para asesoría legal específica."
 
-#### Camino B: Pagar con descuento (verde)
+#### Camino B: Prescripción (>120 días sin notificar)
+
+**Elementos:**
+1. **Checkbox obligatorio:** similar a oposición
+2. Formulario简化: solo nombre + placa + fecha de infracción
+3. **Genera solicitud de prescripción** (PDF)
+4. **Guía:** "Pasaron 120 días, no sé nada de mi multa. Qué hacer cuando ya se vencieron"
+5. Opción de llevar con abogado o presentar directamente
+
+#### Camino C: Pagar con descuento (verde)
 
 **Elementos:**
 1. "Cuánto pagarías hoy" — monto con descuento aplicado + ahorro
@@ -261,28 +373,29 @@ André pidió un alcance **ambicioso por capas y fases**. Así lo estructuro:
 ### CAPA 1 — Core (imprescindible, mañana jueves)
 | # | Funcionalidad | Prioridad |
 |---|---|---|
-| 1 | P0 Inicio con 3 caminos | P0 |
-| 2 | P1 Formulario con validación estricta de fechas | P0 |
-| 3 | P2 Explicador (lenguaje claro + montos + descuentos + prevención) | P0 |
-| 4 | P3 Semáforo de legalidad (iconografía + checklist + plazos) | P0 |
-| 5 | P4 Generador de borrador PDF con checkbox obligatorio | P0 |
-| 6 | Catálogo de 15 infracciones con copy claro | P0 |
-| 7 | PWA instalable + offline | P0 |
+| 1 | P0 Entrada: búsqueda por placa + selector de idioma (ES/K'iche'/Kawchiquel) + tamaño de letra | P0 |
+| 2 | P0.5 Selección de placa (múltiples placas en localStorage) | P0 |
+| 3 | P0.6 Vista de municipalidades (gris=sin multas, color=con multas, números) | P0 |
+| 4 | P1 Formulario de datos de boleta (con placa pre-capturada) — **preguntar si es el propietario** | P0 |
+| 5 | P2 Explicador (lenguaje claro + montos + descuentos + prevención + botones "?" info) | P0 |
+| 6 | P3 Semáforo de legalidad (iconografía + checklist + plazos) — **la gente no sabe que puede apelar** | P0 |
+| 7 | P3.5 ¿Qué hago? — 3 opciones: pagar / oposición / prescripción | P0 |
+| 8 | P4 Generador de borrador PDF (oposición o prescripción) con checkbox obligatorio | P0 |
+| 9 | Catálogo de 15 infracciones con copy claro | P0 |
+| 10 | PWA instalable + offline + QR como entrada | P0 |
+| 11 | Datos demo: Google Sheets + Apps Script (datos ficticios para demo) | P0 |
 
 ### CAPA 2 — Valor (si sobra tiempo mañana / viernes temprano)
 | # | Funcionalidad | Prioridad |
 |---|---|---|
-| 8 | OCR de boletas (Tesseract.js) con 3-4 boletas mock PNG | P1 |
-| 9 | i18n: k'iche' + q'eqchi' + garífuna (UI + audio de frases clave) | P1 |
-| 10 | Historial de consultas (localStorage) | P1 |
-| 11 | Buscador de infracciones por palabra ("semáforo", "casco", "placa") | P1 |
-| 12 | Detección de estafas (guía: notificación real vs SMS falso) | P1 |
+| 12 | Guía de estafas (notificación real vs SMS falso) | P1 |
+| 13 | Escenario 120 días vencidos: qué hacer cuando ya prescribió | P1 |
 
 ### CAPA 3 — Escala (post-hackathon / slides de pitch)
 | # | Funcionalidad | Prioridad |
 |---|---|---|
-| 13 | Dashboard de flota B2B (empresas de transporte) | P2 (pitch) |
-| 14 | Alertas push de plazos (Service Worker + ntfy) | P2 |
+| 14 | OCR de boletas (Tesseract.js) con 3-4 boletas mock PNG | P2 |
+| 15 | Dashboard de flota B2B (empresas de transporte) | P2 (pitch) |
 | 15 | API real (convenio SAT/EMETRA) | P2 (roadmap) |
 | 16 | Expansión regional (El Salvador, Honduras) | P2 (roadmap) |
 

@@ -101,38 +101,38 @@
 | # | Deliverable | Complejidad | Dependencias | Notas |
 |---|---|---|---|---|
 | **P0-1** | **Estructura Vite + React + routing SPA** | ⭐ Baja | Ninguna | Scaffold con `npm create vite`, estructura de carpetas, componentes shadcn, routing con React Router. |
-| **P0-2** | **P0 — Inicio** (hero + 3 caminos) | ⭐ Baja | P0-1 | Landing page: "¿Te llegó una multa?" + botones de entrada |
-| **P0-3** | **P1 — Formulario de boleta** | ⭐⭐ Media | P0-1 | Selector tipo papel, fecha, entidad, infracción. Validación estricta de fechas. **+ pregunta "¿Vos manejabas?" con guía especial si no.** |
-| **P0-4** | **P2 — Explicador de multa** | ⭐⭐ Media | P0-3 + JSON | Lenguaje claro + montos + descuentos + prevención. El CORAZÓN del reto. |
-| **P0-5** | **P3 — Semáforo de legalidad** | ⭐⭐⭐ Alta | P0-4 + lógica core | Verde/Amarillo/Rojo con iconografía + checklist Decreto 33-2024 + barras de plazo |
-| **P0-6** | **P4 — Generador de PDF impugnación** | ⭐⭐ Media | P0-5 + plantilla | jsPDF + checkbox obligatorio + plantilla condicional |
+| **P0-2** | **P0 — Entrada** (QR/URL + placa + idioma) | ⭐ Baja | P0-1 | Landing page: "¿Te llegó una multa?" + selector de idioma (ES/K'iche'/Kawchiquel) + tamaño de letra |
+| **P0-2b** | **P0.5 — Selección de placa** | ⭐ Baja | P0-2 | Múltiples placas en localStorage, sin cuentas. Para gente con varios vehículos |
+| **P0-2c** | **P0.6 — Vista de municipalidades** | ⭐⭐ Media | P0-2b | Gris=sin multas, color=con multas, número en esquina superior derecha |
+| **P0-3** | **P1 — Formulario de boleta** | ⭐⭐ Media | P0-1 | Selector tipo papel, fecha, entidad, infracción. Validación estricta de fechas. **+ pregunta "¿Sos el propietario?" + "¿Vos manejabas?"** |
+| **P0-4** | **P2 — Explicador de multa** | ⭐⭐ Media | P0-3 + JSON | Lenguaje claro + montos + descuentos + prevención + botones "?" info. El CORAZÓN del reto. |
+| **P0-5** | **P3 — Semáforo de legalidad** | ⭐⭐⭐ Alta | P0-4 + lógica core | Verde/Amarillo/Rojo con iconografía + checklist Decreto 33-2024 + barras de plazo. **La gente no sabe que puede apelar** |
+| **P0-5b** | **P3.5 — ¿Qué hago?** | ⭐⭐ Media | P0-5 | 3 opciones: pagar / oposición / prescripción |
+| **P0-6** | **P4 — Generador de PDF impugnación** | ⭐⭐ Media | P0-5 + plantilla | jsPDF + checkbox obligatorio + plantilla condicional (oposición o prescripción) |
 | **P0-7** | **PWA instalable** | ⭐ Baja | P0-1 | `manifest.json` + `sw.js` + icons. Offline-first. |
 | **P0-8** | **Datos: `entidades.json`** | ⭐ Baja | Investigación | Catálogo de 11 entidades + jurisdicción + contacto + horario |
+| **P0-9** | **Backend demo: Google Sheets + Apps Script** | ⭐⭐ Media | P0-1 | Datos ficticios para demo. Sheets como BD + Apps Script como API |
 
-**Resultado P0:** App completa que explica una multa, dice si es impugnable, y genera el PDF. **Esto es el 80% del pitch.**
+**Resultado P0:** App completa que explica una multa, dice si es impugnable, genera el PDF, y muestra las municipalidades con multas. **Esto es el 80% del pitch.**
 
 ### 🟡 P1 — VALOR AÑADIDO (Si sobra tiempo)
 
 | # | Deliverable | Complejidad | Dependencias | Notas |
 |---|---|---|---|---|
-| **P1-1** | **i18n: K'iche' + Inglés** | ⭐⭐ Media | P0 completo | UI + glosario. K'iche' = inclusión (Ley 19-2003). Inglés = turistas/expats. |
+| **P1-1** | **i18n: K'iche' + Kawchiquel** | ⭐⭐ Media | P0 completo | UI + glosario. K'iche' = inclusión (Ley 19-2003). Alguien del equipo se encarga de las traducciones |
 | **P1-2** | **Buscador de infracciones** | ⭐ Baja | P0-3 | "semáforo", "casco", "placa" → filtra el catálogo |
-| **P1-3** | **Historial de consultas** | ⭐ Baja | P0-4 | localStorage, "Tus últimas consultas" |
-| **P1-4** | **Guía de estafas** | ⭐ Baja | Investigación | Notificación real vs SMS falso. Contenido editorial. |
-| **P1-5** | **Audio 🔊 frases clave** | ⭐⭐ Media | P1-1 | HTML audio para personas que hablan pero no leen su idioma |
-| **P1-6** | **Guía "¿Dónde impugnar?"** | ⭐ Baja | P0-8 | Mapa/dirección/horario según entidad |
+| **P1-3** | **Guía de estafas** | ⭐ Baja | Investigación | Notificación real vs SMS falso. Contenido editorial. |
+| **P1-4** | **Escenario 120 días vencidos** | ⭐ Baja | P0-5b | Qué hacer cuando ya prescribió. Guía con abogado o presentación directa |
 
-**Resultado P1:** App con inclusión lingüística + funcionalidades de valor. **Para el pitch: "3 idiomas: español + k'iche' + inglés — incluimos al 1.27M de k'iche'hablantes y a los extranjeros que manejan en Guatemala".**
+**Resultado P1:** App con inclusión lingüística + funcionalidades de valor. **Para el pitch: "3 idiomas: español + k'iche' + kawchiquel — incluimos a los hablantes de idiomas mayas que no entienden la boleta".**
 
 ### 🟢 P2 — ESCALA / POST-HACKATHON (Solo si sobra MUCHO tiempo o para el roadmap)
 
 | # | Deliverable | Complejidad | Dependencias | Notas |
 |---|---|---|---|---|
 | **P2-1** | **OCR de boletas** (Tesseract.js) | ⭐⭐⭐ Alta | Mock boletas PNG | 3-4 boletas mock. Complejo de demostrar bien en poco tiempo. |
-| **P2-2** | **Cálculo automático de prescripción** | ⭐ Baja | P0-3 | Ya está en la lógica, solo UI extra |
-| **P2-3** | **Alertas push de plazos** | ⭐⭐⭐ Alta | Service Worker + permisos | Notificación "queda 1 día para impugnar" |
-| **P2-4** | **Dashboard de flota B2B** | ⭐⭐⭐ Alta | Auth + datos | Para empresas de transporte. Solo pitch. |
-| **P2-5** | **Temas CSS (oscuro/claro)** | ⭐ Baja | P0-1 | Tema oscuro estilo Linear/Notion |
+| **P2-2** | **Dashboard de flota B2B** | ⭐⭐⭐ Alta | Auth + datos | Para empresas de transporte. Solo pitch. |
+| **P2-3** | **Temas CSS (oscuro/claro)** | ⭐ Baja | P0-1 | Tema oscuro estilo Linear/Notion |
 
 ---
 
