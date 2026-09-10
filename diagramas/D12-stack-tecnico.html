@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D12 · Stack técnico del prototipo MultaClara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Stack técnico: moderno, liviano, sin backend</h1>
+    <div class="sub">Vite + Vanilla JS + CSS puro + JSON local + jsPDF + PWA → Cloudflare Pages — toca cada capa</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- CAPA 1: FRONTEND -->
+  <g class="node" data-key="capa_frontend" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="30" y="55" width="1140" height="150" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="60" y="85" font-size="13" font-weight="700" fill="#1D4ED8" letter-spacing=".06em">CAPA 1 · FRONTEND (PWA)</text>
+  </g>
+
+  <g class="node" data-key="vite" tabindex="0" role="button" style="animation-delay:.06s">
+    <rect x="60" y="100" width="200" height="80" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="160" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Vite</text>
+    <text x="160" y="152" text-anchor="middle" font-size="10" fill="#6B7280">dev server + build</text>
+    <text x="160" y="166" text-anchor="middle" font-size="10" fill="#6B7280">hot reload</text>
+    <text x="244" y="116" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="vanilla" tabindex="0" role="button" style="animation-delay:.09s">
+    <rect x="290" y="100" width="200" height="80" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="390" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">Vanilla JS</text>
+    <text x="390" y="152" text-anchor="middle" font-size="10" fill="#6B7280">módulos ES</text>
+    <text x="390" y="166" text-anchor="middle" font-size="10" fill="#6B7280">cero frameworks</text>
+    <text x="474" y="116" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="css" tabindex="0" role="button" style="animation-delay:.12s">
+    <rect x="520" y="100" width="200" height="80" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="620" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">CSS puro</text>
+    <text x="620" y="152" text-anchor="middle" font-size="10" fill="#6B7280">tema oscuro</text>
+    <text x="620" y="166" text-anchor="middle" font-size="10" fill="#6B7280">responsive móvil</text>
+    <text x="704" y="116" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="pwa" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="750" y="100" width="200" height="80" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="850" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">PWA</text>
+    <text x="850" y="152" text-anchor="middle" font-size="10" fill="#6B7280">manifest + sw.js</text>
+    <text x="850" y="166" text-anchor="middle" font-size="10" fill="#6B7280">offline-first</text>
+    <text x="934" y="116" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- FLECHA -->
+  <line x1="600" y1="205" x2="600" y2="235" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <!-- CAPA 2: DATOS -->
+  <g class="node" data-key="capa_datos" tabindex="0" role="button" style="animation-delay:.18s">
+    <rect x="30" y="240" width="1140" height="150" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="60" y="270" font-size="13" font-weight="700" fill="#B45309" letter-spacing=".06em">CAPA 2 · DATOS (JSON local)</text>
+  </g>
+
+  <g class="node" data-key="infracciones" tabindex="0" role="button" style="animation-delay:.21s">
+    <rect x="60" y="285" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+    <text x="185" y="317" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">infracciones.json</text>
+    <text x="185" y="337" text-anchor="middle" font-size="10" fill="#6B7280">15 infracciones</text>
+    <text x="185" y="351" text-anchor="middle" font-size="10" fill="#6B7280">montos + consejos</text>
+    <text x="294" y="301" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="entidades" tabindex="0" role="button" style="animation-delay:.24s">
+    <rect x="340" y="285" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+    <text x="465" y="317" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">entidades.json</text>
+    <text x="465" y="337" text-anchor="middle" font-size="10" fill="#6B7280">11 entidades</text>
+    <text x="465" y="351" text-anchor="middle" font-size="10" fill="#6B7280">jurisdicción + contacto</text>
+    <text x="574" y="301" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="i18n" tabindex="0" role="button" style="animation-delay:.27s">
+    <rect x="620" y="285" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.5"/>
+    <text x="745" y="317" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">i18n JSON</text>
+    <text x="745" y="337" text-anchor="middle" font-size="10" fill="#6B7280">es + k'iche' + inglés</text>
+    <text x="745" y="351" text-anchor="middle" font-size="10" fill="#6B7280">diccionarios</text>
+    <text x="854" y="301" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="localstorage" tabindex="0" role="button" style="animation-delay:.30s">
+    <rect x="900" y="285" width="240" height="80" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="317" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">localStorage</text>
+    <text x="1020" y="337" text-anchor="middle" font-size="10" fill="#6B7280">historial + datos</text>
+    <text x="1020" y="351" text-anchor="middle" font-size="10" fill="#6B7280">cumple Ley 89-2005</text>
+    <text x="1124" y="301" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- FLECHA -->
+  <line x1="600" y1="390" x2="600" y2="420" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <!-- CAPA 3: LIBRERÍAS -->
+  <g class="node" data-key="capa_libs" tabindex="0" role="button" style="animation-delay:.33s">
+    <rect x="30" y="425" width="1140" height="150" rx="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="60" y="455" font-size="13" font-weight="700" fill="#B91C1C" letter-spacing=".06em">CAPA 3 · LIBRERÍAS (solo 2)</text>
+  </g>
+
+  <g class="node" data-key="jspdf" tabindex="0" role="button" style="animation-delay:.36s">
+    <rect x="60" y="470" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="185" y="502" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">jsPDF</text>
+    <text x="185" y="522" text-anchor="middle" font-size="10" fill="#6B7280">genera borrador</text>
+    <text x="185" y="536" text-anchor="middle" font-size="10" fill="#6B7280">de impugnación</text>
+    <text x="294" y="486" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="plantilla" tabindex="0" role="button" style="animation-delay:.39s">
+    <rect x="340" y="470" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="465" y="502" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">plantilla-impugnacion.md</text>
+    <text x="465" y="522" text-anchor="middle" font-size="10" fill="#6B7280">7 vicios condicionales</text>
+    <text x="465" y="536" text-anchor="middle" font-size="10" fill="#6B7280">{{campos}} dinámicos</text>
+    <text x="574" y="486" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="sinbackend" tabindex="0" role="button" style="animation-delay:.42s">
+    <rect x="620" y="470" width="520" height="80" rx="10" fill="#111111"/>
+    <text x="880" y="502" text-anchor="middle" font-size="13" font-weight="700" fill="#FBBF24">CERO backend · CERO servidores · CERO APIs externas</text>
+    <text x="880" y="524" text-anchor="middle" font-size="11" fill="#D1D5DB">Todo corre en el navegador → demo estable, sin riesgo de build roto</text>
+    <text x="1124" y="486" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <!-- FLECHA -->
+  <line x1="600" y1="575" x2="600" y2="605" stroke="#9CA3AF" stroke-width="1.5" class="arrow" marker-end="url(#arr)"/>
+
+  <!-- CAPA 4: DEPLOY -->
+  <g class="node" data-key="capa_deploy" tabindex="0" role="button" style="animation-delay:.45s">
+    <rect x="30" y="610" width="1140" height="150" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="60" y="640" font-size="13" font-weight="700" fill="#047857" letter-spacing=".06em">CAPA 4 · DEPLOY</text>
+  </g>
+
+  <g class="node" data-key="cloudflare" tabindex="0" role="button" style="animation-delay:.48s">
+    <rect x="60" y="655" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+    <text x="185" y="687" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">Cloudflare Pages</text>
+    <text x="185" y="707" text-anchor="middle" font-size="10" fill="#6B7280">gratis + CDN + HTTPS</text>
+    <text x="294" y="671" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="build" tabindex="0" role="button" style="animation-delay:.51s">
+    <rect x="340" y="655" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+    <text x="465" y="687" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">npm run build</text>
+    <text x="465" y="707" text-anchor="middle" font-size="10" fill="#6B7280">→ dist/ listo</text>
+    <text x="574" y="671" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="github" tabindex="0" role="button" style="animation-delay:.54s">
+    <rect x="620" y="655" width="250" height="80" rx="10" fill="#FFFFFF" stroke="#059669" stroke-width="1.5"/>
+    <text x="745" y="687" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">GitHub</text>
+    <text x="745" y="707" text-anchor="middle" font-size="10" fill="#6B7280">control de versiones</text>
+    <text x="854" y="671" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <g class="node" data-key="pwa_install" tabindex="0" role="button" style="animation-delay:.57s">
+    <rect x="900" y="655" width="240" height="80" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="1020" y="687" text-anchor="middle" font-size="13" font-weight="600" fill="#047857" class="node-label">Instalable en el celular</text>
+    <text x="1020" y="707" text-anchor="middle" font-size="10" fill="#6B7280">funciona sin internet</text>
+    <text x="1124" y="671" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="30" y="770">fuente: PLAN-ESTRATEGICO.md §8 · app/SPEC.md §3 · reto5-multas-transito.md §15</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Frontend</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> Datos</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Librerías</div>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> Deploy</div>
+  <div class="legend">💡 Toca cualquier cuadro</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+capa_frontend:{chip:"Capa 1",title:"Frontend (PWA)",body:"La interfaz completa corre en el navegador. Vite como herramienta de desarrollo (dev server + build), Vanilla JS sin frameworks, CSS puro con tema oscuro, y PWA para instalación y uso offline.",facts:[["Stack","Vite + Vanilla JS + CSS"],["Razón","Moderno sin ser pesado"],["Demo","Estable, sin build roto"]],source:"PLAN-ESTRATEGICO.md §8"},
+vite:{chip:"Herramienta",title:"Vite",body:"Dev server con hot reload instantáneo y build optimizado a dist/. Es la herramienta de build moderna por defecto en 2026. Sin framework encima: solo vanilla JS con módulos ES.",facts:[["Comando","npm create vite@latest"],["Dev","npm run dev"],["Build","npm run build → dist/"],["Por qué","Moderno, rápido, sin deps pesadas"]],source:"PLAN-ESTRATEGICO.md §8"},
+vanilla:{chip:"Lenguaje",title:"Vanilla JS (módulos ES)",body:"JavaScript puro con import/export. Cero React, cero Vue, cero Angular. Estructura limpia: src/js/core.js (lógica pura), i18n.js (diccionarios), data.js (carga JSON), script.js (UI).",facts:[["Patrón","Módulos ES"],["Estructura","core.js · i18n.js · data.js · script.js"],["Por qué","Simple, rápido, nada se rompe"]],source:"SPEC.md §3"},
+css:{chip:"Estilo",title:"CSS puro — tema oscuro",body:"Tema oscuro estilo Linear/Notion (patrón QUIZZO). Tipografía legible (Space Grotesk o Inter), tarjetas con glass blur bajo, iconografía SVG inline, animaciones sutiles de entrada.",facts:[["Tema","Oscuro (default)"],["Fuente","Inter / Space Grotesk"],["Responsive","Móvil-first"],["Accesibilidad","Contraste alto + iconografía"]],source:"SPEC.md §7"},
+pwa:{chip:"PWA",title:"PWA instalable + offline",body:"manifest.json + service worker que precachea todo. La app se instala desde el navegador y funciona sin internet. Los datos viajan en JSON local. Cumple Ley 89-2005 (todo queda en el dispositivo).",facts:[["Manifest","manifest.json"],["Offline","sw.js precache"],["Instalable","Desde el navegador"],["Ley","89-2005 cumplida"]],source:"SPEC.md §2 · §3"},
+capa_datos:{chip:"Capa 2",title:"Datos (JSON local)",body:"Toda la información viaja en archivos JSON dentro de la app. Cero backend, cero servidores, cero riesgo de API caída en la demo. Los datos del usuario quedan en su dispositivo (localStorage).",facts:[["Formato","JSON local"],["Backend","Ninguno"],["Privacidad","Todo en el dispositivo"]],source:"SPEC.md §3"},
+infracciones:{chip:"Datos",title:"infracciones.json",body:"Catálogo de 15 infracciones con: código normativo, nombre en lenguaje claro, descripción, monto, descuento por curso vial, categoría, emisores y consejo de prevención. Los montos null se muestran como 'verificar en boleta'.",facts:[["Cantidad","15 infracciones"],["Montos","Verificados o null (nunca inventar)"],["Descuento","25% curso vial"],["Consejo","Cápsula de prevención"]],source:"data/infracciones.json"},
+entidades:{chip:"Datos",title:"entidades.json",body:"Catálogo de las 11 entidades emisoras: PNC, EMETRA, Emixtra y 8 PMTs municipales. Cada una con jurisdicción, portal, contacto y dónde pagar. (P0-8: pendiente de crear).",facts:[["Cantidad","11 entidades"],["Campos","Jurisdicción + contacto + pago"],["Estado","Pendiente de crear (P0-8)"]],source:"PLAN-ESTRATEGICO.md §3 · reto5 §1.1"},
+i18n:{chip:"Datos",title:"i18n JSON — 3 idiomas",body:"Diccionarios por idioma: español + k'iche' + inglés. K'iche' cumple la Ley 19-2003 (derecho a info en idiomas mayas). Inglés para turistas y expats. Estructura lista para más idiomas.",facts:[["Idiomas","Español + K'iche' + Inglés"],["Base legal","Ley 19-2003 Art. 9"],["Formato","JSON por idioma"]],source:"PLAN-ESTRATEGICO.md §8 · analisis-retos.md"},
+localstorage:{chip:"Datos",title:"localStorage — privacidad primero",body:"El historial de consultas y datos del usuario se guardan localmente en el dispositivo. Nada se envía a ningún servidor. Esto cumple la Ley 89-2005 de protección de datos personales.",facts:[["Storage","localStorage"],["Privacidad","Cero envío a servidores"],["Ley","89-2005 cumplida"],["Historial","'Tus últimas consultas'"]],source:"SPEC.md §2"},
+capa_libs:{chip:"Capa 3",title:"Librerías (solo 2)",body:"La app usa exactamente 2 dependencias: jsPDF para generar el borrador de impugnación y la plantilla markdown con campos dinámicos. Nada más. Menos dependencias = menos riesgo.",facts:[["Librerías","jsPDF + plantilla"],["Backend","Cero"],["Riesgo","Mínimo"]],source:"SPEC.md §3"},
+jspdf:{chip:"Librería",title:"jsPDF",body:"Genera el borrador de impugnación en PDF directamente en el navegador. El documento queda en el dispositivo; el usuario lo imprime o envía manualmente. Incluye botón 'copiar texto' como fallback.",facts:[["Función","Generar PDF"],["Local","Todo en el navegador"],["Fallback","Botón copiar texto"]],source:"SPEC.md §5 P4"},
+plantilla:{chip:"Plantilla",title:"plantilla-impugnacion.md",body:"Plantilla del escrito de impugnación con 7 vicios condicionales (falta fecha/lugar, datos incorrectos, sin pruebas, sin base normativa, sin procedimiento, prescripción, incompetencia). Los bloques se activan según lo que detecte el semáforo.",facts:[["Vicios","7 condicionales"],["Campos","{{dobles llaves}} dinámicos"],["Aviso","No es asesoría legal"]],source:"data/plantilla-impugnacion.md"},
+sinbackend:{chip:"Decisión",title:"Cero backend, cero servidores",body:"La app no depende de ningún servidor, API externa ni base de datos remota. Todo corre en el navegador con datos JSON locales. Esto significa: demo estable, sin riesgo de build roto, sin API caída, sin costos.",facts:[["Backend","Ninguno"],["APIs","Ninguna externa"],["Riesgo","Mínimo en demo"],["Costo","$0"]],source:"SPEC.md §3"},
+capa_deploy:{chip:"Capa 4",title:"Deploy",body:"La app se despliega en Cloudflare Pages (gratis, CDN global, HTTPS). El build de Vite genera dist/ que se sube directo. GitHub como control de versiones.",facts:[["Plataforma","Cloudflare Pages"],["Costo","Gratis"],["CDN","Global"],["HTTPS","Incluido"]],source:"PLAN-ESTRATEGICO.md §8"},
+cloudflare:{chip:"Deploy",title:"Cloudflare Pages",body:"Hosting estático gratuito con CDN global y HTTPS automático. El build de Vite (dist/) se sube directo. Free tier es más que suficiente para el hackathon (100K requests/día).",facts:[["Costo","Gratis"],["Requests","100K/día free tier"],["CDN","Global"],["HTTPS","Automático"]],source:"reto5-multas-transito.md §15.2"},
+build:{chip:"Deploy",title:"npm run build",body:"Vite compila todo a una carpeta dist/ estática: HTML, CSS, JS, JSON y assets. Esa carpeta es lo que se sube a Cloudflare Pages. Build rápido y reproducible.",facts:[["Comando","npm run build"],["Output","dist/"],["Tiempo","~2 segundos"]],source:"PLAN-ESTRATEGICO.md §8"},
+github:{chip:"Deploy",title:"GitHub",body:"Control de versiones del proyecto. El repo andregil003/losbrujos ya existe con la investigación y los diagramas. La app se agrega en app/ y se versiona igual.",facts:[["Repo","andregil003/losbrujos"],["Rama","main"],["Contenido","Investigación + diagramas + app"]],source:"PLAN-ESTRATEGICO.md"},
+pwa_install:{chip:"PWA",title:"Instalable en el celular",body:"El usuario instala la app desde el navegador (Android/iOS) y funciona sin internet. Perfecto para el 39% de guatemaltecos sin internet confiable y para zonas rurales.",facts:[["Instalación","Desde el navegador"],["Offline","Funciona sin internet"],["Brecha digital","39% sin internet"]],source:"reto5-multas-transito.md §8.2"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

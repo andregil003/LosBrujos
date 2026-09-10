@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D11 · Priorización de deliverables · P0 / P1 / P2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Qué construimos: deliverables priorizados P0 · P1 · P2</h1>
+    <div class="sub">P0 = demo funcional (imprescindible) · P1 = valor añadido · P2 = post-hackathon — toca cada cuadro</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- TÍTULOS DE COLUMNA -->
+  <text x="30" y="40" font-size="12" font-weight="700" fill="#DC2626" letter-spacing=".08em">🔴 P0 — IMPRESCINDIBLE (8)</text>
+  <text x="440" y="40" font-size="12" font-weight="700" fill="#D97706" letter-spacing=".08em">🟡 P1 — VALOR AÑADIDO (6)</text>
+  <text x="850" y="40" font-size="12" font-weight="700" fill="#059669" letter-spacing=".08em">🟢 P2 — POST-HACKATHON (5)</text>
+
+  <!-- P0-1: Estructura Vite -->
+  <g class="node" data-key="p01" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="30" y="55" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-1 · Estructura Vite</text>
+    <text x="120" y="105" text-anchor="middle" font-size="10" fill="#6B7280">scaffold + routing SPA</text>
+    <text x="120" y="121" text-anchor="middle" font-size="10" fill="#6B7280">módulos ES</text>
+    <text x="194" y="71" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-2: Inicio -->
+  <g class="node" data-key="p02" tabindex="0" role="button" style="animation-delay:.06s">
+    <rect x="30" y="155" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="185" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-2 · Pantalla inicio</text>
+    <text x="120" y="205" text-anchor="middle" font-size="10" fill="#6B7280">hero + 3 caminos</text>
+    <text x="120" y="221" text-anchor="middle" font-size="10" fill="#6B7280">"¿Te llegó una multa?"</text>
+    <text x="194" y="171" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-3: Formulario -->
+  <g class="node" data-key="p03" tabindex="0" role="button" style="animation-delay:.09s">
+    <rect x="30" y="255" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="285" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-3 · Formulario</text>
+    <text x="120" y="303" text-anchor="middle" font-size="10" fill="#6B7280">tipo papel + fecha +</text>
+    <text x="120" y="318" text-anchor="middle" font-size="10" fill="#6B7280">entidad + infracción +</text>
+    <text x="120" y="333" text-anchor="middle" font-size="10" fill="#6B7280">¿vos manejabas?</text>
+    <text x="194" y="271" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-4: Explicador -->
+  <g class="node" data-key="p04" tabindex="0" role="button" style="animation-delay:.12s">
+    <rect x="30" y="355" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="385" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-4 · Explicador</text>
+    <text x="120" y="405" text-anchor="middle" font-size="10" fill="#6B7280">lenguaje claro + montos</text>
+    <text x="120" y="421" text-anchor="middle" font-size="10" fill="#6B7280">+ descuentos + prevención</text>
+    <text x="194" y="371" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-5: Semáforo -->
+  <g class="node" data-key="p05" tabindex="0" role="button" style="animation-delay:.15s">
+    <rect x="30" y="455" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="485" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-5 · Semáforo</text>
+    <text x="120" y="505" text-anchor="middle" font-size="10" fill="#6B7280">verde/amarillo/rojo</text>
+    <text x="120" y="521" text-anchor="middle" font-size="10" fill="#6B7280">checklist Decreto 33-2024</text>
+    <text x="194" y="471" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-6: PDF -->
+  <g class="node" data-key="p06" tabindex="0" role="button" style="animation-delay:.18s">
+    <rect x="30" y="555" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="585" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-6 · PDF impugnación</text>
+    <text x="120" y="605" text-anchor="middle" font-size="10" fill="#6B7280">jsPDF + checkbox</text>
+    <text x="120" y="621" text-anchor="middle" font-size="10" fill="#6B7280">+ plantilla condicional</text>
+    <text x="194" y="571" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P0-7: PWA -->
+  <g class="node" data-key="p07" tabindex="0" role="button" style="animation-delay:.21s">
+    <rect x="30" y="655" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="685" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">P0-7 · PWA offline</text>
+    <text x="120" y="705" text-anchor="middle" font-size="10" fill="#6B7280">manifest + sw.js</text>
+    <text x="120" y="721" text-anchor="middle" font-size="10" fill="#6B7280">instalable</text>
+    <text x="194" y="671" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- P1-1: i18n -->
+  <g class="node" data-key="p11" tabindex="0" role="button" style="animation-delay:.05s">
+    <rect x="440" y="55" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-1 · i18n 3 idiomas</text>
+    <text x="530" y="105" text-anchor="middle" font-size="10" fill="#6B7280">español + k'iche'</text>
+    <text x="530" y="121" text-anchor="middle" font-size="10" fill="#6B7280">+ inglés</text>
+    <text x="604" y="71" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P1-2: Buscador -->
+  <g class="node" data-key="p12" tabindex="0" role="button" style="animation-delay:.08s">
+    <rect x="440" y="155" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="185" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-2 · Buscador</text>
+    <text x="530" y="205" text-anchor="middle" font-size="10" fill="#6B7280">"semáforo", "casco",</text>
+    <text x="530" y="221" text-anchor="middle" font-size="10" fill="#6B7280">"placa" → catálogo</text>
+    <text x="604" y="171" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P1-3: Historial -->
+  <g class="node" data-key="p13" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="440" y="255" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="285" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-3 · Historial</text>
+    <text x="530" y="305" text-anchor="middle" font-size="10" fill="#6B7280">localStorage</text>
+    <text x="530" y="321" text-anchor="middle" font-size="10" fill="#6B7280">"tus últimas consultas"</text>
+    <text x="604" y="271" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P1-4: Estafas -->
+  <g class="node" data-key="p14" tabindex="0" role="button" style="animation-delay:.14s">
+    <rect x="440" y="355" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="385" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-4 · Guía estafas</text>
+    <text x="530" y="405" text-anchor="middle" font-size="10" fill="#6B7280">notificación real vs</text>
+    <text x="530" y="421" text-anchor="middle" font-size="10" fill="#6B7280">SMS falso</text>
+    <text x="604" y="371" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P1-5: Audio -->
+  <g class="node" data-key="p15" tabindex="0" role="button" style="animation-delay:.17s">
+    <rect x="440" y="455" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="485" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-5 · Audio 🔊</text>
+    <text x="530" y="505" text-anchor="middle" font-size="10" fill="#6B7280">frases clave en</text>
+    <text x="530" y="521" text-anchor="middle" font-size="10" fill="#6B7280">k'iche' e inglés</text>
+    <text x="604" y="471" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P1-6: Dónde impugnar -->
+  <g class="node" data-key="p16" tabindex="0" role="button" style="animation-delay:.20s">
+    <rect x="440" y="555" width="180" height="90" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="530" y="585" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">P1-6 · ¿Dónde ir?</text>
+    <text x="530" y="605" text-anchor="middle" font-size="10" fill="#6B7280">dirección + horario</text>
+    <text x="530" y="621" text-anchor="middle" font-size="10" fill="#6B7280">según entidad</text>
+    <text x="604" y="571" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- P2-1: OCR -->
+  <g class="node" data-key="p21" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="850" y="55" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="940" y="85" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-1 · OCR boletas</text>
+    <text x="940" y="105" text-anchor="middle" font-size="10" fill="#6B7280">Tesseract.js +</text>
+    <text x="940" y="121" text-anchor="middle" font-size="10" fill="#6B7280">boletas mock</text>
+    <text x="1014" y="71" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- P2-2: Prescripción -->
+  <g class="node" data-key="p22" tabindex="0" role="button" style="animation-delay:.10s">
+    <rect x="850" y="155" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="940" y="185" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-2 · Prescripción</text>
+    <text x="940" y="205" text-anchor="middle" font-size="10" fill="#6B7280">cálculo automático</text>
+    <text x="940" y="221" text-anchor="middle" font-size="10" fill="#6B7280">120 días</text>
+    <text x="1014" y="171" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- P2-3: Alertas -->
+  <g class="node" data-key="p23" tabindex="0" role="button" style="animation-delay:.13s">
+    <rect x="850" y="255" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="940" y="285" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-3 · Alertas push</text>
+    <text x="940" y="305" text-anchor="middle" font-size="10" fill="#6B7280">"queda 1 día para</text>
+    <text x="940" y="321" text-anchor="middle" font-size="10" fill="#6B7280">impugnar"</text>
+    <text x="1014" y="271" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- P2-4: Dashboard -->
+  <g class="node" data-key="p24" tabindex="0" role="button" style="animation-delay:.16s">
+    <rect x="850" y="355" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="940" y="385" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-4 · Dashboard B2B</text>
+    <text x="940" y="405" text-anchor="middle" font-size="10" fill="#6B7280">flota de empresas</text>
+    <text x="940" y="421" text-anchor="middle" font-size="10" fill="#6B7280">de transporte</text>
+    <text x="1014" y="371" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- P2-5: Temas -->
+  <g class="node" data-key="p25" tabindex="0" role="button" style="animation-delay:.19s">
+    <rect x="850" y="455" width="180" height="90" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+    <text x="940" y="485" text-anchor="middle" font-size="12" font-weight="600" fill="#047857" class="node-label">P2-5 · Temas CSS</text>
+    <text x="940" y="505" text-anchor="middle" font-size="10" fill="#6B7280">oscuro/claro</text>
+    <text x="940" y="521" text-anchor="middle" font-size="10" fill="#6B7280">según el teléfono</text>
+    <text x="1014" y="471" font-size="13" fill="#059669" class="hint">＋</text>
+  </g>
+
+  <!-- BANNER REGLA DE ORO -->
+  <g class="node" data-key="reglaoro" tabindex="0" role="button" style="animation-delay:.25s">
+    <rect x="30" y="690" width="1000" height="70" rx="10" fill="#111111"/>
+    <text x="530" y="720" text-anchor="middle" font-size="14" font-weight="700" fill="#FBBF24">REGLA DE ORO: P0 completo y pulido &gt; P0 + P1 a medias</text>
+    <text x="530" y="742" text-anchor="middle" font-size="11" fill="#D1D5DB">El jurado premia lo que funciona, no lo que promete</text>
+    <text x="1014" y="706" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="30" y="770">fuente: PLAN-ESTRATEGICO.md §3 · app/SPEC.md §6</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> P0 imprescindible</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> P1 valor añadido</div>
+  <div class="legend"><span class="dot" style="background:#ECFDF5;border-color:#059669"></span> P2 post-hackathon</div>
+  <div class="legend">💡 Toca cualquier cuadro</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+p01:{chip:"P0 · Imprescindible",title:"P0-1 · Estructura Vite + routing SPA",body:"Scaffold con npm create vite@latest, estructura de carpetas (src/js, src/css, public), routing con hash (#view-*). Base de toda la app.",facts:[["Complejidad","⭐ Baja"],["Dependencias","Ninguna"],["Tiempo","~1 hora"],["Stack","Vite + Vanilla JS"]],source:"PLAN-ESTRATEGICO.md §3 · SPEC.md §3"},
+p02:{chip:"P0 · Imprescindible",title:"P0-2 · Pantalla de inicio",body:"Hero '¿Te llegó una multa? Te la explicamos' + 3 caminos: ingresar datos de la boleta (principal), escanear (V2/OCR, marcado 'pronto'), o buscar infracción por nombre. Footer con disclaimer legal.",facts:[["Complejidad","⭐ Baja"],["Caminos","3 botones"],["Disclaimer","Herramienta educativa, no asesoría legal"]],source:"SPEC.md §5 P0"},
+p03:{chip:"P0 · Imprescindible",title:"P0-3 · Formulario de boleta",body:"Selector de tipo de papel (boleta/requerimiento/citación), número, entidad (11), fecha de infracción con validación estricta (no futura, no >5 años), fecha de notificación opcional, select de infracción, y la pregunta clave: ¿Vos manejabas el vehículo? Si el notificado no era el conductor, se activa la guía de responsabilidad solidaria (Art. 3 Decreto 132-96). La fecha es crítica para el semáforo.",facts:[["Complejidad","⭐⭐ Media"],["Validación","Fecha requerida, ≤ hoy, ≥ hoy-5años"],["Entidades","11 en select"],["Infracciones","15 en catálogo"],["Pregunta clave","¿Vos manejabas? → guía si NO"]],source:"SPEC.md §5 P1 · PLAN-ESTRATEGICO.md §4.0"},
+p04:{chip:"P0 · Imprescindible",title:"P0-4 · Explicador de multa",body:"El corazón del reto: traduce la jerga legal a lenguaje claro. Muestra qué hiciste, cuánto cuesta (monto + descuento curso vial + condonación), por qué es peligroso (cápsula de prevención) y glosario expandible.",facts:[["Complejidad","⭐⭐ Media"],["Montos","Del JSON, nunca inventar"],["Descuento","25% curso vial"],["Prevención","Dato de seguridad vial"]],source:"SPEC.md §5 P2"},
+p05:{chip:"P0 · Imprescindible",title:"P0-5 · Semáforo de legalidad",body:"Evalúa si la multa es defendible: verde (notificación OK), amarillo (datos incompletos), rojo (prescripción o vicio grave). Checklist de 6 requisitos del Decreto 33-2024 + barras de plazos visuales (15 días impugnar, 120 días prescripción).",facts:[["Complejidad","⭐⭐⭐ Alta"],["Estados","Verde / Amarillo / Rojo"],["Checklist","6 requisitos Decreto 33-2024"],["Plazos","15 días impugnar · 120 días prescripción"]],source:"SPEC.md §5 P3"},
+p06:{chip:"P0 · Imprescindible",title:"P0-6 · Generador de PDF de impugnación",body:"Genera borrador del recurso con jsPDF usando la plantilla condicional (7 vicios). Checkbox obligatorio de disclaimer antes de generar. Vista previa en pantalla + botón copiar texto.",facts:[["Complejidad","⭐⭐ Media"],["Librería","jsPDF"],["Vicios","7 condicionales"],["Checkbox","Obligatorio antes de generar"]],source:"SPEC.md §5 P4 · data/plantilla-impugnacion.md"},
+p07:{chip:"P0 · Imprescindible",title:"P0-7 · PWA instalable + offline",body:"manifest.json + service worker que precachea todo. La app funciona sin internet (los datos viajan en JSON local). Instalable desde el navegador. Cumple Ley 89-2005 (todo local).",facts:[["Complejidad","⭐ Baja"],["Offline","Precache total"],["Privacidad","Todo en localStorage"],["Ley","89-2005 cumplida"]],source:"SPEC.md §2 · §3"},
+p11:{chip:"P1 · Valor añadido",title:"P1-1 · i18n: español + k'iche' + inglés",body:"Interfaz completa en 3 idiomas. K'iche' (~1.27M hablantes) cumple la Ley 19-2003 que el Estado no cumple. Inglés para turistas y expats que manejan en Guatemala. Diccionarios en JSON.",facts:[["Complejidad","⭐⭐ Media"],["Idiomas","Español + K'iche' + Inglés"],["Base legal","Ley 19-2003 Art. 9"],["Diferenciador","Primera app de tránsito multilingüe"]],source:"PLAN-ESTRATEGICO.md §8 · analisis-retos.md"},
+p12:{chip:"P1 · Valor añadido",title:"P1-2 · Buscador de infracciones",body:"Búsqueda por palabra clave: 'semáforo', 'casco', 'placa' → filtra el catálogo de 15 infracciones. Para quien no sabe qué código tiene su multa.",facts:[["Complejidad","⭐ Baja"],["Búsqueda","Por palabra clave"],["Catálogo","15 infracciones"]],source:"PLAN-ESTRATEGICO.md §3"},
+p13:{chip:"P1 · Valor añadido",title:"P1-3 · Historial de consultas",body:"Guarda las últimas consultas en localStorage. 'Tus últimas consultas' en la pantalla de inicio. Todo local, sin servidor.",facts:[["Complejidad","⭐ Baja"],["Storage","localStorage"],["Privacidad","Todo en el dispositivo"]],source:"PLAN-ESTRATEGICO.md §3"},
+p14:{chip:"P1 · Valor añadido",title:"P1-4 · Guía de estafas",body:"Contenido editorial para distinguir una notificación real de un SMS falso. Prensa Libre reportó estafas con códigos QR y multas falsas (junio 2025).",facts:[["Complejidad","⭐ Baja"],["Contenido","Editorial"],["Fuente","Prensa Libre jun 2025"],["Valor","Genera confianza"]],source:"reto5-multas-transito.md §5.9"},
+p15:{chip:"P1 · Valor añadido",title:"P1-5 · Audio de frases clave",body:"Grabaciones HTML audio para personas que hablan pero no leen su idioma. Frases clave en k'iche' e inglés.",facts:[["Complejidad","⭐⭐ Media"],["Formato","HTML audio"],["Idiomas","K'iche' + inglés"]],source:"PLAN-ESTRATEGICO.md §3"},
+p16:{chip:"P1 · Valor añadido",title:"P1-6 · Guía ¿Dónde impugnar?",body:"Dirección, horario y documentos a acompañar según la entidad emisora. Del catálogo de entidades.",facts:[["Complejidad","⭐ Baja"],["Datos","Del catálogo de entidades"],["Valor","Reduce fricción"]],source:"PLAN-ESTRATEGICO.md §3"},
+p21:{chip:"P2 · Post-hackathon",title:"P2-1 · OCR de boletas",body:"Escanear la boleta con la cámara y que la app lea los datos automáticamente (Tesseract.js, WebAssembly en navegador). Requiere crear 3-4 boletas mock PNG. Complejo de demostrar bien en poco tiempo.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Librería","Tesseract.js v6"],["Requiere","Boletas mock PNG"],["Decisión","V2 — entrada manual primero"]],source:"PLAN-ESTRATEGICO.md §3 · reto5 §15.1"},
+p22:{chip:"P2 · Post-hackathon",title:"P2-2 · Cálculo automático de prescripción",body:"Detectar automáticamente si la multa prescribió (120 días sin notificar). La lógica ya está en core.js, solo falta UI extra.",facts:[["Complejidad","⭐ Baja"],["Lógica","Ya existe en core"],["Plazo","120 días"]],source:"PLAN-ESTRATEGICO.md §3"},
+p23:{chip:"P2 · Post-hackathon",title:"P2-3 · Alertas push de plazos",body:"Notificación push cuando queda poco tiempo para impugnar o pagar. Requiere Service Worker + permisos del navegador.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Requiere","SW + permisos"],["Ejemplo","'Queda 1 día para impugnar'"]],source:"PLAN-ESTRATEGICO.md §3"},
+p24:{chip:"P2 · Post-hackathon",title:"P2-4 · Dashboard de flota B2B",body:"Para empresas de transporte: ver todas las multas de sus vehículos, alertas de vencimiento, gestión centralizada. Solo para el pitch/roadmap.",facts:[["Complejidad","⭐⭐⭐ Alta"],["Requiere","Auth + datos"],["Mercado","Empresas de transporte"],["Uso","Solo pitch"]],source:"PLAN-ESTRATEGICO.md §3"},
+p25:{chip:"P2 · Post-hackathon",title:"P2-5 · Temas CSS oscuro/claro",body:"Tema oscuro por defecto + tema claro que responde al sistema del teléfono (prefers-color-scheme).",facts:[["Complejidad","⭐ Baja"],["Default","Oscuro (Linear/Notion)"],["Auto","prefers-color-scheme"]],source:"PLAN-ESTRATEGICO.md §8"},
+reglaoro:{chip:"Regla de oro",title:"P0 completo y pulido > P0 + P1 a medias",body:"La prioridad absoluta es que la Capa 1 (P0) funcione perfecta: formulario → explicador → semáforo → PDF. Todo lo demás es bonus. El jurado premia lo que funciona, no lo que promete.",facts:[["Prioridad","P0 completo primero"],["Riesgo","Feature creep"],["Máxima","Capa 1 completa y pulida"]],source:"SPEC.md §6"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>

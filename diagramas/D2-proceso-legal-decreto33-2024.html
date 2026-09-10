@@ -60,7 +60,7 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 </header>
 <div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
 <main>
-<svg viewBox="0 0 1200 820" width="1200" height="820" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+<svg viewBox="0 0 1200 900" width="1200" height="900" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
     <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
@@ -186,8 +186,15 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
     <text x="1164" y="736" font-size="13" fill="#2563EB" class="hint">＋</text>
   </g>
 
+  <g class="node" data-key="responsabilidad-solidaria" tabindex="0" role="button" style="animation-delay:.68s">
+    <rect x="40" y="800" width="1120" height="64" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="600" y="826" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">Art. 3 Ley de Tránsito (Decreto 132-96): la sanción se dirige al conductor responsable · el propietario es solidariamente responsable</text>
+    <text x="600" y="846" text-anchor="middle" font-size="11" fill="#6B7280">si el notificado no manejaba → derecho de defensa: impugnar señalando que no era el conductor (15 días)</text>
+    <text x="1144" y="816" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
   <g font-size="11" fill="#9CA3AF">
-    <text x="40" y="810">fuente: reto5-multas-transito.md §2 · Decreto 33-2024 (DCA) · aprobado 22 nov 2024 · publicado 16 dic 2024</text>
+    <text x="40" y="890">fuente: reto5-multas-transito.md §2 · Decreto 33-2024 (DCA) · aprobado 22 nov 2024 · publicado 16 dic 2024 · Art. 3 Decreto 132-96</text>
   </g>
 </svg>
 </main>
@@ -209,7 +216,7 @@ footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color
 
 <script>
 const INFO={
-infraccion:{chip:"Paso 1",title:"Ocurre la infracción",body:"Un agente de tránsito levanta la remisión. La evidencia (foto o video) es obligatoria como respaldo de la multa.",facts:[["Montos","Q200 (sin tarjeta de circulación) a Q25,000 (conducir ebrio)"],["Evidencia","Foto / video / documentos de respaldo"],["Dato","53% de las multas son a motociclistas"]],source:"reto5-multas-transito.md §1.4 · §2.3"},
+infraccion:{chip:"Paso 1",title:"Ocurre la infracción",body:"Un agente de tránsito levanta la remisión. La evidencia (foto o video) es obligatoria como respaldo de la multa. La sanción se dirige al conductor responsable (Art. 3 Decreto 132-96).",facts:[["Montos","Q200 (sin tarjeta de circulación) a Q25,000 (conducir ebrio)"],["Evidencia","Foto / video / documentos de respaldo"],["Responsable","El conductor (Art. 3 Decreto 132-96)"],["Dato","53% de las multas son a motociclistas"]],source:"reto5-multas-transito.md §1.4 · §2.3"},
 notificacion:{chip:"Paso 2",title:"Notificación obligatoria",body:"La autoridad DEBE notificar directamente al conductor o dueño antes de cobrar. Puede ser impresa o electrónica. Sin notificación, no se puede exigir el pago.",facts:[["Contenido","Fecha, lugar, pruebas, monto, forma de pago, explicación de la infracción y cómo impugnar"],["Cambio clave","Antes del Decreto se podía cobrar sin avisar"],["Impacto","Ataca el problema #1: las 'multas fantasmas'"]],source:"reto5-multas-transito.md §2.1 · §2.3"},
 decision:{chip:"Paso 3",title:"¿Te notificaron en 120 días?",body:"La prescripción se cuenta desde la fecha de la infracción. Si la autoridad no notifica en 120 días, la multa prescribe y no puede cobrarse.",facts:[["Plazo","120 días desde la infracción"],["Efecto","Multas no acreditadas se anulan de oficio"],["Dato","Muchas multas 'fantasma' prescriben sin que el ciudadano lo sepa"]],source:"reto5-multas-transito.md §2.4"},
 prescribe:{chip:"A favor del ciudadano",title:"PRESCRIBE",body:"Si la multa no se notificó en 120 días, prescribe y no puede cobrarse. Las multas que no puedan acreditarse conforme al decreto se anulan de oficio.",facts:[["Plazo","120 días sin notificación"],["Efecto","No puede cobrarse"],["Acción","El ciudadano puede esperar la prescripción en lugar de pagar"]],source:"reto5-multas-transito.md §2.4"},
@@ -221,7 +228,8 @@ pagar60:{chip:"Obligación de pago",title:"60 días para pagar",body:"Si la reso
 plazo15:{chip:"Semáforo",title:"15 días · impugnar",body:"Plazo para ejercer el derecho de defensa desde la notificación. En el prototipo se muestra en amarillo: es corto y crítico.",facts:[["Color","Amarillo — atención"],["Consejo","Impugna apenas recibas la notificación"]],source:"reto5-multas-transito.md §2.2"},
 plazo60:{chip:"Semáforo",title:"60 días · pagar",body:"Plazo para pagar tras una resolución desfavorable firme. En el prototipo se muestra en rojo: es una obligación.",facts:[["Color","Rojo — obligación"],["Consejo","Programa el pago antes del vencimiento"]],source:"reto5-multas-transito.md §2.5"},
 plazo120:{chip:"Semáforo",title:"120 días · prescripción",body:"Si no te notifican en 120 días desde la infracción, la multa prescribe. En el prototipo se muestra en verde: es tu derecho.",facts:[["Color","Verde — a tu favor"],["Consejo","No pagues una multa que nunca te notificaron"]],source:"reto5-multas-transito.md §2.4"},
-"nota-legal":{chip:"Nota legal",title:"Validez de la notificación",body:"La notificación debe incluir el procedimiento para impugnar y los plazos. Si la autoridad no incluye esta información, hay argumento para cuestionar la validez.",facts:[["Requisito","Explicar cómo impugnar y el plazo"],["Consecuencia","Omisión = argumento de defensa"]],source:"reto5-multas-transito.md §3.2"}
+"nota-legal":{chip:"Nota legal",title:"Validez de la notificación",body:"La notificación debe incluir el procedimiento para impugnar y los plazos. Si la autoridad no incluye esta información, hay argumento para cuestionar la validez.",facts:[["Requisito","Explicar cómo impugnar y el plazo"],["Consecuencia","Omisión = argumento de defensa"]],source:"reto5-multas-transito.md §3.2"},
+ responsabilidad-solidaria:{chip:"Base legal",title:"Responsabilidad solidaria (Art. 3 Decreto 132-96)",body:"La Ley de Tránsito establece que las sanciones se dirigen al conductor responsable, pero cualquier sanción que afecte el vehículo es responsabilidad solidaria del propietario y del conductor. Si el notificado no manejaba al momento de la infracción, conserva su derecho de defensa: puede impugnar señalando que no era el conductor e identificando al conductor real.",facts:[["Regla","La sanción se dirige al conductor responsable"],["Solidaridad","Propietario + conductor"],["Derecho","15 días para impugnar desde la notificación"],["Argumento","El notificado no era el conductor"]],source:"PLAN-ESTRATEGICO.md §4.0 · Decreto 132-96 Art. 3"}
 };
 const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
 function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}

@@ -123,6 +123,9 @@ ACCIÓN
    - Si se ingresa y es posterior a infracción + 120 días → **alerta inmediata**: "⚠️ Esta multa podría haber prescrito"
    - Si no se ingresa → el semáforo usa el escenario "sin notificación confirmada"
 6. **¿Qué infracción te cobran?** (select del catálogo de 15, con búsqueda) — o "No sé / no dice" → muestra el catálogo completo para explorar
+7. **¿Vos manejabas el vehículo?** (sí/no) — **INSIGHT DE CAMPO**:
+   - **Sí** → continúa al explicador normal
+   - **No** → guía especial: "La multa es del conductor, no del dueño. Si el conductor es familiar/conocido, coordiná con él. Si no sabés quién manejaba, la notificación debe cumplir el Decreto 33-2024 — si no te notificaron correctamente, hay argumento para impugnar." + opción de generar borrador señalando que el notificado no era el conductor
 
 **Botón:** "Explicar mi multa" (deshabilitado hasta que fecha + infracción estén válidas)
 
@@ -133,6 +136,7 @@ ACCIÓN
 | Fecha infracción | requerida, ≤ hoy, ≥ hoy-5años | mensajes específicos |
 | Fecha notificación | opcional, ≥ fecha infracción | "La notificación no puede ser antes de la infracción" |
 | Infracción | requerida (select o búsqueda) | "Elegí qué infracción te cobran" |
+| ¿Vos manejabas? | requerida (sí/no) | "Necesitamos saber si eras vos quien manejaba" |
 
 ---
 

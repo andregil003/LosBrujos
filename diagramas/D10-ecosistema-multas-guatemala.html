@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D10 · Mapa del ecosistema de multas en Guatemala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFFFFF;--ink:#111111;--muted:#6B7280;--line:#E5E7EB;--accent:#2563EB;--accent-soft:#EFF6FF;--green:#059669;--green-soft:#ECFDF5;--red:#DC2626;--red-soft:#FEF2F2;--amber:#D97706;--amber-soft:#FFFBEB;--radius:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;padding:24px;}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+h1{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;max-width:820px;}
+.sub{font-size:13px;color:var(--muted);margin-top:6px;}
+button.export{font-family:inherit;font-weight:600;font-size:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;transition:opacity .15s;}
+button.export:hover{opacity:.85;}
+main{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+svg{display:block;width:100%;height:auto;min-width:1000px;}
+.mobile-hint{display:none;}
+.node{cursor:pointer;}
+.node rect{transition:fill .18s ease,stroke .18s ease,filter .18s ease;}
+.node:hover rect{filter:brightness(.96);}
+.node:hover .node-label{fill:var(--accent);}
+.node-label{transition:fill .18s ease;}
+.hint{opacity:.55;transition:opacity .18s ease;}
+.node:hover .hint{opacity:1;}
+.arrow{stroke-dasharray:6 5;animation:flow 1s linear infinite;}
+@keyframes flow{to{stroke-dashoffset:-11;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.node{animation:fadeUp .45s ease both;}
+.backdrop{position:fixed;inset:0;background:rgba(17,17,17,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40;}
+.backdrop.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;height:100dvh;width:min(400px,92vw);background:#fff;border-left:1px solid var(--line);transform:translateX(105%);transition:transform .3s cubic-bezier(.32,.72,.28,1);z-index:50;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+.drawer.open{transform:none;}
+.drawer-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.drawer-head h2{font-size:18px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;}
+.drawer-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:2px 6px;border-radius:6px;}
+.drawer-close:hover{color:var(--ink);background:var(--bg);}
+.drawer-body{padding:20px 22px;overflow-y:auto;font-size:14px;line-height:1.65;color:#333;}
+.drawer-body p{margin-bottom:12px;}
+.facts{margin:14px 0;padding:0;list-style:none;}
+.facts li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5;}
+.facts li b{min-width:118px;color:var(--ink);font-weight:600;}
+.source{margin-top:16px;font-size:12px;color:var(--muted);font-style:italic;}
+.chip{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em;}
+footer{margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend{display:flex;align-items:center;gap:8px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+@media (max-width:640px){body{padding:14px;}main{padding:8px;}.drawer{width:100vw;}.mobile-hint{display:flex;align-items:center;justify-content:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;margin-bottom:12px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Lo que YA existe: el ecosistema fragmentado de multas en Guatemala</h1>
+    <div class="sub">11 entidades que multan · 4 portales de consulta · 3 canales de pago · 3 apps · 0 APIs públicas — toca cada cuadro</div>
+  </div>
+  <button class="export" onclick="exportPNG()">Exportar PNG</button>
+</header>
+<div class="mobile-hint">📱 Desliza horizontalmente para ver el diagrama completo</div>
+<main>
+<svg viewBox="0 0 1200 780" width="1200" height="780" xmlns="http://www.w3.org/2000/svg" font-family="'Inter',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/></marker>
+  </defs>
+
+  <!-- TÍTULOS DE SECCIÓN -->
+  <text x="30" y="40" font-size="12" font-weight="700" fill="#6B7280" letter-spacing=".08em">ENTIDADES QUE MULTAN (11)</text>
+  <text x="440" y="40" font-size="12" font-weight="700" fill="#6B7280" letter-spacing=".08em">PORTALES DE CONSULTA (4)</text>
+  <text x="850" y="40" font-size="12" font-weight="700" fill="#6B7280" letter-spacing=".08em">APPS COMPETIDORAS (3)</text>
+
+  <!-- ENTIDADES: PNC -->
+  <g class="node" data-key="pnc" tabindex="0" role="button" style="animation-delay:.03s">
+    <rect x="30" y="55" width="180" height="110" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="120" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">PNC Tránsito</text>
+    <text x="120" y="112" text-anchor="middle" font-size="10" fill="#6B7280">Rutas nacionales y</text>
+    <text x="120" y="126" text-anchor="middle" font-size="10" fill="#6B7280">centroamericanas</text>
+    <text x="120" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#2563EB">transito.gob.gt</text>
+    <text x="194" y="71" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- ENTIDADES: EMETRA -->
+  <g class="node" data-key="emetra" tabindex="0" role="button" style="animation-delay:.06s">
+    <rect x="30" y="175" width="180" height="110" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="120" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8" class="node-label">EMETRA</text>
+    <text x="120" y="232" text-anchor="middle" font-size="10" fill="#6B7280">Ciudad de Guatemala</text>
+    <text x="120" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#2563EB">muniguate.com</text>
+    <text x="194" y="191" font-size="13" fill="#2563EB" class="hint">＋</text>
+  </g>
+
+  <!-- ENTIDADES: 9 PMTs -->
+  <g class="node" data-key="pmts" tabindex="0" role="button" style="animation-delay:.09s">
+    <rect x="30" y="295" width="180" height="110" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="120" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309" class="node-label">9 PMTs municipales</text>
+    <text x="120" y="352" text-anchor="middle" font-size="10" fill="#6B7280">Villa Nueva, Mixco,</text>
+    <text x="120" y="366" text-anchor="middle" font-size="10" fill="#6B7280">Escuintla, Antigua,</text>
+    <text x="120" y="380" text-anchor="middle" font-size="10" fill="#6B7280">Jutiapa, Palencia…</text>
+    <text x="194" y="311" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- ENTIDADES: sin convenio -->
+  <g class="node" data-key="sinconvenio" tabindex="0" role="button" style="animation-delay:.12s">
+    <rect x="30" y="415" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">⚠ Sin convenio</text>
+    <text x="120" y="468" text-anchor="middle" font-size="10" fill="#6B7280">munis NO pueden multar</text>
+    <text x="120" y="482" text-anchor="middle" font-size="10" fill="#6B7280">en rutas nacionales</text>
+    <text x="194" y="431" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- PORTALES: SAT -->
+  <g class="node" data-key="sat" tabindex="0" role="button" style="animation-delay:.05s">
+    <rect x="440" y="55" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="530" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">Portal SAT</text>
+    <text x="530" y="112" text-anchor="middle" font-size="10" fill="#6B7280">PNC + EMETRA + munis</text>
+    <text x="530" y="126" text-anchor="middle" font-size="10" fill="#6B7280">placa + NIT</text>
+    <text x="530" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">"null" en nombres</text>
+    <text x="604" y="71" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- PORTALES: PNC -->
+  <g class="node" data-key="pncportal" tabindex="0" role="button" style="animation-delay:.08s">
+    <rect x="440" y="175" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="530" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">PNC Tránsito</text>
+    <text x="530" y="232" text-anchor="middle" font-size="10" fill="#6B7280">solo multas PNC</text>
+    <text x="530" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">sin info impugnación</text>
+    <text x="604" y="191" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- PORTALES: EMETRA -->
+  <g class="node" data-key="emetraportal" tabindex="0" role="button" style="animation-delay:.11s">
+    <rect x="440" y="295" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="530" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">EMETRA/MuniGuate</text>
+    <text x="530" y="352" text-anchor="middle" font-size="10" fill="#6B7280">solo CDMX</text>
+    <text x="530" y="366" text-anchor="middle" font-size="10" fill="#6B7280">pago solo Banrural</text>
+    <text x="530" y="388" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">sin plazos</text>
+    <text x="604" y="311" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- PORTALES: munis -->
+  <g class="node" data-key="munisportal" tabindex="0" role="button" style="animation-delay:.14s">
+    <rect x="440" y="415" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="530" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">Portales municipales</text>
+    <text x="530" y="468" text-anchor="middle" font-size="10" fill="#6B7280">cada muni lo suyo</text>
+    <text x="530" y="482" text-anchor="middle" font-size="10" fill="#6B7280">muchos NO tienen portal</text>
+    <text x="604" y="431" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- APPS: Multas Guate -->
+  <g class="node" data-key="multasguate" tabindex="0" role="button" style="animation-delay:.07s">
+    <rect x="850" y="55" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="940" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">Multas Guate</text>
+    <text x="940" y="112" text-anchor="middle" font-size="10" fill="#6B7280">Android · activa</text>
+    <text x="940" y="126" text-anchor="middle" font-size="10" fill="#6B7280">solo consulta básica</text>
+    <text x="940" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">⭐ 2.1</text>
+    <text x="1014" y="71" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- APPS: MuniGuate 2.0 -->
+  <g class="node" data-key="muniguateapp" tabindex="0" role="button" style="animation-delay:.10s">
+    <rect x="850" y="175" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="940" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">MuniGuate 2.0</text>
+    <text x="940" y="232" text-anchor="middle" font-size="10" fill="#6B7280">iOS/Android · 2020</text>
+    <text x="940" y="246" text-anchor="middle" font-size="10" fill="#6B7280">solo EMETRA</text>
+    <text x="940" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">⭐ 2.8 · bugs pago</text>
+    <text x="1014" y="191" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- APPS: TransitoGT -->
+  <g class="node" data-key="transitogt" tabindex="0" role="button" style="animation-delay:.13s">
+    <rect x="850" y="295" width="180" height="110" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="940" y="332" text-anchor="middle" font-size="13" font-weight="600" fill="#B91C1C" class="node-label">TransitoGT</text>
+    <text x="940" y="352" text-anchor="middle" font-size="10" fill="#6B7280">Android · inactiva 2022</text>
+    <text x="940" y="366" text-anchor="middle" font-size="10" fill="#6B7280">solo mapas de tráfico</text>
+    <text x="940" y="388" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">⭐ 1.5 · abandonada</text>
+    <text x="1014" y="311" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- APPS: 0 APIs -->
+  <g class="node" data-key="noapis" tabindex="0" role="button" style="animation-delay:.16s">
+    <rect x="850" y="415" width="180" height="90" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="940" y="448" text-anchor="middle" font-size="12" font-weight="600" fill="#B91C1C" class="node-label">0 APIs públicas</text>
+    <text x="940" y="468" text-anchor="middle" font-size="10" fill="#6B7280">ningún portal tiene</text>
+    <text x="940" y="482" text-anchor="middle" font-size="10" fill="#6B7280">documentación API</text>
+    <text x="1014" y="431" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- REGLA LEGAL: RESPONSABILIDAD SOLIDARIA -->
+  <g class="node" data-key="responsabilidad-solidaria" tabindex="0" role="button" style="animation-delay:.14s">
+    <rect x="30" y="512" width="180" height="44" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="120" y="532" text-anchor="middle" font-size="11" font-weight="600" fill="#B91C1C" class="node-label">Art. 3 · solidaridad</text>
+    <text x="120" y="548" text-anchor="middle" font-size="10" fill="#6B7280">propietario + conductor</text>
+    <text x="194" y="528" font-size="13" fill="#DC2626" class="hint">＋</text>
+  </g>
+
+  <!-- PAGOS -->
+  <text x="30" y="560" font-size="12" font-weight="700" fill="#6B7280" letter-spacing=".08em">SISTEMAS DE PAGO (fragmentados)</text>
+  <g class="node" data-key="pago_banrural" tabindex="0" role="button" style="animation-delay:.18s">
+    <rect x="30" y="575" width="180" height="80" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="120" y="608" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">Banrural</text>
+    <text x="120" y="628" text-anchor="middle" font-size="10" fill="#6B7280">EMETRA (exclusivo)</text>
+    <text x="194" y="591" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="pago_bi" tabindex="0" role="button" style="animation-delay:.20s">
+    <rect x="240" y="575" width="180" height="80" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="330" y="608" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">Banco Industrial</text>
+    <text x="330" y="628" text-anchor="middle" font-size="10" fill="#6B7280">Mixco, S.C. Pinula</text>
+    <text x="404" y="591" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+  <g class="node" data-key="pago_bancos" tabindex="0" role="button" style="animation-delay:.22s">
+    <rect x="450" y="575" width="180" height="80" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="540" y="608" text-anchor="middle" font-size="12" font-weight="600" fill="#B45309" class="node-label">Bancos del sistema</text>
+    <text x="540" y="628" text-anchor="middle" font-size="10" fill="#6B7280">PNC</text>
+    <text x="614" y="591" font-size="13" fill="#D97706" class="hint">＋</text>
+  </g>
+
+  <!-- BANNER CONCLUSIÓN -->
+  <g class="node" data-key="conclusion" tabindex="0" role="button" style="animation-delay:.25s">
+    <rect x="30" y="690" width="1000" height="70" rx="10" fill="#111111"/>
+    <text x="530" y="720" text-anchor="middle" font-size="14" font-weight="700" fill="#FBBF24">NO existe app unificada · NO hay APIs · NO hay explicación · NO hay impugnación · NO hay idiomas</text>
+    <text x="530" y="742" text-anchor="middle" font-size="11" fill="#D1D5DB">→ Aquí entra MultaClara: el traductor de multas que nadie construyó</text>
+    <text x="1014" y="706" font-size="13" fill="#FBBF24" class="hint">＋</text>
+  </g>
+
+  <g font-size="11" fill="#9CA3AF">
+    <text x="30" y="770">fuente: reto5-multas-transito.md §1-4 · analisis-retos.md · PLAN-ESTRATEGICO.md §1</text>
+  </g>
+</svg>
+</main>
+<footer>
+  <div class="legend"><span class="dot" style="background:#EFF6FF;border-color:#2563EB"></span> Entidad</div>
+  <div class="legend"><span class="dot" style="background:#FEF2F2;border-color:#DC2626"></span> Problema</div>
+  <div class="legend"><span class="dot" style="background:#FFFBEB;border-color:#D97706"></span> Oportunidad</div>
+  <div class="legend">💡 Toca cualquier cuadro</div>
+</footer>
+
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><span class="chip" id="d-chip"></span><h2 id="d-title"></h2></div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar">×</button>
+  </div>
+  <div class="drawer-body"><p id="d-body"></p><ul class="facts" id="d-facts"></ul><div class="source" id="d-source"></div></div>
+</aside>
+
+<script>
+const INFO={
+pnc:{chip:"Entidad",title:"PNC — Departamento de Tránsito",body:"La autoridad nacional de tránsito. Multa en rutas nacionales, departamentales y centroamericanas. Es la única entidad con competencia en esas vías.",facts:[["Jurisdicción","Rutas nacionales + CA-1 + CA-2"],["Portal","transito.gob.gt/remisiones-y-multas"],["Pago","Bancos del sistema"],["Dato","Solvencia en línea desde ago 2025"]],source:"reto5-multas-transito.md §1.1"},
+emetra:{chip:"Entidad",title:"EMETRA — Ciudad de Guatemala",body:"Entidad Metropolitana Reguladora de Transporte y Tránsito. Solo multa dentro de la Ciudad de Guatemala. Pago exclusivo vía Banrural.",facts:[["Jurisdicción","Ciudad de Guatemala"],["Portal","muniguate.com/emetra"],["Pago","Banrural (exclusivo)"],["Condonación","50-60% con curso vial (2026)"]],source:"reto5-multas-transito.md §1.1"},
+pmts:{chip:"Entidad",title:"9 PMTs municipales",body:"Villa Nueva, Mixco (Emixtra), Escuintla, Antigua, Jutiapa, Palencia, Santa Catarina Pinula, San Lucas Sacatepéquez y Amatitlán. Cada una con su propio sistema (o sin sistema).",facts:[["Cantidad","9 municipalidades"],["Cobertura","Solo su municipio"],["Portales","Muchos no tienen"],["Pago","BI, Banrural, variado"]],source:"reto5-multas-transito.md §1.1"},
+sinconvenio:{chip:"Regla legal",title:"Municipalidades NO pueden multar en rutas nacionales",body:"Decreto 33-2024: las municipalidades tienen prohibido imponer multas en rutas nacionales, departamentales y centroamericanas sin convenio formalizado con la PNC. Si te multó una muni en una ruta nacional → hay argumento para impugnar.",facts:[["Base legal","Decreto 33-2024 Art. 1"],["Excepción","Convenio con PNC"],["Acción","Impugnar por incompetencia"]],source:"reto5-multas-transito.md §1.1"},
+ responsabilidad-solidaria:{chip:"Regla legal",title:"Responsabilidad solidaria (Art. 3 Decreto 132-96)",body:"La sanción se dirige al conductor responsable, pero cualquier sanción que afecte el vehículo es responsabilidad solidaria del propietario y del conductor. Si te llegó una multa por un vehículo que no manejabas, tienes derecho de defensa: 15 días para impugnar señalando que no eras el conductor.",facts:[["Base legal","Art. 3 Decreto 132-96"],["Regla","Sanción → conductor responsable"],["Solidaridad","Propietario + conductor"],["Derecho","15 días para impugnar"]],source:"PLAN-ESTRATEGICO.md §4.0"},
+sat:{chip:"Portal",title:"Portal SAT — consulta de multas",body:"Agrega multas de PNC, EMETRA, Emixtra, Villa Nueva y otras munis. Requiere placa + NIT. Problemas: muestra 'null' en nombres de entidades, no explica qué significa cada multa, no dice cómo impugnar, no muestra detalle de la infracción.",facts:[["Cobertura","PNC + EMETRA + munis"],["Requisito","Placa + NIT"],["Bug","Muestra 'null' en nombres"],["Sin","Explicación ni impugnación"]],source:"reto5-multas-transito.md §4.1"},
+pncportal:{chip:"Portal",title:"PNC Tránsito",body:"Consulta de remisiones, multas por licencia vencida y licencias consignadas. Solo cubre multas de PNC. No incluye información de cómo impugnar.",facts:[["Cobertura","Solo PNC"],["Servicios","Remisiones, licencias"],["Falta","Info de impugnación"]],source:"reto5-multas-transito.md §4.3"},
+emetraportal:{chip:"Portal",title:"EMETRA / MuniGuate",body:"Consulta de multas de la Ciudad de Guatemala. Interfaz básica, sin explicaciones, sin información de plazos de impugnación. Pago solo vía Banrural.",facts:[["Cobertura","Solo CDMX"],["Pago","Banrural exclusivo"],["Falta","Plazos e impugnación"]],source:"reto5-multas-transito.md §4.2"},
+munisportal:{chip:"Portal",title:"Portales municipales",body:"Cada municipalidad tiene su propio sistema de consulta (o no tiene ninguno). No hay estándar ni interoperabilidad entre ellos.",facts:[["Cantidad","9+ portales distintos"],["Estándar","Ninguno"],["Interoperabilidad","Nula"]],source:"reto5-multas-transito.md §1.2"},
+multasguate:{chip:"App competidora",title:"Multas Guate (Android)",body:"App de terceros desarrollada por abogados. Consulta de multas PMT + PNC. Reviews mezcladas: solo consulta básica, sin explicación, sin OCR, sin idiomas indígenas, sin notificaciones de plazos.",facts:[["Rating","⭐ 2.1 (100+ reseñas)"],["Estado","Activa"],["Falta","Explicación, OCR, idiomas, plazos"]],source:"reto5-multas-transito.md §13.1"},
+muniguateapp:{chip:"App competidora",title:"MuniGuate 2.0",body:"App oficial de la Municipalidad de Guatemala. Última actualización en 2020. Solo EMETRA, sin integración con SAT, bugs reportados en pago, interfaz anticuada.",facts:[["Rating","⭐ 2.8 (App Store)"],["Estado","Sin updates desde 2020"],["Cobertura","Solo EMETRA"]],source:"reto5-multas-transito.md §13.1"},
+transitogt:{chip:"App competidora",title:"TransitoGT",body:"App de mapas de tráfico, sin función de multas. Abandonada desde 2022.",facts:[["Rating","⭐ 1.5"],["Estado","Inactiva (2022)"],["Función","Solo mapas de tráfico"]],source:"reto5-multas-transito.md §13.1"},
+noapis:{chip:"Realidad técnica",title:"No hay APIs públicas",body:"Ningún portal gubernamental (SAT, PNC, EMETRA) tiene API REST documentada. El scraping es zona gris legal. Para el hackathon usamos datos mock y entrada manual de la boleta.",facts:[["SAT","Sin API documentada"],["PNC","Sin API documentada"],["EMETRA","Sin API documentada"],["Decisión","Datos mock + entrada manual"]],source:"reto5-multas-transito.md §10.1"},
+pago_banrural:{chip:"Pago",title:"Banrural — EMETRA",body:"EMETRA solo acepta pago vía Banrural (presencial en agencias o banca virtual). Cada banco tiene su propio tutorial y proceso.",facts:[["Entidad","EMETRA"],["Canales","Agencias + banca virtual"]],source:"reto5-multas-transito.md §1.3"},
+pago_bi:{chip:"Pago",title:"Banco Industrial — Mixco/S.C. Pinula/Fraijanes",body:"Estas municipalidades cobran vía Banco Industrial (bi en línea). Otro canal distinto al de EMETRA.",facts:[["Entidades","Mixco, S.C. Pinula, Fraijanes"],["Canal","bi en línea"]],source:"reto5-multas-transito.md §1.3"},
+pago_bancos:{chip:"Pago",title:"Bancos del sistema — PNC",body:"Las multas de PNC se pagan en bancos del sistema o vía banca en línea. La solvencia de multas en línea está disponible desde agosto 2025.",facts:[["Entidad","PNC"],["Canales","Bancos del sistema + en línea"]],source:"reto5-multas-transito.md §1.3"},
+conclusion:{chip:"Conclusión",title:"La brecha que MultaClara llena",body:"Guatemala tiene: 11 entidades que multan, 4 portales fragmentados, 3 canales de pago distintos, 3 apps malas y 0 APIs. Ninguna herramienta explica la multa, evalúa su legalidad, genera impugnaciones o habla idiomas indígenas. Esa es exactamente nuestra oportunidad.",facts:[["Entidades","11"],["Portales","4 fragmentados"],["APIs","0"],["Apps","3 malas (⭐1.5-2.8)"],["Brecha","Explicación + legalidad + idiomas"]],source:"PLAN-ESTRATEGICO.md §1"}
+};
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function openDrawer(key){const d=INFO[key];if(!d)return;document.getElementById('d-chip').textContent=d.chip;document.getElementById('d-title').textContent=d.title;document.getElementById('d-body').textContent=d.body;const ul=document.getElementById('d-facts');ul.innerHTML='';d.facts.forEach(([k,v])=>{const li=document.createElement('li');const b=document.createElement('b');b.textContent=k;li.appendChild(b);li.appendChild(document.createTextNode(v));ul.appendChild(li);});document.getElementById('d-source').textContent='Fuente: '+d.source;drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true');}
+document.querySelectorAll('.node').forEach(n=>{n.addEventListener('click',()=>openDrawer(n.dataset.key));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(n.dataset.key);}});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+function exportPNG(){const svg=document.querySelector('svg');const xml=new XMLSerializer().serializeToString(svg);const url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=document.title+'.png';a.href=c.toDataURL('image/png');a.click();};img.src=url;}
+</script>
+</body>
+</html>
