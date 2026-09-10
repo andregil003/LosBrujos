@@ -30,6 +30,8 @@ Tenemos **2 repos**. Esto es importante:
 
 **REGLA:** La info de investigación se queda en `LosBrujos`. El código de la app va en `reto-5-brujos`.
 
+> **📐 ANTES de escribir código, leé [ARQUITECTURA-DATOS.md](ARQUITECTURA-DATOS.md)** — ahí están las reglas de variables (camelCase), dónde vive cada dato (una sola fuente de verdad), los formatos JSON y el flujo de Git con ramas.
+
 ---
 
 ## 3. INSTALAR ntfy (notificaciones del equipo)
@@ -251,10 +253,21 @@ Así es como funciona el equipo durante el hackathon:
    git add .
    git commit -m "feat: hice tal cosa"
    ↓
-5. Avisás por ntfy que terminaste
+5. Subís TU rama a GitHub:
+   git push origin kevin-frontend
    ↓
-6. André revisa y hace merge a main
+6. Avisás por ntfy que terminaste
+   ↓
+7. André revisa y hace merge a main
 ```
+
+### ⚠️ REGLAS DE ORO DE GIT (leelas siempre)
+
+- ✅ **Cada uno trabaja SOLO en su rama** (`kevin-frontend`, `lemus-logica`, `diego-investigador`, `uriel-disenador`)
+- ✅ **Cada uno hace push SOLO a su rama** (`git push origin tu-rama`)
+- ❌ **NUNCA hagas push a `main`** — main solo lo toca André (merge)
+- ✅ Al empezar el día: `git pull origin main` para traer lo último
+- ✅ Mensajes de commit claros: `feat:`, `fix:`, `refactor:`, `docs:`
 
 ### Comandos que vas a usar todo el día
 
